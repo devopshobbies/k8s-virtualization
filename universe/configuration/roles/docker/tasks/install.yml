@@ -1,0 +1,23 @@
+---
+
+- name: "install docker"
+  apt:
+    name: docker.io
+  when: docker_package.changed 
+  tags:
+    - always
+
+
+- name: "restart docker service and daemon"
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+    enabled: true
+  tags:
+    - always
+
+- name: "add your user to the docker group"
+  shell: usermod -aG docker $USER
+  tags:
+    - always
