@@ -1,0 +1,10 @@
+---
+
+- name: "Check if curl is installed"
+  package:
+    name: curl
+    state: present
+  check_mode: true
+  register: curl_package
+  tags:
+    - always

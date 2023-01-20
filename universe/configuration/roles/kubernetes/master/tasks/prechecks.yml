@@ -1,0 +1,28 @@
+---
+
+- name: "Check if kubeadm is installed"
+  package:
+    name: kubeadm
+    state: present
+  check_mode: true
+  register: kubeadm_package
+  tags:
+    - always
+
+- name: "Check if kubelet is installed"
+  package:
+    name: kubelet
+    state: present
+  check_mode: true
+  register: kubelet_package
+  tags:
+    - always
+
+- name: "Check if kubectl is installed"
+  package:
+    name: kubectl
+    state: present
+  check_mode: true
+  register: kubectl_package
+  tags:
+    - always

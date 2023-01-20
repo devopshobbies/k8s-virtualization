@@ -7,6 +7,16 @@
   tags:
     - always
 
+- name: "add your user to the docker group"
+  shell: usermod -aG docker $USER
+  tags:
+    - always
+- name: "change docker daemon"
+  template:
+        src: templates/daemon.json.j2
+        dest: /etc/docker/daemon.json
+  tags:
+    - always
 
 - name: "restart docker service and daemon"
   systemd:
@@ -14,10 +24,5 @@
     daemon_reload: yes
     name: docker
     enabled: true
-  tags:
-    - always
-
-- name: "add your user to the docker group"
-  shell: usermod -aG docker $USER
   tags:
     - always

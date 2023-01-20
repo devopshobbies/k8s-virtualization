@@ -1,0 +1,10 @@
+---
+
+- name: "Check if git is installed"
+  package:
+    name: git
+    state: present
+  check_mode: true
+  register: git_package
+  tags:
+    - always

@@ -1,0 +1,9 @@
+---
+- name: Install git
+  apt:
+    name: git
+    state: present
+    update_cache: yes
+  when: not git_package.changed 
+  tags:
+    - always

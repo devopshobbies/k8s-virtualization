@@ -1,0 +1,7 @@
+---
+swap_off: true
+kubectl_version: 1.23*
+kubeadm_version: 1.23*
+kubelet_version: 1.23*
+pod_network_cidr: 10.1.0.0/24
+

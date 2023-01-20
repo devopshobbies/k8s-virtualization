@@ -1,0 +1,38 @@
+---
+
+#--------------------------------------------
+# install kubeadm
+#--------------------------------------------
+
+- name: add kubernetes gpg key
+  get_url:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    dest: /etc/apt/trusted.gpg.d/kubernetes.asc
+  when: kubeadm_package is changed and kubelet_package is changed and kubectl_package is changed
+
+- name: add kubernetes apt repo
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+  when: kubeadm_package is changed and kubelet_package is changed and kubectl_package is changed
+
+- name: "install kubeadm"
+  apt:
+    name: kubeadm={{kubeadm_version}}
+  when: kubeadm_package.changed 
+  tags:
+    - always
+
+- name: "install kubelet"
+  apt:
+    name: kubelet={{kubelet_version}}
+  when: kubelet_package.changed 
+  tags:
+    - always
+
+- name: "install kubectl"
+  apt:
+    name: kubectl={{kubectl_version}}
+  when: kubectl_package.changed 
+  tags:
+    - always

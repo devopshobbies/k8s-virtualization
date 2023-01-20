@@ -1,0 +1,8 @@
+---
+
+- name: "install curl"
+  apt:
+    name: apt-transport-https curl
+  when: curl_package.changed 
+  tags:
+    - always

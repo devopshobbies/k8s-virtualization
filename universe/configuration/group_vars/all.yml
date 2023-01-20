@@ -51,3 +51,4 @@ container_runtime: containerd
 helm_version: "v2.17.0"
 
 master_ip: "{{ hostvars[groups['master'][0]]['ansible_default_ipv4'].address | default(groups['master'][0]) }}"
+
