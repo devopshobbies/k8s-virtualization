@@ -1,0 +1,8 @@
+---
+
+- name: "Install kubevirt Operator"
+  command: kubectl apply --kubeconfig={{ kubeadmin_config }} -f https://github.com/kubevirt/kubevirt/releases/download/v0.58.0/kubevirt-cr.yaml
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true
+
+  

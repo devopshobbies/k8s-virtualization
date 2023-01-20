@@ -1,0 +1,30 @@
+---
+
+- name: "Create service account for OKD"
+  command: kubectl create --kubeconfig={{ kubeadmin_config }} serviceaccount console -n kube-system
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true
+
+- name: "Create OKD control binding"
+  command: kubectl create --kubeconfig={{ kubeadmin_config }} clusterrolebinding console --clusterrole=cluster-admin --serviceaccount=kube-system:console -n kube-system
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true
+
+
+
+- name: "Create service account for OKD"
+  command: kubectl get --kubeconfig={{ kubeadmin_config }} serviceaccount console --namespace=kube-system -o jsonpath='{.secrets[0].name}'
+  register: okd_secret
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true
+
+- name: "Copy okd console YAML file"
+  template:
+    src: "../templates/okd.j2"
+    dest: "/tmp/okd.yml"
+
+- name: "Deploy okd"
+  command: kubectl apply --kubeconfig={{ kubeadmin_config }} -f /tmp/okd.yml
+  register: okd_secret
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true

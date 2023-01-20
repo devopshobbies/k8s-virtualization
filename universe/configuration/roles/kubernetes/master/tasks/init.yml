@@ -10,10 +10,8 @@
   when: reset_cluster is succeeded
   shell: |
     kubeadm init --pod-network-cidr={{ pod_network_cidr }} \
-                 --apiserver-advertise-address {{ master_ip }}
+                 --apiserver-cert-extra-sans={{ master_ip }}
   register: init_cluster
-  environment:
-    no_proxy: "$no_proxy,.svc,.svc.cluster.local"
   tags:
     - always
 
@@ -32,7 +30,11 @@
     dest: ".kube/config"
     owner: "{{ ansible_user | default(ansible_user_id) }}"
     group: "{{ ansible_user | default(ansible_user_id) }}"
-    mode: 777
+    mode: 0755
     remote_src: true
   tags:
     - always
+
+- name: "untaint control-plan"
+  command: kubectl --kubeconfig={{ kubeadmin_config }} taint nodes --all node-role.kubernetes.io/master-
+  run_once: true
