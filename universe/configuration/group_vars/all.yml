@@ -21,7 +21,7 @@ network: calico
 
 # Change this to an appropriate interface, preferably a private network.
 # For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
-network_interface: ""
+network_interface: "wlp7s0"
 
 enable_dashboard: yes
 
