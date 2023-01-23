@@ -1,0 +1,56 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  creationTimestamp: null
+  name: ubuntu
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: fedora-dv
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 100Gi
+          storageClassName: local
+        source:
+          registry:
+            url:
+              "docker://quay.io/containerdisks/ubuntu:22.04"
+  running: false
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/vm: vm-datavolume
+    spec:
+      domain:
+        devices:
+          cpu:
+            cores: 4
+          disks:
+            - disk:
+                bus: virtio
+              name: datavolumevolume
+            - disk:
+                bus: virtio
+              name: cloudinit
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8Gi
+      terminationGracePeriodSeconds: 0
+      volumes:
+        - cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+                ssh_authorized_keys:
+                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming
+          name: cloudinit
+        - dataVolume:
+            name: fedora-dv
+          name: datavolumevolume

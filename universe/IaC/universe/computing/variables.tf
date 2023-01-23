@@ -37,7 +37,7 @@ variable "system_namespace" {
 #defines the name for the computing machine
 variable "system_vm_name"{
     type = string
-    default = "system-vm1"
+    default = "system-vm2"
 }
 #-------------------------------------------------------------------------------
 #defines the os type we want to provision the computing machine based on
