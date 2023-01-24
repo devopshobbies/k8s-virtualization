@@ -23,32 +23,24 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
----
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: docker, tags: always }
+terraform {
+  required_providers {
+    helm = {
+      version = "~> 2.5.1"
+    }
+    kubernetes = {
+      version = "~> 2.11.0"
+    }
+  }
+}
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: git, tags: always }
-    - { role: curl, tags: always }
-    - { role: kubernetes/master, tags: always }
-    - { role: cni, tags: cni }
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
 
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
 
-- hosts: master
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: kubevirt, tags: always }
-    - { role: pv, tags: always }
-
-# - hosts: node
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: kubernetes/node, tags: node }

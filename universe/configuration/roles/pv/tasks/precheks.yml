@@ -1,0 +1,49 @@
+---
+#==============================================================================#
+#                                                                              #
+#                             Harbor Server Group                              #
+#                                                                              #
+#==============================================================================#
+- name: check if postgresql directory exists
+  stat:
+    path: "{{pv_root_directory}}/postgresql"
+  register: postgresql_stat
+
+- name: check if trivy directory exists
+  stat:
+    path: "{{pv_root_directory}}/trivy"
+  register: trivy_stat
+
+- name: check if charts directory exists
+  stat:
+    path: "{{pv_root_directory}}/charts"
+  register: charts_stat
+
+- name: check if jobservice directory exists
+  stat:
+    path: "{{pv_root_directory}}/jobservice"
+  register: jobservice_stat
+
+- name: check if scandata directory exists
+  stat:
+    path: "{{pv_root_directory}}/scandata"
+  register: scandata_stat
+
+- name: check if registry directory exists
+  stat:
+    path: "{{pv_root_directory}}/registry"
+  register: registry_stat
+
+- name: check if redis directory exists
+  stat:
+    path: "{{pv_root_directory}}/redis"
+  register: redis_stat
+#==============================================================================#
+#                                                                              #
+#                             Frafana Server Group                             #
+#                                                                              #
+#==============================================================================#
+- name: check if grafana directory exists
+  stat:
+    path: "{{pv_root_directory}}/grafana"
+  register: grafana_stat

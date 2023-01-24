@@ -24,31 +24,19 @@
 #                                                                              #
 #==============================================================================#
 ---
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: docker, tags: always }
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: git, tags: always }
-    - { role: curl, tags: always }
-    - { role: kubernetes/master, tags: always }
-    - { role: cni, tags: cni }
+# ####################################################################
+#                             Prechecks
+# ####################################################################
+- name: Prechecks
+  include_tasks: prechecks.yml
+  tags:
+    - always
 
-
-- hosts: master
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: kubevirt, tags: always }
-    - { role: pv, tags: always }
-
-# - hosts: node
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: kubernetes/node, tags: node }
+# ####################################################################
+#                             Create Directories
+# ####################################################################
+- name: Directories
+  include_tasks: directories.yml
+  tags:
+    - always

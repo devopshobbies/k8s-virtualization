@@ -28,7 +28,6 @@
 #                             System Server Group                              #
 #                                                                              #
 #==============================================================================#
-
 #-------------------------------------------------------------------------------
 # creates the name space for for system
 resource "kubernetes_namespace" "system_namespace" {
@@ -67,6 +66,7 @@ resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
     }
   }
 }
+
 resource "kubernetes_persistent_volume" "system_vm1_persistent_volume_2" {
   metadata {
     name = "${var.system_vm_name}-persistent-volume-2"

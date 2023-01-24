@@ -24,31 +24,15 @@
 #                                                                              #
 #==============================================================================#
 ---
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: docker, tags: always }
 
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: git, tags: always }
-    - { role: curl, tags: always }
-    - { role: kubernetes/master, tags: always }
-    - { role: cni, tags: cni }
+- name: "Install kubevirt data importer operator"
+  command: kubectl apply --kubeconfig={{ kubeadmin_config }} -f https://github.com/kubevirt/containerized-data-importer/releases/download/v1.55.2/cdi-operator.yaml
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true
 
+- name: "Install kubevirt data Cr"
+  command: kubectl apply --kubeconfig={{ kubeadmin_config }} -f https://github.com/kubevirt/containerized-data-importer/releases/download/v1.55.2/cdi-cr.yaml
+  delegate_to: "{{ groups['master'][0] }}"
+  run_once: true
 
-- hosts: master
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: kubevirt, tags: always }
-    - { role: pv, tags: always }
-
-# - hosts: node
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: kubernetes/node, tags: node }
+  

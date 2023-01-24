@@ -77,3 +77,4 @@ helm_version: "v2.17.0"
 
 master_ip: "{{ hostvars[groups['master'][0]]['ansible_{{network_interface}}_ipv4'].address | default(groups['master'][0]) }}"
 
+pv_root_directory: "/mnt/disk1/"
