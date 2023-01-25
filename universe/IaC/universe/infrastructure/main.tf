@@ -292,3 +292,43 @@ resource "helm_release" "grafana" {
   wait       = "false"
   values     = ["${file("grafana/values.yml")}"]
 }
+#----------------------------------------------------------------------------------
+resource "kubernetes_persistent_volume" "minio_persistent_volume" {
+  metadata {
+    name = "minio-persistent-volume"
+  }
+  spec {
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key      = "beta.kubernetes.io/os"
+            operator = "In"
+            values   = ["linux"]
+          }
+        }
+      }
+    }
+    access_modes       = ["ReadWriteOnce"]
+    capacity = {
+      storage = "200Gi"
+    }
+
+    persistent_volume_source {
+      local {
+        path = "/mnt/disk1/minio"
+      }
+    }
+  }
+}
+#----------------------------------------------------------------------------------
+# Deploys Grafana and all of it's component with helmchart
+resource "helm_release" "minio" {
+  name       = "minio"
+  repository = "bitnami"
+  chart      = "minio"
+  namespace  = "default"
+  version    = "12.1.1"
+  wait       = "false"
+  values     = ["${file("minio-s3/values.yml")}"]
+}

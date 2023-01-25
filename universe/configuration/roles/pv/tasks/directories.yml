@@ -56,6 +56,13 @@
     path: "{{pv_root_directory}}/grafana"
     state: directory
   when: grafana_stat.stat.exists
-
-
-  
+#==============================================================================#
+#                                                                              #
+#                             Minio-s3 Server Group                            #
+#                                                                              #
+#==============================================================================#
+- name: Creates minio directory
+  file:
+    path: "{{pv_root_directory}}/minio"
+    state: directory
+  when: minio_stat.stat.exists

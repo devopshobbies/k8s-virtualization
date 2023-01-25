@@ -40,6 +40,7 @@ resource "kubernetes_namespace" "system_namespace" {
 resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
   metadata {
     name = "${var.system_vm_name}-persistent-volume"
+    
   }
   spec {
     node_affinity {
@@ -53,187 +54,118 @@ resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
         }
       }
     }
-    storage_class_name = "local"
-    access_modes       = ["ReadWriteOnce"]
+    access_modes       = ["ReadWriteMany"]
     capacity = {
       storage = "100Gi"
     }
 
     persistent_volume_source {
       local {
-        path = "/mnt/disk2"
+        path = "/mnt/disk1/system/vm-pvs/pv1"
       }
     }
   }
 }
-
-resource "kubernetes_persistent_volume" "system_vm1_persistent_volume_2" {
-  metadata {
-    name = "${var.system_vm_name}-persistent-volume-2"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    storage_class_name = "local"
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "100Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1"
-      }
-    }
-  }
-}
-# resource "kubernetes_persistent_volume" "system_vm1_persistent_volume2" {
-#   metadata {
-#     name = "${var.system_vm_name}-persistent-volume-2"
-#   }
-#   spec {
-#     node_affinity {
-#       required {
-#         node_selector_term {
-#           match_expressions {
-#             key      = "beta.kubernetes.io/os"
-#             operator = "In"
-#             values   = ["linux"]
-#           }
-#         }
-#       }
-#     }
-#     storage_class_name = "local"
-#     access_modes       = ["ReadWriteOnce"]
-#     capacity = {
-#       storage = "200Gi"
-#     }
-
-#     persistent_volume_source {
-#       local {
-#         path = "/mnt/disk1"
-#       }
-#     }
-#   }
-# }
-#-------------------------------------------------------------------------------
-#Create persistent volume claim
-# resource "kubernetes_persistent_volume_claim" "system_vm1_persistent_volume_claim" {
-#   depends_on = [
-#     kubernetes_persistent_volume.system_vm1_persistent_volume
-#   ]
-
-#   metadata {
-#     name      = "${var.system_vm_name}-persistent-volume-claim"
-#     namespace = var.system_namespace
-
-#   }
-
-#   spec {
-
-#     access_modes = ["ReadWriteMany"]
-#     #storage_class_name = "local-path"
-#     resources {
-#       requests = {
-#         storage = "10Gi"
-#       }
-#     }
-#   }
-# }
 #-------------------------------------------------------------------------------
 #https://cloud-images.ubuntu.com/lunar/current/lunar-server-cloudimg-amd64-disk-kvm.img
+resource "kubernetes_manifest" "virtualmachine_ubuntu" {
+  manifest = {
+    apiVersion = "kubevirt.io/v1"
+    kind = "VirtualMachine"
+    metadata = {
+      creationTimestamp = null
+      name = "ubuntu"
+      namespace = var.system_namespace
+    }
+    spec = {
+      dataVolumeTemplates = [
+        {
+          metadata = {
+            creationTimestamp = null
+            name = "datavolumevolume"
+          }
+          spec = {
+            pvc = {
+              accessModes = [
+                "ReadWriteMany",
+              ]
+              resources = {
+                requests = {
+                  storage = "100Gi"
+                }
+              }
+            }
+            source = {
+              http = {
+                url = "http://10.244.134.23:9000/public/lunar-server-cloudimg-amd64.img"
+              }
+            }
+          }
+        },
+      ]
+      running = false
+      template = {
+        metadata = {
+          creationTimestamp = null
+          labels = {
+            "kubevirt.io/vm" = "vm-datavolume"
+          }
+        }
+        spec = {
+          domain = {
+            cpu = {
+              cores = 2
+            }
+            devices = {
+              disks = [
+                {
+                  disk = {
+                    bus = "virtio"
+                  }
+                  name = "datavolumevolume"
+                },
+                {
+                  disk = {
+                    bus = "virtio"
+                  }
+                  name = "cloudinit"
+                },
+              ]
+            }
+            machine = {
+              type = "q35"
+            }
+            resources = {
+              requests = {
+                memory = "8Gi"
+              }
+            }
+          }
+          terminationGracePeriodSeconds = 0
+          volumes = [
+            {
+              cloudInitNoCloud = {
+                userData = <<-EOT
+                #cloud-config
+                    ssh_authorized_keys:
+                      - ${var.system_vm_ssh}
+                EOT
+              }
+              name = "cloudinit"
+            },
+            {
+              dataVolume = {
+                name = "datavolumevolume"
+              }
+              name = "datavolumevolume"
+            },
+          ]
+        }
+      }
+    }
+  }
+}
 
-
-# Creates virtual machine 1
-# resource "kubernetes_manifest" "ubuntu_terraform" {
-#   manifest = {
-#     apiVersion = "kubevirt.io/v1"
-#     kind       = "VirtualMachine"
-#     metadata = {
-#       creationTimestamp = null
-#       name              = var.system_vm_name
-#       namespace         = var.system_namespace
-#     }
-#     spec = {
-#       runStrategy = "Always"
-#       template = {
-#         metadata = {
-#           "creationTimestamp" = null
-#         }
-#         spec = {
-#           domain = {
-#             devices = {
-#               disks = [
-#                 # {
-#                 #   disk = {
-#                 #     bus = "virtio"
-#                 #   }
-#                 #   name = "mounted-disk"
-#                 #  },
-#                 {
-#                   disk = {
-#                     bus = "virtio"
-                    
-#                   }
-#                   name = "containerdisk"
-#                 },
-#                 {
-#                   disk = {
-#                     bus = "virtio"
-#                   }
-#                   name = "cloudinit"
-#                 }
-                
-#               ]
-#               rng = {}
-#             }
-#             resources = {
-#               requests = {
-#                 memory = var.system_vm_memory
-#               }
-#             }
-#           }
-#           terminationGracePeriodSeconds = 180
-#           volumes = [
-#             {
-#               containerDisk = {
-#                 image = "quay.io/containerdisks/ubuntu:22.04"
-                
-
-#               }
-#               name = "containerdisk"
-#             },
-#             {
-#               cloudInitNoCloud = {
-#                 userData = <<-EOT
-#                 #cloud-config
-#                     ssh_authorized_keys:
-#                       - ${var.system_vm_ssh}
-#                 EOT
-#               }
-#               name = "cloudinit"
-#             },
-#             {
-#               name = "mounted-disk"
-#               persistentVolumeClaim = {
-#                 claimName = kubernetes_persistent_volume_claim.system_vm1_persistent_volume_claim.metadata[0].name
-#               }
-#             }
-#           ]
-#         }
-#       }
-#     }
-#   }
-# }
 #==============================================================================#
 #                                                                              #
 #                              Dipal Server Group                              #
