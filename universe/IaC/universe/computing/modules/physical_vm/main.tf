@@ -92,7 +92,7 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
         {
           metadata = {
             creationTimestamp = null
-            name              = var.vm_disk_name
+            name              = "${var.vm_name}-${var.vm_disk_name}"
           }
           spec = {
             pvc = {
@@ -132,7 +132,7 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
                   disk = {
                     bus = "virtio"
                   }
-                  name = var.vm_disk_name
+                  name = "${var.vm_name}-${var.vm_disk_name}"
                 },
                 {
                   disk = {
@@ -165,9 +165,9 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
             },
             {
               dataVolume = {
-                name = var.vm_disk_name
+                name = "${var.vm_name}-${var.vm_disk_name}"
               }
-              name = var.vm_disk_name
+              name = "${var.vm_name}-${var.vm_disk_name}"
             },
           ]
         }

@@ -30,14 +30,33 @@
 #==============================================================================#
 #-------------------------------------------------------------------------------
 
-module "physical_vm" {
+module "system_master_node"{
   source = "./modules/physical_vm"
   vm_namespace = "system"
   vm_name = "system-master"
-  vm_os = "http://10.244.134.41:9000/public/lunar-server-cloudimg-amd64.img"
+  vm_os = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
   vm_os_version = "22.4"
-  vm_cpu_cores = 8
-  vm_memory = "4Gi"
+  vm_cpu_cores = 4
+  vm_memory = "2Gi"
+  vm_host_node = "moeid-ideapad-l340-17irh-gaming"
+  vm_disk_storage = "50Gi"
+  vm_ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  vm_disk_name = "primary-disk"
+  vm_host_disk_path = "/mnt/disk1/system/vm-pvs"
+  host_address = "192.168.1.216"
+  host_ssh_key= "/home/moeid/.ssh/local_rsa"
+  host_user="moeid"
+  ssh_sudo_password="Moied3dMoied3d"
+}
+
+module "system_worker_node"{
+  source = "./modules/physical_vm"
+  vm_namespace = "system"
+  vm_name = "system-worker"
+  vm_os = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  vm_os_version = "22.4"
+  vm_cpu_cores = 4
+  vm_memory = "2Gi"
   vm_host_node = "moeid-ideapad-l340-17irh-gaming"
   vm_disk_storage = "50Gi"
   vm_ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
