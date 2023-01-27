@@ -2,6 +2,6 @@
 
 # Universe
 
-![](/home/moeid/universe-infra/assets/Universe.png)
+![](assets/Universe.png)
 
 ## Overview
