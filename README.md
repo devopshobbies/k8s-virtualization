@@ -1,6 +1,16 @@
 # Universe
 
-![](assets/Universe.png)
+<img src="assets/Universe.png" title="" alt="" data-align="center">
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Prerequisits](#prerequisits)
+  - [Host Nodes](#host-nodes)
+    - [Openssh-server](#openssh-server)
+    - [Ansible](#ansible)
+    - [Terraform](#terraform)
+- [Configuration](#configuration)
 
 ## Overview
 
@@ -12,7 +22,7 @@ universe as an automation source code can automate the deployment of skyfarm bac
 
 **Note:** For the porpuse of this project you need at least 2 Nodes (one master and one worker)
 
-Please before installation make sure that your CPU suports hasrdware virtualization via  `egrep` command
+Please before installation make sure that your CPU suports hardware virtualization via  `egrep` command
 
 ```bash
 egrep -c '(vmx|svm)' /proc/cpuinfo
@@ -145,4 +155,165 @@ step 4.
 [kube-cluster:children]
 master
 node
+```
+
+- Terraform 
+
+step 1.
+
+    install terraform 
+
+```bash
+sudo apt-get update \
+sudo apt-get install -y gnupg software-properties-common
+```
+
+step 2.
+
+    verify your installation
+
+```bash
+terraform -help
+Usage: terraform [-version] [-help] <command> [args]
+
+The available commands for execution are listed below.
+The most common, useful commands are shown first, followed by
+less common or more advanced commands. If you're just getting
+started with Terraform, stick with the common commands. For the
+other commands, please read the help and docs before usage.
+##...
+```
+
+# Project structure
+
+```bash
+
+├── cicd
+├── infrastructure
+├── LICENSE
+├── projects
+├── README.md
+├── system
+└── universe
+    ├── configuration
+    │   ├── ansible.cfg
+    │   ├── group_vars
+    │   │   └── all.yml
+    │   ├── hosts.ini
+    │   ├── roles
+    │   │   ├── cni
+    │   │   │   ├── defaults
+    │   │   │   │   └── main.yml
+    │   │   │   ├── tasks
+    │   │   │   │   └── main.yml
+    │   │   │   └── templates
+    │   │   │       ├── calico.yml.j2
+    │   │   │       ├── canal.yml.j2
+    │   │   │       └── flannel.yml.j2
+    │   │   ├── commons
+    │   │   │   ├── os-checker
+    │   │   │   │   ├── defaults
+    │   │   │   │   │   └── main.yml
+    │   │   │   │   └── tasks
+    │   │   │   │       └── main.yml
+    │   │   │   └── pre-install
+    │   │   │       ├── meta
+    │   │   │       │   └── main.yml
+    │   │   │       ├── tasks
+    │   │   │       │   ├── main.yml
+    │   │   │       │   └── pkg.yml
+    │   │   │       └── templates
+    │   │   │           └── 20-extra-args.conf.j2
+    │   │   ├── curl
+    │   │   │   └── tasks
+    │   │   │       ├── install.yml
+    │   │   │       ├── main.yml
+    │   │   │       └── prechecks.yml
+    │   │   ├── docker
+    │   │   │   ├── defaults
+    │   │   │   │   └── main.yml
+    │   │   │   ├── meta
+    │   │   │   │   └── main.yml
+    │   │   │   ├── tasks
+    │   │   │   │   ├── install.yml
+    │   │   │   │   ├── main.yml
+    │   │   │   │   └── prechecks.yml
+    │   │   │   └── templates
+    │   │   │       ├── daemon.json.j2
+    │   │   │       ├── docker.j2
+    │   │   │       └── docker.service.j2
+    │   │   ├── git
+    │   │   │   ├── defaults
+    │   │   │   └── tasks
+    │   │   │       ├── install.yml
+    │   │   │       ├── main.yml
+    │   │   │       └── prechecks.yml
+    │   │   ├── kubernetes
+    │   │   │   ├── master
+    │   │   │   │   ├── defaults
+    │   │   │   │   │   └── main.yml
+    │   │   │   │   ├── tasks
+    │   │   │   │   │   ├── init.yml
+    │   │   │   │   │   ├── install.yml
+    │   │   │   │   │   ├── main.yml
+    │   │   │   │   │   ├── prechecks.yml
+    │   │   │   │   │   └── preflight.yml
+    │   │   │   │   └── templates
+    │   │   │   └── worker
+    │   │   ├── kubevirt
+    │   │   │   ├── defaults
+    │   │   │   ├── tasks
+    │   │   │   │   ├── crds.yml
+    │   │   │   │   ├── data-importer.yml
+    │   │   │   │   ├── main.yml
+    │   │   │   │   ├── okd.yml
+    │   │   │   │   └── operators.yml
+    │   │   │   └── templates
+    │   │   │       └── okd.j2
+    │   │   ├── pv
+    │   │   │   ├── defaults
+    │   │   │   └── tasks
+    │   │   │       ├── directories.yml
+    │   │   │       ├── main.yml
+    │   │   │       └── precheks.yml
+    │   │   └── tests
+    │   │       └── tasks
+    │   │           └── main.yml
+    │   ├── site.yml
+    │   └── tests.yml
+    └── IaC
+        └── universe
+            ├── computing
+            │   ├── main.tf
+            │   ├── modules
+            │   │   ├── container-vm
+            │   │   │   ├── Dockerfile
+            │   │   │   ├── main.tf
+            │   │   │   └── variables.tf
+            │   │   └── physical_vm
+            │   │       ├── main.tf
+            │   │       └── variables.tf
+            │   ├── plan
+            │   ├── template.yml
+            │   ├── terraform.tfstate
+            │   ├── terraform.tfstate.backup
+            │   ├── variables.tf
+            │   └── versions.tf
+            └── infrastructure
+                ├── grafana
+                │   └── values.yml
+                ├── harbor
+                │   └── values.yml
+                ├── influxdb
+                │   └── values.yml
+                ├── main.tf
+                ├── minio-s3
+                │   └── values.yml
+                ├── plan
+                ├── prometheus
+                │   └── values.yml
+                ├── terraform.tfstate
+                ├── terraform.tfstate.backup
+                ├── variables.tf
+                └── versions.tf
 ```
