@@ -1,5 +1,3 @@
-
-
 # Universe
 
 ![](assets/Universe.png)
@@ -8,11 +6,7 @@
 
 universe as an automation source code can automate the deployment of skyfarm backend and infrastructure. Universe consists of a number of sub systems that deploy separate parts of the infrastructure separately. The underlyig infrastructure has been automated by Ansible while the cluster level automation has been conducted with Hashicorp Terraform. With Universe we deploy +13 Virtual machines fully automated with KVM in the backend and Kubevirt on kubernetes. In this document we go throught the capabilities of the source code, list of features, basic concepts and finally the full deployment roadmap and guideline. 
 
-
-
 ## Prerequisits
-
----
 
 ### Host Nodes
 
@@ -109,3 +103,43 @@ ssh -i {ssh private key file path} user@address
 ```
 
 - **Ansible**
+
+step 1. 
+
+    add repository to your local machine
+
+```bash
+sudo apt-add-repository ppa:ansible/ansible
+```
+
+step 2.
+
+    Next, refresh your system’s package index so that it is aware of the packages     available in the newly included PPA
+
+```bash
+sudo apt update
+```
+
+step 3.
+
+    install andible woth **apt**
+
+```bash
+sudo apt install ansible
+```
+
+step 4.
+
+    configure inventory file [hosts.ini](universe/configuration/hosts.ini)
+
+```ini
+[master]
+192.168.1.216 ansible_connection=local ansible_sudo_pass='Moied3dMoied3d'
+
+[node]
+192.16.35.[10:11]
+
+[kube-cluster:children]
+master
+node
+```
