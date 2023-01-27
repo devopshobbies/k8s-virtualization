@@ -187,7 +187,6 @@ other commands, please read the help and docs before usage.
 # Project structure
 
 ```bash
-
 ├── cicd
 ├── infrastructure
 ├── LICENSE
@@ -317,3 +316,117 @@ other commands, please read the help and docs before usage.
                 ├── variables.tf
                 └── versions.tf
 ```
+
+# Configuration management
+
+The configuration of this project has been written with Ansible. It starts from the most basic dependency installation to the cluster installation and preparation. The only thinkg which is required is to have your nodes up and running with a reliable  `ssh` connection.
+
+Below you can see the structure of our ansible project accordingly.
+
+```bash
+├── ansible.cfg
+├── group_vars
+│   └── all.yml
+├── hosts.ini
+├── roles
+│   ├── cni
+│   │   ├── defaults
+│   │   │   └── main.yml
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── calico.yml.j2
+│   │       ├── canal.yml.j2
+│   │       └── flannel.yml.j2
+│   ├── commons
+│   │   ├── os-checker
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   └── tasks
+│   │   │       └── main.yml
+│   │   └── pre-install
+│   │       ├── meta
+│   │       │   └── main.yml
+│   │       ├── tasks
+│   │       │   ├── main.yml
+│   │       │   └── pkg.yml
+│   │       └── templates
+│   │           └── 20-extra-args.conf.j2
+│   ├── curl
+│   │   └── tasks
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── prechecks.yml
+│   ├── docker
+│   │   ├── defaults
+│   │   │   └── main.yml
+│   │   ├── meta
+│   │   │   └── main.yml
+│   │   ├── tasks
+│   │   │   ├── install.yml
+│   │   │   ├── main.yml
+│   │   │   └── prechecks.yml
+│   │   └── templates
+│   │       ├── daemon.json.j2
+│   │       ├── docker.j2
+│   │       └── docker.service.j2
+│   ├── git
+│   │   └── tasks
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── prechecks.yml
+│   ├── kubernetes
+│   │   └── master
+│   │       ├── defaults
+│   │       │   └── main.yml
+│   │       └── tasks
+│   │           ├── init.yml
+│   │           ├── install.yml
+│   │           ├── main.yml
+│   │           ├── prechecks.yml
+│   │           └── preflight.yml
+│   ├── kubevirt
+│   │   ├── tasks
+│   │   │   ├── crds.yml
+│   │   │   ├── data-importer.yml
+│   │   │   ├── main.yml
+│   │   │   ├── okd.yml
+│   │   │   └── operators.yml
+│   │   └── templates
+│   │       └── okd.j2
+│   ├── pv
+│   │   └── tasks
+│   │       ├── directories.yml
+│   │       ├── main.yml
+│   │       └── precheks.yml
+│   └── tests
+│       └── tasks
+│           └── main.yml
+├── site.yml
+└── tests.yml
+```
+
+## Global variables description
+
+| #   | var name            | type          | usage                                                                                               |
+| --- | ------------------- | ------------- | --------------------------------------------------------------------------------------------------- |
+| 1   | kube_version        | string        | verion of the kubernetes to be installed                                                            |
+| 2   | token               | string        | kubeadm custom token for join comman generating                                                     |
+| 3   | init_opts           | string        | feature gates to be installed                                                                       |
+| 4   | kubeadm_opts        | string        | the list of kubernetes addons to be enabled                                                         |
+| 5   | service_cidr        | string        | specifies the service network CIDR (IP range)                                                       |
+| 6   | pod_network_cidr    | string        | specifies the pod network CIDR (IP rane)                                                            |
+| 7   | network             | string        | name of the pod network controller to be installed(options: Calico, flannel and canal)              |
+| 8   | network_interface   | string        | Your chosen network interface to be used . Default is your default network interface                |
+| 9   | enable_dashboard    | boolean       | Checks if the kubernetes dashboard should be enabled or not                                         |
+| 10  | insecure_registries | array string  | specifies the list of trusted insecure docker registries to be added to the docker daemon.json file |
+| 11  | systemd_dir         | string (path) | root directory of the systemd                                                                       |
+| 12  | systemd_env_dir     | string (path) | root directory of the sysconfig file                                                                |
+| 13  | network_dir         | string (path) | root directory of the kubernetes network                                                            |
+| 14  | kubeadmin_config    | string (path) | address of the kubernetes admin config file                                                         |
+| 15  | kube_addon_dir      | string (path) | address of the kuberneyes addon                                                                     |
+| 16  | additional_features | Object        | list of addons to be activated (helm,metallb,healthcheck)                                           |
+| 17  | tmp_dir             | string (path) | the address of the kubernetes temporary files directory                                             |
+| 18  | container_runtime   | string        | choose the container runtime engine to be used with kubernetes                                      |
+| 19  | helm_version        | string        | specifies the helm version to be installed                                                          |
+| 20  | master_ip           | string        | Finds the default IPv4 of the current selected network interface                                    |
