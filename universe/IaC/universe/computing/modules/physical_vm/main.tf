@@ -68,6 +68,7 @@ resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
     capacity = {
       storage = var.vm_disk_storage
     }
+    persistent_volume_reclaim_policy = "Retain"
 
     persistent_volume_source {
       local {
