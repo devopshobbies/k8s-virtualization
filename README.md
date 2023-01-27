@@ -134,11 +134,14 @@ step 4.
 
 ```ini
 [master]
-192.168.1.216 ansible_connection=local ansible_sudo_pass='Moied3dMoied3d'
+{your master node address} ansible_sudo_pass='{your host sudo pass}'
+# example 10.10.10.10
 
 [node]
-192.16.35.[10:11]
+{your nodes addresses} ansible_sudo_pass='{your host sudo pass}'
+# example 192.16.35.[10:11] you can specify your nodes with a range of ips
 
+# group your cluster
 [kube-cluster:children]
 master
 node
