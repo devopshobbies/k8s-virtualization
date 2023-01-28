@@ -430,3 +430,17 @@ Below you can see the structure of our ansible project accordingly.
 | 18  | container_runtime   | string        | choose the container runtime engine to be used with kubernetes                                      |
 | 19  | helm_version        | string        | specifies the helm version to be installed                                                          |
 | 20  | master_ip           | string        | Finds the default IPv4 of the current selected network interface                                    |
+
+## Roles
+
+Configuration management consists of serveral necessary steps to be executed (Roles).
+
+Below you can see the list of Roles with their purpose of usage. 
+
+
+
+> **[Commons](universe/configuration/roles/commons)**
+> 
+> this Role contains all common operations that need to be run before all other rules. We put common and basic checkers, fact collective and dependency installations here. As for now this role consists of two main sub-rules.
+> 
+> > **[os-checker](universe/configuration/roles/commons/os-checker)**
