@@ -89,6 +89,7 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
       namespace         = var.vm_namespace
     }
     spec = {
+
       dataVolumeTemplates = [
         {
           metadata = {
@@ -116,6 +117,7 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
       ]
       running = false
       template = {
+
         metadata = {
           creationTimestamp = null
           labels = {
@@ -123,6 +125,9 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
           }
         }
         spec = {
+          nodeSelector = {
+            "kubernetes.io/hostname"= var.vm_host_node
+          }
           domain = {
             cpu = {
               cores = var.vm_cpu_cores

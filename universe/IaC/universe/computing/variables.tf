@@ -44,7 +44,7 @@ variable "system_vm_1_name" {
 # defines the address of the cloud image
 variable "system_vm_1_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -62,7 +62,7 @@ variable "system_vm_1_VCPU_NUMBER" {
 # defines the memory capacity of the VM
 variable "system_vm_1_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "1Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -86,37 +86,37 @@ variable "system_vm_1_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "system_vm_1_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "system_vm_1_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "system_vm_1_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "system_vm_1_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "system_vm_1_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "system_vm_1_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM2 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -128,7 +128,7 @@ variable "system_vm_2_name" {
 # defines the address of the cloud image
 variable "system_vm_2_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -170,37 +170,37 @@ variable "system_vm_2_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "system_vm_2_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "system_vm_2_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "system_vm_2_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "system_vm_2_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "system_vm_2_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "system_vm_2_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM3 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -212,7 +212,7 @@ variable "system_vm_3_name" {
 # defines the address of the cloud image
 variable "system_vm_3_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -254,37 +254,37 @@ variable "system_vm_3_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "system_vm_3_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "system_vm_3_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "system_vm_3_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "system_vm_3_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "system_vm_3_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "system_vm_3_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #==============================================================================#
 #                                                                              #
@@ -307,7 +307,7 @@ variable "projects_vm_1_name" {
 # defines the address of the cloud image
 variable "projects_vm_1_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -349,37 +349,37 @@ variable "projects_vm_1_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_1_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "projects_vm_1_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_1_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "projects_vm_1_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "projects_vm_1_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "projects_vm_1_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM2 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -391,7 +391,7 @@ variable "projects_vm_2_name" {
 # defines the address of the cloud image
 variable "projects_vm_2_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -433,37 +433,37 @@ variable "projects_vm_2_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_2_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "projects_vm_2_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_2_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "projects_vm_2_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "projects_vm_2_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "projects_vm_2_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM3 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -475,7 +475,7 @@ variable "projects_vm_3_name" {
 # defines the address of the cloud image
 variable "projects_vm_3_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -517,37 +517,37 @@ variable "projects_vm_3_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_3_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "projects_vm_3_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_3_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "projects_vm_3_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "projects_vm_3_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "projects_vm_3_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM3 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -559,7 +559,7 @@ variable "projects_vm_4_name" {
 # defines the address of the cloud image
 variable "projects_vm_4_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -601,37 +601,37 @@ variable "projects_vm_4_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_4_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "projects_vm_4_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_4_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "projects_vm_4_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "projects_vm_4_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "projects_vm_4_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #==============================================================================#
 #                                                                              #
@@ -654,7 +654,7 @@ variable "cicd_vm_1_name" {
 # defines the address of the cloud image
 variable "cicd_vm_1_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -696,37 +696,37 @@ variable "cicd_vm_1_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "cicd_vm_1_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "cicd_vm_1_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "cicd_vm_1_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "cicd_vm_1_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "cicd_vm_1_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "cicd_vm_1_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM2 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -738,7 +738,7 @@ variable "cicd_vm_2_name" {
 # defines the address of the cloud image
 variable "cicd_vm_2_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -780,37 +780,37 @@ variable "cicd_vm_2_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "cicd_vm_2_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "cicd_vm_2_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "cicd_vm_2_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "cicd_vm_2_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "cicd_vm_2_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "cicd_vm_2_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #--------------------------------VM3 (Worker) ----------------------------------
 # defines the name of the computing machine
@@ -822,7 +822,7 @@ variable "cicd_vm_3_name" {
 # defines the address of the cloud image
 variable "cicd_vm_3_cloud_image_address" {
   type    = string
-  default = "http://10.244.134.1:9000/public/lunar-server-cloudimg-amd64.img"
+  default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
@@ -864,37 +864,37 @@ variable "cicd_vm_3_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "cicd_vm_3_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
 variable "cicd_vm_3_ssh_key" {
   type    = string
-  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= moeid@moeid-IdeaPad-L340-17IRH-Gaming"
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
 variable "cicd_vm_3_host_ip_address" {
   type    = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
 variable "cicd_vm_3_host_ssh_key_address" {
   type    = string
-  default = "/home/moeid/.ssh/local_rsa"
+  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
 variable "cicd_vm_3_host_ssh_user_name" {
   type    = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
 variable "cicd_vm_3_host_ssh_sudo_password" {
   type    = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }
 #==============================================================================#
 #                                                                              #
@@ -928,7 +928,7 @@ variable "pod_vm_1_os_version" {
 # defines the OS image registry of the pod-vm
 variable "pod_vm_1_os_registry" {
   type    = string
-  default = "moeidheidari"
+  default = "avheidari"
 }
 #--------------------------------
 # defines the memory request of the pod-vm
@@ -976,5 +976,5 @@ variable "pod_vm_1_replica" {
 # defines the host name where the pod-vm should be deployed on
 variable "pod_vm_1_host_name" {
   type    = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }

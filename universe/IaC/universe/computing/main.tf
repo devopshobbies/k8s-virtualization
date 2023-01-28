@@ -91,7 +91,7 @@ module "system_worker_node_2"{
 #                              Projects Server Group                           #
 #                                                                              #
 #==============================================================================#
-# Provisions the master node  in projects namespace
+#Provisions the master node  in projects namespace
 module "projects_master_node"{
   source = "./modules/physical_vm"
   vm_namespace = var.projects_namespace
@@ -210,7 +210,7 @@ module "cicd_worker_node_1"{
   host_user= var.cicd_vm_2_host_ssh_user_name
   ssh_sudo_password= var.cicd_vm_2_host_ssh_sudo_password
 }
-# Provisions the worker node 2 in cicd namespace
+#Provisions the worker node 2 in cicd namespace
 module "cicd_worker_node_2"{
   source = "./modules/physical_vm"
   vm_namespace = var.cicd_namespace

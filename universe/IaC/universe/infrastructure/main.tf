@@ -25,237 +25,37 @@
 #==============================================================================#
 #==============================================================================#
 #                                                                              #
-#                             Persistent volumes                               #
+#                                Prometheus                                    #
 #                                                                              #
 #==============================================================================#
-resource "kubernetes_persistent_volume" "harbor_postgresql_persistent_volume" {
-  metadata {
-    name = "harbor-postgresql-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "8Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/postgresql"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-resource "kubernetes_persistent_volume" "harbor_trivy_persistent_volume" {
-  metadata {
-    name = "harbor-trivy-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "5Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/trivy"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-resource "kubernetes_persistent_volume" "harbor_chart_persistent_volume" {
-  metadata {
-    name = "harbor-chart-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "10Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/charts"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-resource "kubernetes_persistent_volume" "harbor_jobservice_persistent_volume" {
-  metadata {
-    name = "harbor-jobservice-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "1Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/jobservice"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-resource "kubernetes_persistent_volume" "harbor_scandata_persistent_volume" {
-  metadata {
-    name = "harbor-scandata-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "1Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/scandata"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-resource "kubernetes_persistent_volume" "harbor_registry_persistent_volume" {
-  metadata {
-    name = "harbor-registry-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "50Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/registry"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-resource "kubernetes_persistent_volume" "harbor_redis_persistent_volume" {
-  metadata {
-    name = "harbor-redis-persistent-volume"
-  }
-  spec {
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key      = "beta.kubernetes.io/os"
-            operator = "In"
-            values   = ["linux"]
-          }
-        }
-      }
-    }
-    access_modes       = ["ReadWriteOnce"]
-    capacity = {
-      storage = "8Gi"
-    }
-
-    persistent_volume_source {
-      local {
-        path = "/mnt/disk1/harbor/redis"
-      }
-    }
-  }
-}
-#----------------------------------------------------------------------------------
-# Deploys harbor with all componenets 
-resource "helm_release" "harbor" {
-  name       = "harbor"
-  repository = "bitnami"
-  chart      = "harbor"
-  namespace  = "default"
-  version    = "16.3.1"
-  wait       = "false"
-  values     = ["${file("harbor/values.yml")}"]
-}
-#----------------------------------------------------------------------------------
 # Deploys Prometheus and all of it's component with helmchart
 resource "helm_release" "prometheus" {
-  name       = "kube-prometheus"
-  repository = "bitnami"
-  chart      = "kube-prometheus"
-  namespace  = "default"
-  version    = "8.3.2"
+  name       = var.prometheus_helm_release_name
+  repository = var.prometheus_helm_repo
+  chart      = var.prometheus_helm_chart_name
+  namespace  = var.prometheus_helm_namespace
+  version    = var.prometheus_helm_chart_version
   wait       = "false"
-  values     = ["${file("prometheus/values.yml")}"]
+  values     = [file(var.prometheus_helm_chart_values_file_path)]
 }
-#----------------------------------------------------------------------------------
+#==============================================================================#
+#                                                                              #
+#                                  Grafana                                     #
+#                                                                              #
+#==============================================================================#
 resource "kubernetes_persistent_volume" "grafana_persistent_volume" {
+  connection {
+    type        = "ssh"
+    user        = var.host_ssh_user
+    private_key = file(var.host_ssh_key_address)
+    agent       = "true"
+    host        = var.host_ssh_address
+  }
+  provisioner "remote-exec" {
+    inline = ["echo ${var.host_sudo_password} | sudo -S mkdir -p ${var.host_disk_path}/default-${var.grafana_helm_release_name}"]
+  }
   metadata {
-    name = "grafana-persistent-volume"
+    name = "${var.grafana_helm_release_name}-persistent-volume"
   }
   spec {
     node_affinity {
@@ -271,12 +71,12 @@ resource "kubernetes_persistent_volume" "grafana_persistent_volume" {
     }
     access_modes       = ["ReadWriteOnce"]
     capacity = {
-      storage = "10Gi"
+      storage = var.grafana_helm_storage
     }
 
     persistent_volume_source {
       local {
-        path = "/mnt/disk1/grafana"
+        path = "${var.host_disk_path}/default-${var.grafana_helm_release_name}"
       }
     }
   }
@@ -284,18 +84,38 @@ resource "kubernetes_persistent_volume" "grafana_persistent_volume" {
 #----------------------------------------------------------------------------------
 # Deploys Grafana and all of it's component with helmchart
 resource "helm_release" "grafana" {
-  name       = "grafana"
-  repository = "bitnami"
-  chart      = "grafana"
-  namespace  = "default"
-  version    = "8.2.22"
+  name       = var.grafana_helm_release_name
+  repository = var.grafana_helm_repo
+  chart      = var.grafana_helm_chart_name
+  namespace  = var.grafana_helm_namespace
+  version    = var.grafana_helm_chart_version
   wait       = "false"
-  values     = ["${file("grafana/values.yml")}"]
+  values     = [file(var.grafana_helm_chart_values_file_path)]
+  set {
+    name  = "persistence.size"
+    value = var.grafana_helm_storage
+  }
+
 }
-#----------------------------------------------------------------------------------
+#==============================================================================#
+#                                                                              #
+#                                   Minio                                      #
+#                                                                              #
+#==============================================================================#
+
 resource "kubernetes_persistent_volume" "minio_persistent_volume" {
+  connection {
+    type        = "ssh"
+    user        = var.host_ssh_user
+    private_key = file(var.host_ssh_key_address)
+    agent       = "true"
+    host        = var.host_ssh_address
+  }
+  provisioner "remote-exec" {
+    inline = ["echo ${var.host_sudo_password} | sudo -S mkdir -p ${var.host_disk_path}/default-${var.minio_helm_release_name}"]
+  }
   metadata {
-    name = "minio-persistent-volume"
+    name = "${var.minio_helm_release_name}-persistent-volume"
   }
   spec {
     node_affinity {
@@ -311,12 +131,12 @@ resource "kubernetes_persistent_volume" "minio_persistent_volume" {
     }
     access_modes       = ["ReadWriteOnce"]
     capacity = {
-      storage = "200Gi"
+      storage = var.minio_helm_storage
     }
 
     persistent_volume_source {
       local {
-        path = "/mnt/disk1/minio"
+        path = "${var.host_disk_path}/default-${var.minio_helm_release_name}"
       }
     }
   }
@@ -324,11 +144,16 @@ resource "kubernetes_persistent_volume" "minio_persistent_volume" {
 #----------------------------------------------------------------------------------
 # Deploys Grafana and all of it's component with helmchart
 resource "helm_release" "minio" {
-  name       = "minio"
-  repository = "bitnami"
-  chart      = "minio"
-  namespace  = "default"
-  version    = "12.1.1"
+  name       = var.minio_helm_release_name
+  repository = var.minio_helm_repo
+  chart      = var.minio_helm_chart_name
+  namespace  = var.minio_helm_namespace
+  version    = var.minio_helm_chart_version
   wait       = "false"
-  values     = ["${file("minio-s3/values.yml")}"]
+  values     = [file(var.minio_helm_chart_values_file_path)]
+  set {
+    name  = "persistence.size"
+    value = var.minio_helm_storage
+  }
+
 }

@@ -199,30 +199,44 @@ ansible-playbook tests.yml
 
 # Execution
 
-- infrastructure preparation
-  
-  ```bash
-  cd universe/configuration
-  ansible-playbook site.yml
-  ```
+## infrastructure preparation
 
-- Create computing instances (VMS)
-  
-  ```bash
-  cd universe/IaC/comuting
-  terraform init
-  terraform plan -o plan
-  terraform apply
-  ```
+```bash
+cd universe/configuration
+ansible-playbook site.yml
+```
 
-- Deploy infrastructure on the main cluster
-  
-  ```bash
-  cd universe/IaC/infrastructure
-  terraform init
-  terraform plan -o plan
-  terraform apply
-  ```
+## Deploy infrastructure on the main cluster
+
+```bash
+cd universe/IaC/infrastructure
+terraform init
+terraform plan -o plan
+terraform apply
+```
+
+## Create computing instances (VMS)
+
+```bash
+cd universe/IaC/comuting
+terraform init
+terraform plan -o plan
+terraform apply
+```
+
+## # Deply zones
+
+## System
+
+> TODO
+
+## Development
+
+> TODO
+
+## CI/CD
+
+> TODO
 
 # Project structure
 
@@ -484,3 +498,37 @@ Below you can see the list of Roles with their purpose of usage.
 > this Role contains all common operations that need to be run before all other rules. We put common and basic checkers, fact collective and dependency installations here. As for now this role consists of two main sub-rules.
 > 
 > > **[os-checker](universe/configuration/roles/commons/os-checker)**
+> > 
+> > This roles tries to collect some farcts about the host machine. OS version, ditribute name and set facts to `ansible_os_family`.
+> 
+> > **[preinstall](universe/configuration/roles/commons/pre-install)**
+> > 
+> > this roles tries to execute some pre installation jobs. To let the kubernetes work well we need to install a module called [kubelet]([kubelet | Kubernetes](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/#:~:text=The%20kubelet%20is%20the%20primary,in%20terms%20of%20a%20PodSpec.)). Kubelet doesn't support Swap, thus we need to turn off the swap before any installation and finally reload the kubelet daemon.
+> 
+> **[Curl](universe/configuration/roles/curl)**
+> 
+> this role checks if curl ios installed. If not then it tries to add the appropriate repository and install it on the host machine.
+> 
+> > precheck.yml
+> > 
+> > install.yml
+> > 
+> > main.yml
+> 
+> **[Git](universe/configuration/roles/git)** 
+> 
+> this role checks if git ios installed. If not then it tries to add the appropriate repository and install it on the host machine.
+> 
+> > precheck.yml
+> > 
+> > install.yml
+> > 
+> > main.yml
+> 
+> **[docker](universe/configuration/roles/docker)**
+> 
+> this role checks if docker ios installed. If not then it tries to add the appropriate repository and install it on the host machine.
+> 
+> > [default/main.yml ](universe/configuration/roles/docker/defaults/main.yml)contains a variable to hold the docker version that we want to install or upgrade to.
+> 
+> > [meta/main.yml](universe/configuration/roles/docker/meta/main.yml) contains a list of dependencies and roles that need to be run before this task. In our case `os-checker`.
