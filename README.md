@@ -184,6 +184,46 @@ other commands, please read the help and docs before usage.
 ##...
 ```
 
+# Source code
+
+```bash
+git clone https://github.com/MoeidHeidari/universe-infra.git && cd universe-infra
+```
+
+# Run tests
+
+```bash
+cd universe/configuration
+ansible-playbook tests.yml
+```
+
+# Execution
+
+- infrastructure preparation
+  
+  ```bash
+  cd universe/configuration
+  ansible-playbook site.yml
+  ```
+
+- Create computing instances (VMS)
+  
+  ```bash
+  cd universe/IaC/comuting
+  terraform init
+  terraform plan -o plan
+  terraform apply
+  ```
+
+- Deploy infrastructure on the main cluster
+  
+  ```bash
+  cd universe/IaC/infrastructure
+  terraform init
+  terraform plan -o plan
+  terraform apply
+  ```
+
 # Project structure
 
 ```bash
