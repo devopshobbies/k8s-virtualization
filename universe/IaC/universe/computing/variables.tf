@@ -56,19 +56,19 @@ variable "system_vm_1_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "system_vm_1_VCPU_NUMBER" {
   type    = number
-  default = 4
+  default = 12
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "system_vm_1_memory_capacity" {
   type    = string
-  default = "8Gi"
+  default = "12Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
 variable "system_vm_1_storage_size" {
   type    = string
-  default = "50Gi"
+  default = "100Gi"
 }
 #--------------------------------
 # defines the disk name
@@ -170,7 +170,7 @@ variable "system_vm_2_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "system_vm_2_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -182,7 +182,7 @@ variable "system_vm_2_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "system_vm_2_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -254,7 +254,7 @@ variable "system_vm_3_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "system_vm_3_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -266,7 +266,7 @@ variable "system_vm_3_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "system_vm_3_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -319,7 +319,7 @@ variable "projects_vm_1_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "projects_vm_1_VCPU_NUMBER" {
   type    = number
-  default = 4
+  default = 10
 }
 #--------------------------------
 # defines the memory capacity of the VM
@@ -331,7 +331,7 @@ variable "projects_vm_1_memory_capacity" {
 # defines the disk storage of the VM
 variable "projects_vm_1_storage_size" {
   type    = string
-  default = "50Gi"
+  default = "100Gi"
 }
 #--------------------------------
 # defines the disk name
@@ -433,7 +433,7 @@ variable "projects_vm_2_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_2_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -445,7 +445,7 @@ variable "projects_vm_2_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_2_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -517,7 +517,7 @@ variable "projects_vm_3_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_3_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -529,7 +529,7 @@ variable "projects_vm_3_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_3_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -577,7 +577,7 @@ variable "projects_vm_4_VCPU_NUMBER" {
 # defines the memory capacity of the VM
 variable "projects_vm_4_memory_capacity" {
   type    = string
-  default = "2Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -601,7 +601,7 @@ variable "projects_vm_4_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "projects_vm_4_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -613,7 +613,7 @@ variable "projects_vm_4_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "projects_vm_4_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -672,7 +672,7 @@ variable "code_vm_1_VCPU_NUMBER" {
 # defines the memory capacity of the VM
 variable "code_vm_1_memory_capacity" {
   type    = string
-  default = "10Gi"
+  default = "12Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -696,7 +696,7 @@ variable "code_vm_1_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "code_vm_1_host_name" {
   type    = string
-  default = "dev"
+  default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -708,7 +708,7 @@ variable "code_vm_1_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "code_vm_1_host_ip_address" {
   type    = string
-  default = "192.168.89.2"
+  default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -780,7 +780,7 @@ variable "code_vm_2_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "code_vm_2_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -792,7 +792,7 @@ variable "code_vm_2_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "code_vm_2_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
@@ -864,7 +864,7 @@ variable "code_vm_3_host_disk_root_path" {
 # defines the HOST name the vm should be created on
 variable "code_vm_3_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
@@ -876,7 +876,7 @@ variable "code_vm_3_ssh_key" {
 # defines the HOST IP address the vm should be created on
 variable "code_vm_3_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on

@@ -241,7 +241,7 @@ terraform apply
 # Project structure
 
 ```bash
-├── cicd
+├── code
 ├── infrastructure
 ├── LICENSE
 ├── projects
