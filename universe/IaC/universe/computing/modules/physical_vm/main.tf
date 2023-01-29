@@ -53,13 +53,17 @@ resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
 
   }
   spec {
+    claim_ref {
+      name = "${var.vm_name}-${var.vm_disk_name}"
+      namespace = var.vm_namespace
+    }
     node_affinity {
       required {
         node_selector_term {
           match_expressions {
-            key      = "beta.kubernetes.io/os"
+            key      = "kubernetes.io/hostname"
             operator = "In"
-            values   = ["linux"]
+            values   = [var.vm_host_node]
           }
         }
       }
@@ -97,7 +101,15 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
             name              = "${var.vm_name}-${var.vm_disk_name}"
           }
           spec = {
+
             pvc = {
+              selector = {
+                matchLabels = {
+                  "kubernetes.io/hostname" = var.vm_host_node
+                }
+
+              }
+
               accessModes = [
                 "ReadWriteMany",
               ]
@@ -126,8 +138,10 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
         }
         spec = {
           nodeSelector = {
-            "kubernetes.io/hostname"= var.vm_host_node
+            "kubernetes.io/hostname" = var.vm_host_node
           }
+
+
           domain = {
             cpu = {
               cores = var.vm_cpu_cores

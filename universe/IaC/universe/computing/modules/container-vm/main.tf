@@ -99,7 +99,7 @@ resource "kubernetes_service" "pod_vm_service" {
     selector = {
       app = "${var.pod_vm_namespace}-${var.pod_vm_name}"
     }
-    external_ips = ["192.168.1.216"]
+    external_ips = ["192.168.89.4"]
     port {
       protocol = "TCP"
       port = "22"

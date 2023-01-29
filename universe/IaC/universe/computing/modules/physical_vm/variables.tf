@@ -86,7 +86,7 @@ variable "vm_ssh_key"{
 # Defines the nodes we want to create the VM on.
 variable "vm_host_node" {
   type = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #-------------------------------------------------------------------------------
 # Defines the root address of the disk volume you want to creat the Volume on
@@ -98,7 +98,7 @@ variable "vm_host_disk_path" {
 # Defines host ssh address
 variable "host_address" {
   type = string
-  default = "192.168.1.216"
+  default = "192.168.89.4"
 }
 #-------------------------------------------------------------------------------
 # Defines host ssh address
@@ -110,11 +110,11 @@ variable "host_ssh_key" {
 # Defines the host ssh user
 variable "host_user" {
   type = string
-  default = "moeid"
+  default = "av"
 }
 #--------------------------------------------------------------------------------
 # Defines the host sudo password
 variable "ssh_sudo_password" {
   type = string
-  default = "Moied3dMoied3d"
+  default = "PoI456ZxC"
 }

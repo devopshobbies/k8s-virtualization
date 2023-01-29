@@ -92,7 +92,7 @@ variable "pod_vm_replica" {
 # Defines the host of the pod-vm
 variable "pod_vm_host" {
   type = string
-  default = "moeid-ideapad-l340-17irh-gaming"
+  default = "skyfarm"
 }
 #-------------------------------------------------------------------------------
 # Defines the storage request of the pod-vm

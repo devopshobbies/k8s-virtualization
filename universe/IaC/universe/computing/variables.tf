@@ -56,13 +56,13 @@ variable "system_vm_1_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "system_vm_1_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "system_vm_1_memory_capacity" {
   type    = string
-  default = "1Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -140,13 +140,13 @@ variable "system_vm_2_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "system_vm_2_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "system_vm_2_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -224,13 +224,13 @@ variable "system_vm_3_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "system_vm_3_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "system_vm_3_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -319,13 +319,13 @@ variable "projects_vm_1_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "projects_vm_1_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "projects_vm_1_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -403,13 +403,13 @@ variable "projects_vm_2_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "projects_vm_2_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "projects_vm_2_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -487,13 +487,13 @@ variable "projects_vm_3_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "projects_vm_3_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "projects_vm_3_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -571,13 +571,13 @@ variable "projects_vm_4_cloud_image_version" {
 # defines the VCPU cores of the VM
 variable "projects_vm_4_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
 variable "projects_vm_4_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "2Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
@@ -635,264 +635,264 @@ variable "projects_vm_4_host_ssh_sudo_password" {
 }
 #==============================================================================#
 #                                                                              #
-#                             CI/CD Server Group                               #
+#                             Code Server Group                               #
 #                                                                              #
 #==============================================================================#
 #--------------------------------VM1 (Master) ----------------------------------
 # defines the namespace we want to use to provision the computing machine
-variable "cicd_namespace" {
+variable "code_namespace" {
   type    = string
-  default = "cicd"
+  default = "code"
 }
 #--------------------------------
 # defines the name of the computing machine
-variable "cicd_vm_1_name" {
+variable "code_vm_1_name" {
   type    = string
   default = "master"
 }
 #--------------------------------
 # defines the address of the cloud image
-variable "cicd_vm_1_cloud_image_address" {
+variable "code_vm_1_cloud_image_address" {
   type    = string
   default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
-variable "cicd_vm_1_cloud_image_version" {
+variable "code_vm_1_cloud_image_version" {
   type    = string
   default = "22.4"
 }
 #--------------------------------
 # defines the VCPU cores of the VM
-variable "cicd_vm_1_VCPU_NUMBER" {
+variable "code_vm_1_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 12
 }
 #--------------------------------
 # defines the memory capacity of the VM
-variable "cicd_vm_1_memory_capacity" {
+variable "code_vm_1_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "10Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
-variable "cicd_vm_1_storage_size" {
+variable "code_vm_1_storage_size" {
   type    = string
-  default = "50Gi"
+  default = "100Gi"
 }
 #--------------------------------
 # defines the disk name
-variable "cicd_vm_1_disk_name" {
+variable "code_vm_1_disk_name" {
   type    = string
   default = "primary-disk"
 }
 #--------------------------------
 # defines the host disk root path
-variable "cicd_vm_1_host_disk_root_path" {
+variable "code_vm_1_host_disk_root_path" {
   type    = string
-  default = "/mnt/disk1/cicd/vm-pvs"
+  default = "/mnt/disk1/code/vm-pvs"
 }
 #--------------------------------
 # defines the HOST name the vm should be created on
-variable "cicd_vm_1_host_name" {
+variable "code_vm_1_host_name" {
   type    = string
-  default = "skyfarm"
+  default = "dev"
 }
 #--------------------------------
 # defines the SSH key of the VM
-variable "cicd_vm_1_ssh_key" {
+variable "code_vm_1_ssh_key" {
   type    = string
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
-variable "cicd_vm_1_host_ip_address" {
+variable "code_vm_1_host_ip_address" {
   type    = string
-  default = "192.168.89.4"
+  default = "192.168.89.2"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
-variable "cicd_vm_1_host_ssh_key_address" {
+variable "code_vm_1_host_ssh_key_address" {
   type    = string
   default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
-variable "cicd_vm_1_host_ssh_user_name" {
+variable "code_vm_1_host_ssh_user_name" {
   type    = string
   default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
-variable "cicd_vm_1_host_ssh_sudo_password" {
+variable "code_vm_1_host_ssh_sudo_password" {
   type    = string
   default = "PoI456ZxC"
 }
 #--------------------------------VM2 (Worker) ----------------------------------
 # defines the name of the computing machine
-variable "cicd_vm_2_name" {
+variable "code_vm_2_name" {
   type    = string
   default = "worker1"
 }
 #--------------------------------
 # defines the address of the cloud image
-variable "cicd_vm_2_cloud_image_address" {
+variable "code_vm_2_cloud_image_address" {
   type    = string
   default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
-variable "cicd_vm_2_cloud_image_version" {
+variable "code_vm_2_cloud_image_version" {
   type    = string
   default = "22.4"
 }
 #--------------------------------
 # defines the VCPU cores of the VM
-variable "cicd_vm_2_VCPU_NUMBER" {
+variable "code_vm_2_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
-variable "cicd_vm_2_memory_capacity" {
+variable "code_vm_2_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
-variable "cicd_vm_2_storage_size" {
+variable "code_vm_2_storage_size" {
   type    = string
   default = "50Gi"
 }
 #--------------------------------
 # defines the disk name
-variable "cicd_vm_2_disk_name" {
+variable "code_vm_2_disk_name" {
   type    = string
   default = "primary-disk"
 }
 #--------------------------------
 # defines the host disk root path
-variable "cicd_vm_2_host_disk_root_path" {
+variable "code_vm_2_host_disk_root_path" {
   type    = string
-  default = "/mnt/disk1/cicd/vm-pvs"
+  default = "/mnt/disk1/code/vm-pvs"
 }
 #--------------------------------
 # defines the HOST name the vm should be created on
-variable "cicd_vm_2_host_name" {
+variable "code_vm_2_host_name" {
   type    = string
   default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
-variable "cicd_vm_2_ssh_key" {
+variable "code_vm_2_ssh_key" {
   type    = string
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
-variable "cicd_vm_2_host_ip_address" {
+variable "code_vm_2_host_ip_address" {
   type    = string
   default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
-variable "cicd_vm_2_host_ssh_key_address" {
+variable "code_vm_2_host_ssh_key_address" {
   type    = string
   default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
-variable "cicd_vm_2_host_ssh_user_name" {
+variable "code_vm_2_host_ssh_user_name" {
   type    = string
   default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
-variable "cicd_vm_2_host_ssh_sudo_password" {
+variable "code_vm_2_host_ssh_sudo_password" {
   type    = string
   default = "PoI456ZxC"
 }
 #--------------------------------VM3 (Worker) ----------------------------------
 # defines the name of the computing machine
-variable "cicd_vm_3_name" {
+variable "code_vm_3_name" {
   type    = string
   default = "worker2"
 }
 #--------------------------------
 # defines the address of the cloud image
-variable "cicd_vm_3_cloud_image_address" {
+variable "code_vm_3_cloud_image_address" {
   type    = string
   default = "http://10.244.217.44:9000/public/lunar-server-cloudimg-amd64.img"
 }
 #--------------------------------
 # defines the version of the cloud image
-variable "cicd_vm_3_cloud_image_version" {
+variable "code_vm_3_cloud_image_version" {
   type    = string
   default = "22.4"
 }
 #--------------------------------
 # defines the VCPU cores of the VM
-variable "cicd_vm_3_VCPU_NUMBER" {
+variable "code_vm_3_VCPU_NUMBER" {
   type    = number
-  default = 1
+  default = 4
 }
 #--------------------------------
 # defines the memory capacity of the VM
-variable "cicd_vm_3_memory_capacity" {
+variable "code_vm_3_memory_capacity" {
   type    = string
-  default = "0.5Gi"
+  default = "8Gi"
 }
 #--------------------------------
 # defines the disk storage of the VM
-variable "cicd_vm_3_storage_size" {
+variable "code_vm_3_storage_size" {
   type    = string
   default = "50Gi"
 }
 #--------------------------------
 # defines the disk name
-variable "cicd_vm_3_disk_name" {
+variable "code_vm_3_disk_name" {
   type    = string
   default = "primary-disk"
 }
 #--------------------------------
 # defines the host disk root path
-variable "cicd_vm_3_host_disk_root_path" {
+variable "code_vm_3_host_disk_root_path" {
   type    = string
-  default = "/mnt/disk1/cicd/vm-pvs"
+  default = "/mnt/disk1/code/vm-pvs"
 }
 #--------------------------------
 # defines the HOST name the vm should be created on
-variable "cicd_vm_3_host_name" {
+variable "code_vm_3_host_name" {
   type    = string
   default = "skyfarm"
 }
 #--------------------------------
 # defines the SSH key of the VM
-variable "cicd_vm_3_ssh_key" {
+variable "code_vm_3_ssh_key" {
   type    = string
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnKHjufDiMLojY6lKhtwh1jZCLChUq6HESUHfU0s4rANfTxdlBOhqGO0ZtWyRhta4gd/qet2+s6GF0c6US2lmoQ6GPOlC256lNb4HiM+/Ar46vgLlAnyEtUqXwILSctye69zaJ4vF82aaTLL8LxqEZMIdWbQj+afM4qHQuETDQZDjbZ//PPXpXqEUP8dnE8Ylgkj33iyCYQwRCuLq2g91jrtp6aGpUqhNDTwC1KL5mWv0kX+Sj6JXW3srLA8px3JNCNsY2DHSyDRqZdCDxX4+Q7ha8BogkcJ32ud3y3jUuzGEBrvEcjATisYMkd2G6hiCb2Lt+FFbYyqrtGIn+DU/3e736fqt5WPdEaBKTnCpuyhLe4mUTPVWPYQU0eoPgrrprHu9trXzZX7YQZiTRXveFc0gMs/+TKHS1QzyhnK9fMwJa20YrkbHDKzXkE56+wgOtAukNKP88bDpgYHCQxp1qACZOK+qz3053fI50s6nPf1Seh4LgB46IO0YR3NQLu+c= av@skyfarm"
 }
 #--------------------------------
 # defines the HOST IP address the vm should be created on
-variable "cicd_vm_3_host_ip_address" {
+variable "code_vm_3_host_ip_address" {
   type    = string
   default = "192.168.89.4"
 }
 #--------------------------------
 # defines the HOST ssh key address that the vm should be created on
-variable "cicd_vm_3_host_ssh_key_address" {
+variable "code_vm_3_host_ssh_key_address" {
   type    = string
   default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
 }
 #--------------------------------
 # defines the HOST ssh username that the vm should be created on
-variable "cicd_vm_3_host_ssh_user_name" {
+variable "code_vm_3_host_ssh_user_name" {
   type    = string
   default = "av"
 }
 #--------------------------------
 # defines the HOST ssh sudo password that the vm should be created on
-variable "cicd_vm_3_host_ssh_sudo_password" {
+variable "code_vm_3_host_ssh_sudo_password" {
   type    = string
   default = "PoI456ZxC"
 }
@@ -928,7 +928,7 @@ variable "pod_vm_1_os_version" {
 # defines the OS image registry of the pod-vm
 variable "pod_vm_1_os_registry" {
   type    = string
-  default = "avheidari"
+  default = "moeidheidari"
 }
 #--------------------------------
 # defines the memory request of the pod-vm
