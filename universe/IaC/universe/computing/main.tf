@@ -48,7 +48,7 @@ module "system_master_node"{
   host_user= var.system_vm_1_host_ssh_user_name
   ssh_sudo_password= var.system_vm_1_host_ssh_sudo_password
 }
-# Provisions the worker node 1 in System namespace
+# Provisions the node node 1 in System namespace
 module "system_worker_node_1"{
   source = "./modules/physical_vm"
   vm_namespace = var.system_namespace
@@ -67,7 +67,7 @@ module "system_worker_node_1"{
   host_user= var.system_vm_2_host_ssh_user_name
   ssh_sudo_password= var.system_vm_2_host_ssh_sudo_password
 }
-# Provisions the worker node 2 in System namespace
+# Provisions the node node 2 in System namespace
 module "system_worker_node_2"{
   source = "./modules/physical_vm"
   vm_namespace = var.system_namespace
@@ -110,7 +110,7 @@ module "projects_master_node"{
   host_user= var.projects_vm_1_host_ssh_user_name
   ssh_sudo_password= var.projects_vm_1_host_ssh_sudo_password
 }
-# Provisions the worker node 1 in projects namespace
+# Provisions the node node 1 in projects namespace
 module "projects_worker_node_1"{
   source = "./modules/physical_vm"
   vm_namespace = var.projects_namespace
@@ -129,7 +129,7 @@ module "projects_worker_node_1"{
   host_user= var.projects_vm_2_host_ssh_user_name
   ssh_sudo_password= var.projects_vm_2_host_ssh_sudo_password
 }
-# Provisions the worker node 2 in projects namespace
+# Provisions the node node 2 in projects namespace
 module "projects_worker_node_2"{
   source = "./modules/physical_vm"
   vm_namespace = var.projects_namespace
@@ -149,7 +149,7 @@ module "projects_worker_node_2"{
   ssh_sudo_password= var.projects_vm_3_host_ssh_sudo_password
 }
 
-# Provisions the worker node 3 in projects namespace
+# Provisions the node node 3 in projects namespace
 module "projects_worker_node_3"{
   source = "./modules/physical_vm"
   vm_namespace = var.projects_namespace
@@ -170,64 +170,64 @@ module "projects_worker_node_3"{
 }
 ##==============================================================================#
 ##                                                                              #
-##                             Code Server Group                                #
+##                             cicd Server Group                                #
 ##                                                                              #
 ##==============================================================================#
 module "code_master_node"{
   source = "./modules/physical_vm"
-  vm_namespace = var.code_namespace
-  vm_name = "${var.code_namespace}-${var.code_vm_1_name}"
-  vm_os = var.code_vm_1_cloud_image_address
-  vm_os_version = var.code_vm_1_cloud_image_version
-  vm_cpu_cores = var.code_vm_1_VCPU_NUMBER
-  vm_memory = var.code_vm_1_memory_capacity
-  vm_host_node = var.code_vm_1_host_name
-  vm_disk_storage = var.code_vm_1_storage_size
-  vm_ssh_key = var.code_vm_1_ssh_key
-  vm_disk_name = var.code_vm_1_disk_name
-  vm_host_disk_path = var.code_vm_1_host_disk_root_path
-  host_address = var.code_vm_1_host_ip_address
-  host_ssh_key= var.code_vm_1_host_ssh_key_address
-  host_user= var.code_vm_1_host_ssh_user_name
-  ssh_sudo_password= var.code_vm_1_host_ssh_sudo_password
+  vm_namespace = var.cicd_namespace
+  vm_name = "${var.cicd_namespace}-${var.cicd_vm_1_name}"
+  vm_os = var.cicd_vm_1_cloud_image_address
+  vm_os_version = var.cicd_vm_1_cloud_image_version
+  vm_cpu_cores = var.cicd_vm_1_VCPU_NUMBER
+  vm_memory = var.cicd_vm_1_memory_capacity
+  vm_host_node = var.cicd_vm_1_host_name
+  vm_disk_storage = var.cicd_vm_1_storage_size
+  vm_ssh_key = var.cicd_vm_1_ssh_key
+  vm_disk_name = var.cicd_vm_1_disk_name
+  vm_host_disk_path = var.cicd_vm_1_host_disk_root_path
+  host_address = var.cicd_vm_1_host_ip_address
+  host_ssh_key= var.cicd_vm_1_host_ssh_key_address
+  host_user= var.cicd_vm_1_host_ssh_user_name
+  ssh_sudo_password= var.cicd_vm_1_host_ssh_sudo_password
 }
-# Provisions the worker node 1 in code namespace
-module "code_worker_node_1"{
+# Provisions the node node 1 in cicd namespace
+module "cicd_worker_node_1"{
   source = "./modules/physical_vm"
-  vm_namespace = var.code_namespace
-  vm_name = "${var.code_namespace}-${var.code_vm_2_name}"
-  vm_os = var.code_vm_2_cloud_image_address
-  vm_os_version = var.code_vm_2_cloud_image_version
-  vm_cpu_cores = var.code_vm_2_VCPU_NUMBER
-  vm_memory = var.code_vm_2_memory_capacity
-  vm_host_node = var.code_vm_2_host_name
-  vm_disk_storage = var.code_vm_2_storage_size
-  vm_ssh_key = var.code_vm_2_ssh_key
-  vm_disk_name = var.code_vm_2_disk_name
-  vm_host_disk_path = var.code_vm_2_host_disk_root_path
-  host_address = var.code_vm_2_host_ip_address
-  host_ssh_key= var.code_vm_2_host_ssh_key_address
-  host_user= var.code_vm_2_host_ssh_user_name
-  ssh_sudo_password= var.code_vm_2_host_ssh_sudo_password
+  vm_namespace = var.cicd_namespace
+  vm_name = "${var.cicd_namespace}-${var.cicd_vm_2_name}"
+  vm_os = var.cicd_vm_2_cloud_image_address
+  vm_os_version = var.cicd_vm_2_cloud_image_version
+  vm_cpu_cores = var.cicd_vm_2_VCPU_NUMBER
+  vm_memory = var.cicd_vm_2_memory_capacity
+  vm_host_node = var.cicd_vm_2_host_name
+  vm_disk_storage = var.cicd_vm_2_storage_size
+  vm_ssh_key = var.cicd_vm_2_ssh_key
+  vm_disk_name = var.cicd_vm_2_disk_name
+  vm_host_disk_path = var.cicd_vm_2_host_disk_root_path
+  host_address = var.cicd_vm_2_host_ip_address
+  host_ssh_key= var.cicd_vm_2_host_ssh_key_address
+  host_user= var.cicd_vm_2_host_ssh_user_name
+  ssh_sudo_password= var.cicd_vm_2_host_ssh_sudo_password
 }
-#Provisions the worker node 2 in code namespace
-module "code_worker_node_2"{
+#Provisions the node node 2 in cicd namespace
+module "cicd_worker_node_2"{
   source = "./modules/physical_vm"
-  vm_namespace = var.code_namespace
-  vm_name = "${var.code_namespace}-${var.code_vm_3_name}"
-  vm_os = var.code_vm_3_cloud_image_address
-  vm_os_version = var.code_vm_3_cloud_image_version
-  vm_cpu_cores = var.code_vm_3_VCPU_NUMBER
-  vm_memory = var.code_vm_3_memory_capacity
-  vm_host_node = var.code_vm_3_host_name
-  vm_disk_storage = var.code_vm_3_storage_size
-  vm_ssh_key = var.code_vm_3_ssh_key
-  vm_disk_name = var.code_vm_3_disk_name
-  vm_host_disk_path = var.code_vm_3_host_disk_root_path
-  host_address = var.code_vm_3_host_ip_address
-  host_ssh_key= var.code_vm_3_host_ssh_key_address
-  host_user= var.code_vm_3_host_ssh_user_name
-  ssh_sudo_password= var.code_vm_3_host_ssh_sudo_password
+  vm_namespace = var.cicd_namespace
+  vm_name = "${var.cicd_namespace}-${var.cicd_vm_3_name}"
+  vm_os = var.cicd_vm_3_cloud_image_address
+  vm_os_version = var.cicd_vm_3_cloud_image_version
+  vm_cpu_cores = var.cicd_vm_3_VCPU_NUMBER
+  vm_memory = var.cicd_vm_3_memory_capacity
+  vm_host_node = var.cicd_vm_3_host_name
+  vm_disk_storage = var.cicd_vm_3_storage_size
+  vm_ssh_key = var.cicd_vm_3_ssh_key
+  vm_disk_name = var.cicd_vm_3_disk_name
+  vm_host_disk_path = var.cicd_vm_3_host_disk_root_path
+  host_address = var.cicd_vm_3_host_ip_address
+  host_ssh_key= var.cicd_vm_3_host_ssh_key_address
+  host_user= var.cicd_vm_3_host_ssh_user_name
+  ssh_sudo_password= var.cicd_vm_3_host_ssh_sudo_password
 }
 ###==============================================================================#
 ###                                                                              #

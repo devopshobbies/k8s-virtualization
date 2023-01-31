@@ -1,0 +1,16 @@
+---
+
+
+- name: print join command
+  shell: 'echo \#\!/bin/bash > join.sh | kubeadm token create --print-join-command >> join.sh'
+  tags:
+    - always
+
+- name: copy join command
+  fetch:
+    src: join.sh
+    dest: "join/join.sh"
+    flat: yes
+
+  tags:
+    - always

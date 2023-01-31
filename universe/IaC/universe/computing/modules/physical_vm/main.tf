@@ -177,6 +177,9 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
               cloudInitNoCloud = {
                 userData = <<-EOT
                 #cloud-config
+                    user: ubuntu
+                    password: ${var.ssh_sudo_password}
+                    chpasswd: {expire: False}
                     ssh_authorized_keys:
                       - ${var.vm_ssh_key}
                 EOT

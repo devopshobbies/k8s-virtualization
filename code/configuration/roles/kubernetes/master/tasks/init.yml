@@ -35,8 +35,7 @@
   when: reset_cluster is succeeded
   shell: |
     kubeadm init --pod-network-cidr={{ pod_network_cidr }} \
-                 --apiserver-cert-extra-sans={{ master_ip }} \
-                 --apiserver-advertise-address={{ master_ip }}
+                 --apiserver-cert-extra-sans={{ master_ip }}
   register: init_cluster
   tags:
     - always

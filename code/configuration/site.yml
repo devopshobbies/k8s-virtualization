@@ -28,10 +28,11 @@
   gather_facts: yes
   become: yes
   roles:
-    - { role: docker, tags: always }
+    #- { role: docker, tags: always }
     #- { role: git, tags: always }
-    - { role: kubernetes/master, tags: always }
-    - { role: cni, tags: cni }
+    #- { role: kubernetes/master, tags: always }
+    #- { role: cni, tags: cni }
+    - { role: kubernetes/joincommand, tags: always }
 
 #- hosts: kube-cluster
 #  gather_facts: yes
@@ -40,8 +41,10 @@
     #- { role: git, tags: always }
     #- { role: curl, tags: always }
 
-# - hosts: node
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: kubernetes/node, tags: node }
+-  hosts: node
+   gather_facts: yes
+   become: yes
+   roles:
+     - { role: docker, tags: always }
+     - { role: git, tags: always }
+     - { role: kubernetes/node, tags: always }

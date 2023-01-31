@@ -312,7 +312,7 @@ terraform apply
     │   │   │   │   │   ├── prechecks.yml
     │   │   │   │   │   └── preflight.yml
     │   │   │   │   └── templates
-    │   │   │   └── worker
+    │   │   │   └── node
     │   │   ├── kubevirt
     │   │   │   ├── defaults
     │   │   │   ├── tasks

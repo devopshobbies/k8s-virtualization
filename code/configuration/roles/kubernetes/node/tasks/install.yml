@@ -23,56 +23,44 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-# Ansible
-# ansible_user: root
+---
 
-# Kubernetes
-kube_version: v1.26.0
-token: b0f7b8.8d1767876297d85c
+#--------------------------------------------
+# install kubeadm
+#--------------------------------------------
 
-# 1.8.x feature: --feature-gates SelfHosting=true
-init_opts: ""
+- name: add kubernetes gpg key
+  shell: "curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 
-# Any other additional opts you want to add..
-kubeadm_opts: ""
-# For example:
-# kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
+- name: add kubernetes apt repo
+  shell: 'echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list'
 
-service_cidr: "10.96.0.0/12"
-pod_network_cidr: "10.244.0.0/16"
+- name: "install kubeadm"
+  apt:
+    name: kubeadm={{kubeadm_version}}
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+  when: kubeadm_package.changed 
+  tags:
+    - always
 
-# Network implementation('flannel', 'calico', 'canal')
-network: calico
+- name: "install kubelet"
+  apt:
+    name: kubelet={{kubelet_version}}
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+  when: kubelet_package.changed 
+  tags:
+    - always
 
-# Change this to an appropriate interface, preferably a private network.
-# For example, on DigitalOcean, you would use eth1 as that is the default private network interface.
-network_interface: "enp1s0"
-
-enable_dashboard: yes
-
-# A list of insecure registries you might need to define
-# insecure_registries: []
-insecure_registries: ['gcr.io']
-
-systemd_dir: /lib/systemd/system
-system_env_dir: /etc/sysconfig
-network_dir: /etc/kubernetes/network
-kubeadmin_config: /etc/kubernetes/admin.conf
-kube_addon_dir: /etc/kubernetes/addon
-
-# Additional feature to install
-additional_features:
-  helm: false
-  metallb: false
-  healthcheck: false
-
-# temporary directory used by additional features
-tmp_dir: /tmp/kubeadm-ansible-files
-
-# Container runtimes ('containerd', 'crio')
-container_runtime: containerd
-
-# helm helm version
-helm_version: "v2.17.0"
-
-master_ip: "{{ hostvars[groups['master'][0]]['ansible_{{network_interface}}_ipv4'].address | default(groups['master'][0]) }}"
+- name: "install kubectl"
+  apt:
+    name: kubectl={{kubectl_version}}
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+  when: kubectl_package.changed 
+  tags:
+    - always
