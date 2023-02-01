@@ -1,0 +1,8 @@
+-  hosts: all
+   gather_facts: yes
+   become: yes
+   roles:
+     - { role: curl, tags: always }
+     - { role: git, tags: always }
+     - { role: docker, tags: always }
+     - { role: kind, tags: always }

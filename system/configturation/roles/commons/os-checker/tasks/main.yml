@@ -1,0 +1,65 @@
+#==============================================================================#
+#                                                                              #
+#                                 MIT License                                  #
+#                                                                              #
+#                       Copyright (c) 2023 Skyfarm                             #
+#                                                                              #
+# Permission is hereby granted, free of charge, to any person obtaining a copy #
+#of this software and associated documentation files (the Software), to deal #
+# in the Software without restriction, including without limitation the rights #
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   #
+#    copies of the Software, and to permit persons to whom the Software is     #
+#           furnished to do so, subject to the following conditions:           #
+#                                                                              #
+#The above copyright notice and this permission notice shall be included in all#
+#               copies or substantial portions of the Software.                #
+#                                                                              #
+#  THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  #
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,   #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  #
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER    #
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, #
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE #
+#                                  SOFTWARE.                                   #
+#                                                                              #
+#==============================================================================#
+---
+# Fact os vars
+
+- name: Get os_version from /etc/os-release
+  when: ansible_os_family is not defined
+  raw: "grep '^VERSION_ID=' /etc/os-release | sed s'/VERSION_ID=//'"
+  register: os_version
+  changed_when: False
+
+- name: Get distro name from /etc/os-release
+  when: ansible_os_family is not defined
+  raw: "grep '^NAME=' /etc/os-release | sed s'/NAME=//'"
+  register: distro
+  changed_when: False
+
+- name: Set fact ansible_os_family var to Debian
+  when:
+    - ansible_os_family is not defined
+    - "'Debian' in distro.stdout"
+  set_fact:
+    ansible_os_family: Debian
+
+- name: Set fact ansible_os_family var to Debian
+  when:
+    - ansible_os_family is not defined
+    - "'Ubuntu' in distro.stdout"
+  set_fact:
+    ansible_os_family: Debian
+
+- name: Set fact ansible_os_family var to RedHat
+  when:
+    - ansible_os_family is not defined
+    - "'CentOS' in distro.stdout"
+  set_fact:
+    ansible_os_family: RedHat
+
+- name: Override config file directory for Debian
+  when: ansible_os_family == "Debian"
+  set_fact:
+    system_env_dir: "/etc/default"

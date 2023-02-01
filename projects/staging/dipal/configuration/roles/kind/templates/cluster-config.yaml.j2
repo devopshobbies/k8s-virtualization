@@ -1,0 +1,12 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  ipFamily: ipv4
+  apiServerAddress: 10.244.90.169
+nodes:
+{% for n in range(control_nodes|int) %}
+  - role: control-plane
+{% endfor %}
+{% for n in range(worker_nodes|int) %}
+  - role: worker
+{% endfor %}

@@ -1,0 +1,89 @@
+#==============================================================================#
+#                                                                              #
+#                                 MIT License                                  #
+#                                                                              #
+#                       Copyright (c) 2023 Skyfarm                             #
+#                                                                              #
+# Permission is hereby granted, free of charge, to any person obtaining a copy #
+#of this software and associated documentation files (the Software), to deal #
+# in the Software without restriction, including without limitation the rights #
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   #
+#    copies of the Software, and to permit persons to whom the Software is     #
+#           furnished to do so, subject to the following conditions:           #
+#                                                                              #
+#The above copyright notice and this permission notice shall be included in all#
+#               copies or substantial portions of the Software.                #
+#                                                                              #
+#  THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  #
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,   #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  #
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER    #
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, #
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE #
+#                                  SOFTWARE.                                   #
+#                                                                              #
+#==============================================================================#
+
+---
+
+- name: Check if OS distribution is some Debian kind
+  fail:
+    msg: "OS distribution {{ ansible_os_family }} is not Debian family!"
+  when: (not ansible_os_family == 'Debian')
+  tags:
+    - install
+
+- name: Check if kind already installed into {{ kind_install_dir }}
+  stat:
+    path: "{{ kind_install_dir }}/kind"
+  register: kind_status
+  tags:
+    - always
+
+- name: "Check if docker is installed"
+  package:
+    name: docker
+    state: present
+  check_mode: true
+  register: kind_state
+  tags:
+    - always
+
+- name: Check installed kind version
+  shell: "{{ kind_install_dir }}/kind --version | awk -F ' ' '{print \"v\"$3}'"
+  changed_when: false
+  register: kind_installed_version
+  tags:
+    - always
+
+- name: Get latest kind release
+  uri:
+    url: "{{ kind_git }}/releases/latest"
+    return_content: true
+    body_format: json
+  register: kind_latest_release
+  when: kind_version == 'latest'
+  tags:
+    - install
+
+- name: Set version to install
+  set_fact:
+    kind_version: "{{ kind_latest_release.json.tag_name }}"
+  when: kind_version == 'latest'
+  tags:
+    - install
+
+- name: Installation will be skipped
+  debug:
+    msg: "Installation will be skipped, the version {{ kind_version }} specified is already installed!"
+  when: kind_version == kind_installed_version.stdout
+  tags:
+    - install
+
+- name: "Check If kubectl is installed"
+  stat:
+    path: "/usr/local/bin/kubectl"
+  register: kubectl_state
+  tags:
+    - install
+

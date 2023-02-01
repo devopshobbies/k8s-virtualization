@@ -23,157 +23,152 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-
-#--------------------------------------------------------------------------------
 #==============================================================================#
 #                                                                              #
-#                             Jenkins Group                                    #
+#                             harbor Group                                    #
 #                                                                              #
 #==============================================================================#
 # Defines the host machine user
-variable "jenkins_host_ssh_user" {
+variable "harbor_host_ssh_user" {
   type = string
   default = "ubuntu"
 }
 #--------------------------------------------------------------------------------
 # defines the address of the host ssh-key file
-variable "jenkins_host_ssh_key_address" {
+variable "harbor_host_ssh_key_address" {
   type = string
   default = "/home/moeid/.ssh/vms_rsa"
 }
 #--------------------------------------------------------------------------------
 # defines the host address
-variable "jenkins_host_ssh_address" {
+variable "harbor_host_ssh_address" {
   type = string
-  default = "10.244.217.4"
+  default = "10.244.217.7"
 }
 #--------------------------------------------------------------------------------
 # defines the host sudo password
-variable "jenkins_host_sudo_password" {
+variable "harbor_host_sudo_password" {
   type = string
   default = "PoI456ZxC"
 }
 #--------------------------------------------------------------------------------
 # defines the host disk path
-variable "jenkins_host_disk_path" {
+variable "harbor_host_disk_path" {
   type = string
   default = "/mnt"
 }
-# defines the namespace where we want to deploy jenkins
-variable "jenkins_helm_release_namespace" {
+# defines the namespace where we want to deploy harbor
+variable "harbor_helm_release_namespace" {
   type = string
   default = "default"
 }
-variable "jenkins_helm_release_name" {
+variable "harbor_helm_release_name" {
   type = string
-  default = "cicd-jenkins"
+  default = "system-harbor"
 }
 #--------------------------------------------------------------------------------
-# Defines the repository name for jenkins helm deploy
-variable "jenkins_helm_repo" {
+# Defines the repository name for harbor helm deploy
+variable "harbor_helm_repo" {
   type = string
   default = "bitnami"
 }
 #--------------------------------------------------------------------------------
-# Defines the chart name for jenkins helm deploy
-variable "jenkins_helm_chart_name" {
+# Defines the chart name for harbor helm deploy
+variable "harbor_helm_chart_name" {
   type = string
-  default = "jenkins"
+  default = "harbor"
 }
 #--------------------------------------------------------------------------------
 # Defines the chart version for prometheus helm deploy
-variable "jenkins_helm_chart_version" {
+variable "harbor_helm_chart_version" {
   type = string
-  default = "11.0.13"
+  default = "16.3.1"
 }
 #--------------------------------------------------------------------------------
-# Defines the chart values file path for jenkins helm deploy
-variable "jenkins_helm_chart_values_file_path" {
+# Defines the chart values file path for harbor helm deploy
+variable "harbor_helm_chart_values_file_path" {
   type = string
-  default = "jenkins/values.yml"
+  default = "harbor/values.yml"
 }
 #--------------------------------------------------------------------------------
-# Defines the storage for jenkins persistence volume
-variable "jenkins_helm_storage" {
+# Defines the storage for harbor postgress persistence volume
+variable "harbor_helm_postgress_storage" {
   type = string
-  default = "60Gi"
-}
-#==============================================================================#
-#                                                                              #
-#                             Gitea Group                                      #
-#                                                                              #
-#==============================================================================#
-# Defines the host machine user
-variable "gitea_host_ssh_user" {
-  type = string
-  default = "ubuntu"
+  default = "8Gi"
 }
 #--------------------------------------------------------------------------------
-# defines the address of the host ssh-key file
-variable "gitea_host_ssh_key_address" {
+# Defines the storage for harbor trivy persistence volume
+variable "harbor_helm_trivy_storage" {
   type = string
-  default = "/home/moeid/.ssh/vms_rsa"
+  default = "5Gi"
 }
 #--------------------------------------------------------------------------------
-# defines the host address
-variable "gitea_host_ssh_address" {
+# Defines the storage for harbor chart persistence volume
+variable "harbor_helm_chart_storage" {
   type = string
-  default = "10.244.90.164"
+  default = "10Gi"
 }
 #--------------------------------------------------------------------------------
-# defines the host sudo password
-variable "gitea_host_sudo_password" {
+# Defines the storage for harbor jobservice persistence volume
+variable "harbor_helm_jobservice_storage" {
   type = string
-  default = "PoI456ZxC"
+  default = "1Gi"
 }
 #--------------------------------------------------------------------------------
-# defines the host disk path
-variable "gitea_host_disk_path" {
+# Defines the storage for harbor jobservice persistence volume
+variable "harbor_helm_scandata_storage" {
   type = string
-  default = "/bitnami"
-}
-# defines the namespace where we want to deploy jenkins
-variable "gitea_helm_release_namespace" {
-  type = string
-  default = "default"
-}
-variable "gitea_helm_release_name" {
-  type = string
-  default = "cicd-gitea"
+  default = "1Gi"
 }
 #--------------------------------------------------------------------------------
-# Defines the repository name for gitea helm deploy
-variable "gitea_helm_repo" {
-  type = string
-  default = "bitnami"
-}
-#--------------------------------------------------------------------------------
-# Defines the chart name for gitea helm deploy
-variable "gitea_helm_chart_name" {
-  type = string
-  default = "gitea"
-}
-#--------------------------------------------------------------------------------
-# Defines the chart version for prometheus helm deploy
-variable "gitea_helm_chart_version" {
-  type = string
-  default = "0.1.8"
-}
-#--------------------------------------------------------------------------------
-# Defines the chart values file path for gitea helm deploy
-variable "gitea_helm_chart_values_file_path" {
-  type = string
-  default = "gitea/values.yml"
-}
-#--------------------------------------------------------------------------------
-# Defines the storage for gitea persistence volume
-variable "gitea_helm_storage" {
+# Defines the storage for harbor jobservice persistence volume
+variable "harbor_helm_registry_storage" {
   type = string
   default = "50Gi"
 }
 #--------------------------------------------------------------------------------
-# Defines the storage for gitea postgresql persistence volume
-variable "gitea_postgresql_helm_storage" {
+# Defines the storage for harbor redis persistence volume
+variable "harbor_helm_redis_storage" {
   type = string
   default = "8Gi"
+}
+#==============================================================================#
+#                                                                              #
+#                             Prometheus group var                             #
+#                                                                              #
+#==============================================================================#
+# Defines a release name for prometheus
+variable "prometheus_helm_release_name"{
+  type= string
+  default = "system-prometheus"
+}
+#--------------------------------------------------------------------------------
+# Defines the repository name for prometheus helm deploy
+variable "prometheus_helm_repo" {
+  type = string
+  default = "bitnami"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart name for prometheus helm deploy
+variable "prometheus_helm_chart_name" {
+  type = string
+  default = "kube-prometheus"
+}
+#--------------------------------------------------------------------------------
+# Defines the namespace name for prometheus helm deploy
+variable "prometheus_helm_namespace" {
+  type = string
+  default = "default"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart version for prometheus helm deploy
+variable "prometheus_helm_chart_version" {
+  type = string
+  default = "8.3.2"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart values file path for prometheus helm deploy
+variable "prometheus_helm_chart_values_file_path" {
+  type = string
+  default = "prometheus/values.yml"
 }
