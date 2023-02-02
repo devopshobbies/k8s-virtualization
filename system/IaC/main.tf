@@ -357,4 +357,61 @@ resource "helm_release" "prometheus" {
   wait       = "false"
   values     = [file(var.prometheus_helm_chart_values_file_path)]
 }
+#==============================================================================#
+#                                                                              #
+#                                keycloak                                    #
+#                                                                              #
+#==============================================================================#
+
+resource "kubernetes_persistent_volume" "keycloak_persistent_volume" {
+  connection {
+    type        = "ssh"
+    user        = var.keycloak_host_ssh_user
+    private_key = file(var.keycloak_host_ssh_key_address)
+    agent       = true
+    host        = var.harbor_host_ssh_address
+  }
+  provisioner "remote-exec" {
+    inline = ["echo ${var.keycloak_host_sudo_password} | sudo -S mkdir -p ${var.keycloak_host_disk_path}/keycloak"]
+  }
+  metadata {
+    name = "${var.keycloak_helm_release_name}-persistent-volume"
+  }
+
+  spec {
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key      = "kubernetes.io/hostname"
+            operator = "In"
+            values   = ["system-master"]
+          }
+        }
+      }
+    }
+
+    access_modes       = ["ReadWriteOnce"]
+    capacity = {
+      storage = var.keycloak_helm_storage
+    }
+
+    persistent_volume_source {
+      local {
+        path = "${var.keycloak_host_disk_path}/keycloak"
+      }
+    }
+  }
+}
+//------------------------------------------------------------------------------
+# Deploys keycloak and all of it's component with helmchart
+resource "helm_release" "keycloak" {
+  name       = var.keycloak_helm_release_name
+  repository = var.keycloak_helm_repo
+  chart      = var.keycloak_helm_chart_name
+  namespace  = var.keycloak_helm_release_namespace
+  version    = var.keycloak_helm_chart_version
+  wait       = "false"
+  values     = [file(var.keycloak_helm_chart_values_file_path)]
+}
 

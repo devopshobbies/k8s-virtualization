@@ -77,7 +77,7 @@ adminPassword: "PoI456ZxC"
 ## 4) if "exposureType" is "proxy" and "service.type" is "LoadBalancer",
 ## the "domain" should be the LoadBalancer IP
 ##
-externalURL: https://core.harbor.domain
+externalURL: https://10.244.217.7
 ## Note: If Harbor is exposed via Ingress, the NGINX server will not be used
 ## @param proxy.httpProxy The URL of the HTTP proxy server
 ## @param proxy.httpsProxy The URL of the HTTPS proxy server
@@ -1312,7 +1312,7 @@ core:
   image:
     registry: docker.io
     repository: bitnami/harbor-core
-    tag: 2.7.0-debian-11-r8
+    tag: latest
     digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'

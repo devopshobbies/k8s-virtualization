@@ -172,3 +172,77 @@ variable "prometheus_helm_chart_values_file_path" {
   type = string
   default = "prometheus/values.yml"
 }
+
+#==============================================================================#
+#                                                                              #
+#                             Prometheus group var                             #
+#                                                                              #
+#==============================================================================#
+# Defines the host machine user
+variable "keycloak_host_ssh_user" {
+  type = string
+  default = "ubuntu"
+}
+#--------------------------------------------------------------------------------
+# defines the address of the host ssh-key file
+variable "keycloak_host_ssh_key_address" {
+  type = string
+  default = "/home/moeid/.ssh/vms_rsa"
+}
+#--------------------------------------------------------------------------------
+# defines the host address
+variable "keycloak_host_ssh_address" {
+  type = string
+  default = "10.244.217.7"
+}
+#--------------------------------------------------------------------------------
+# defines the host sudo password
+variable "keycloak_host_sudo_password" {
+  type = string
+  default = "PoI456ZxC"
+}
+#--------------------------------------------------------------------------------
+# defines the host disk path
+variable "keycloak_host_disk_path" {
+  type = string
+  default = "/mnt"
+}
+# defines the namespace where we want to deploy keycloak
+variable "keycloak_helm_release_namespace" {
+  type = string
+  default = "default"
+}
+variable "keycloak_helm_release_name" {
+  type = string
+  default = "system-keycloak"
+}
+#--------------------------------------------------------------------------------
+# Defines the repository name for keycloak helm deploy
+variable "keycloak_helm_repo" {
+  type = string
+  default = "bitnami"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart name for keycloak helm deploy
+variable "keycloak_helm_chart_name" {
+  type = string
+  default = "keycloak"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart version for prometheus helm deploy
+variable "keycloak_helm_chart_version" {
+  type = string
+  default = "13.0.3"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart values file path for keycloak helm deploy
+variable "keycloak_helm_chart_values_file_path" {
+  type = string
+  default = "keycloak/values.yml"
+}
+#--------------------------------------------------------------------------------
+# Defines the storage for keycloak postgress persistence volume
+variable "keycloak_helm_storage" {
+  type = string
+  default = "8Gi"
+}
