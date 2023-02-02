@@ -23,3 +23,23 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
+terraform {
+  required_providers {
+    helm = {
+      version = "~> 2.5.1"
+    }
+    kubernetes = {
+      version = "~> 2.11.0"
+    }
+  }
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "/tmp/dipalConfig"
+  }
+}
+
+provider "kubernetes" {
+  config_path = "/tmp/dipalConfig"
+}

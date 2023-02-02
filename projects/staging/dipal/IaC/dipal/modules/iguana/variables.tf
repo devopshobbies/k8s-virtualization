@@ -156,6 +156,6 @@ variable "iguana_S3_access_key" {
 #Defines S3 access key
 variable "iguana_S3_secret" {
   type = string
-  default = "eq5nxTq4Ka"
+  default = "XIdX48556C"
 }
 
