@@ -31,15 +31,14 @@
 #-------------------------------------------------------------------------------
 # Deploys pyrador service
 module "dipal_pyrador" {
-  source = "modules/pyrador"
-  depends_on = [helm_release.kafka,helm_release.redis]
+  source = "./modules/pyrador"
   #..............general variables...............................................
   pyrador_namespace = "default"
   pyrador_name = "pyrador"
   pyrador_replica = "1"
   pyrador_pull_secret = "regcred"
   pyrador_image_address = "10.244.217.7:32488/dipal/pyrador"
-  pyrador_image_tag = "latest"
+  pyrador_image_tag = "v1"
   #..............configmap variables.............................................
   pyrador_app_port = 5000
   pyrador_redis_host = "redis-master"
@@ -49,21 +48,25 @@ module "dipal_pyrador" {
   pyrador_kafka_client_id = "pyrador"
   pyrador_kafka_group_id = "pyrador"
   #..............secret variables................................................
-  pyrador_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAljPpshPcrypFRkhxMZraXgbNmB0q3XQkcCcrWy3L+C1J2YMprp9a5UOi/Evl59Key2hVbYO76y/TipodcsSzAA1OhHJm2PFacdN9yia/HoW8VJ4u7tm62cLTrbmiPsjjEUfsqShPdYby01549iLlfb+oXX2DfC9JkhekX6nCEO/slPZ7TKDs30Gwd5BlqaaKFgpN2BkMipvrTfMhiQNWtV8NG7ZcJ704JcscVzAhaeXRsA9S1TcHstTjUhW/bZyyhPwO5qzHNh9sIr0jc/IPy7QUHEGH834CTckw+70lhtiIrQxIFa1JBxyJzdrRi1LiWIC2FBnAHyfauUgddxIrRwIDAQAB"
+  pyrador_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5N8RaLVL/8KrO111ekAA/MSF9XajCs4HNlWDsmj2i2/VhfbGnNz73hTbHBx/oZnIlPPOk+pL09PInR830F0uZkhN737cIU1fkvcsXVVKgy/Iz6CLPsAXqwW/LjStqWQ2cIxFyrMqJ3cYMFpq3xXA5WqPJke5oJgRQR3cemd8m+hKaiXZYUOylqso41x+lClluzmnpTuH0QMdv/VKNvFCJrfSZc5Qy9oaTm/POibrk3Y5gttB3wQ7PWvBGuqMdDDPiryVTToLFugFLZ40btueR25moGZaBdWAKeLGC0FbIBnQ/P4QvYCy2jBrkz8e5TNauPzWza/bBDwzj8aMnct1MwIDAQAB"
   pyrador_redis_password = "PoI456ZxC"
 }
 #-------------------------------------------------------------------------------
 # Deploys iguana service
 module "dipal_iguana" {
-  source = "modules/iguana"
-  depends_on = [helm_release.kafka,helm_release.redis]
+  source = "./modules/iguana"
   #..............general variables...............................................
   iguana_namespace = "default"
   iguana_name = "iguana"
   iguana_replica = "1"
   iguana_pull_secret = "regcred"
   iguana_image_address = "10.244.217.7:32488/dipal/iguana"
-  iguana_image_tag = "latest"
+  iguana_image_tag = "v1"
+  iguana_db_address = "dipal-mongodb-service"
+  iguana_db_port = "32042"
+  iguana_db_name = "iguana"
+  iguana_db_username = "root"
+  iguana_db_debug = "false"
   #..............configmap variables.............................................
   iguana_app_port = 2000
   iguana_redis_host = "redis-master"
@@ -74,9 +77,10 @@ module "dipal_iguana" {
   iguana_kafka_port = 9092
   iguana_kafka_client_id = "iguana"
   iguana_kafka_group_id = "iguana"
+  iguana_db_password = "PoI456ZxC"
 
   #..............secret variables................................................
-  iguana_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAljPpshPcrypFRkhxMZraXgbNmB0q3XQkcCcrWy3L+C1J2YMprp9a5UOi/Evl59Key2hVbYO76y/TipodcsSzAA1OhHJm2PFacdN9yia/HoW8VJ4u7tm62cLTrbmiPsjjEUfsqShPdYby01549iLlfb+oXX2DfC9JkhekX6nCEO/slPZ7TKDs30Gwd5BlqaaKFgpN2BkMipvrTfMhiQNWtV8NG7ZcJ704JcscVzAhaeXRsA9S1TcHstTjUhW/bZyyhPwO5qzHNh9sIr0jc/IPy7QUHEGH834CTckw+70lhtiIrQxIFa1JBxyJzdrRi1LiWIC2FBnAHyfauUgddxIrRwIDAQAB"
+  iguana_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5N8RaLVL/8KrO111ekAA/MSF9XajCs4HNlWDsmj2i2/VhfbGnNz73hTbHBx/oZnIlPPOk+pL09PInR830F0uZkhN737cIU1fkvcsXVVKgy/Iz6CLPsAXqwW/LjStqWQ2cIxFyrMqJ3cYMFpq3xXA5WqPJke5oJgRQR3cemd8m+hKaiXZYUOylqso41x+lClluzmnpTuH0QMdv/VKNvFCJrfSZc5Qy9oaTm/POibrk3Y5gttB3wQ7PWvBGuqMdDDPiryVTToLFugFLZ40btueR25moGZaBdWAKeLGC0FbIBnQ/P4QvYCy2jBrkz8e5TNauPzWza/bBDwzj8aMnct1MwIDAQAB"
   iguana_redis_password = "PoI456ZxC"
   iguana_S3_access_key = "admin"
   iguana_S3_secret = "XIdX48556C"
@@ -84,8 +88,7 @@ module "dipal_iguana" {
 #-------------------------------------------------------------------------------
 # Deploys pigeons service
 module "dipal_pigeons" {
-  source = "modules/pigeons"
-  depends_on = [helm_release.kafka,helm_release.redis]
+  source = "./modules/pigeons"
   pigeons_namespace = "default"
   pigeons_name = "pigeons"
   pigeons_replica = "1"
@@ -101,8 +104,13 @@ module "dipal_pigeons" {
   pigeons_kafka_client_id = "pigeons"
   pigeons_kafka_group_id = "pigeons"
   pigeons_tls_reject = "0"
+  pigeons_db_address = "dipal-mongodb-service"
+  pigeons_db_port = "27017"
+  pigeons_db_name = "pigeons"
+  pigeons_db_username = "root"
   #..............secret variables................................................
   pigeons_redis_password = "PoI456ZxC"
+  pigeons_db_password = "PoI456ZxC"
   pigeons_email_from = "Comfortel <comfortec@yandex.ru>"
   pigeons_email_user = "comfortec"
   pigeons_email_pass = "orvavpirmuiqqrip"
@@ -130,25 +138,25 @@ module "dipal_pigeons" {
 #-------------------------------------------------------------------------------
 # Deploys crow service
 module "dipal_crow" {
-  source = "modules/crow"
-  depends_on = [helm_release.kafka,helm_release.redis,helm_release.mongodb]
+  source = "./modules/crow"
   crow_namespace = "default"
   crow_name = "crow"
   crow_replica = "1"
   crow_pull_secret = "regcred"
   crow_image_address = "10.244.217.7:32488/dipal/crow"
-  crow_image_tag = "latest"
+  crow_image_tag = "v1"
+  crow_is_staging_or_prod = "staging"
   #..............configmap variables.............................................
-  crow_mongodb_base_url = "dipal-mongodb"
-  crow_mongodb_port = "27017"
-  crow_external_mongodb_base_url = "dipal-mongodb"
+  crow_mongodb_base_url = "dipal-mongodb-service"
+  crow_mongodb_port = "32042"
+  crow_external_mongodb_base_url = "dipal-mongodb-service"
   crow_external_mongodb_username="root"
   crow_mongodb_username = "root"
   crow_mongodb_dbname= "comfortech"
   crow_external_mongodb_db_name = "external_db"
   crow_external_mongodb_debug = "false"
   crow_mongodb_debug = "false"
-  crow_external_mongodb_port = "27017"
+  crow_external_mongodb_port = "32042"
   crow_default_place_id = "631749ea24fb4fc46bbe08e6"
   crow_default_utilities_service_id = "631749ee24fb4f3828be08f0"
   crow_default_intercom_service_id = "631749ee24fb4f6c11be08f4"
@@ -161,9 +169,9 @@ module "dipal_crow" {
   crow_kafka_port = "9092"
   crow_kafka_client_id = "comfortech-dataland"
   crow_kafka_group_id = "comfortech-dataland"
-  crow_keycloak_base_url = "http://keycloak"
-  crow_keycloak_port = "8080"
-  crow_keycloak_realm = "comfortech_staging"
+  crow_keycloak_base_url = "http://192.168.89.4:31107"
+  crow_keycloak_port = "32223"
+  crow_keycloak_realm = "dipal_staging"
   crow_keycloak_grant_type = "password"
   crow_next_try_time = "60000"
   crow_expiration_time = "60000"
@@ -181,9 +189,9 @@ module "dipal_crow" {
   crow_vault_root = "bm90aGluZw=="
   crow_vault_token_path = "dmF1bHQvZGF0YS92YXVsdF9yb290X3Rva2VuLmtleQ=="
   crow_vault_keys_path = "dmF1bHQvZGF0YS9zZWFsaW5nX2tleXMua2V5"
-  crow_keycloak_client_account_id="0d68a12c-7e3e-4995-8604-bc7eb3327fd4"
+  crow_keycloak_client_account_id="1b52a357-1761-418c-bc1d-bf05cd267b1e"
   crow_keycloak_client_id= "admin-cli"
-  crow_keycloak_local_client_id = "comfortech"
+  crow_keycloak_local_client_id = "dipal"
   crow_keycloak_username= "admin"
   crow_keycloak_password= "PoI456ZxC"
   crow_trudesk_password="PoI456ZxC"
@@ -192,8 +200,7 @@ module "dipal_crow" {
 #-------------------------------------------------------------------------------
 # Deploys goose service
 module "dipal_goose" {
-  source = "modules/goose"
-  depends_on = [helm_release.kafka,helm_release.redis]
+  source = "./modules/goose"
   goose_namespace = "default"
   goose_name = "goose"
   goose_replica = "1"

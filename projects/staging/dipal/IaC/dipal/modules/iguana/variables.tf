@@ -129,6 +129,49 @@ variable "iguana_kafka_group_id" {
   type = string
   default = "iguana"
 }
+#-------------------------------------------------------------------------------
+#Defines mongo debug
+variable "iguana_mongo_debug" {
+  type = string
+  default = "true"
+}
+#-------------------------------------------------------------------------------
+#Defines db  address
+variable "iguana_db_address" {
+  type = string
+  default = "dipal-mongodb-service"
+}
+#-------------------------------------------------------------------------------
+#Defines db  port
+variable "iguana_db_port" {
+  type = string
+  default = "27017"
+}
+#-------------------------------------------------------------------------------
+#Defines db  username
+variable "iguana_db_username" {
+  type = string
+  default = "root"
+}
+#-------------------------------------------------------------------------------
+#Defines db  name
+variable "iguana_db_name" {
+  type = string
+  default = "iguana"
+}
+#-------------------------------------------------------------------------------
+#Defines db  password
+variable "iguana_db_password" {
+  type = string
+  default = "PoI456ZxC"
+}
+#-------------------------------------------------------------------------------
+#Defines db  debug
+variable "iguana_db_debug" {
+  type = string
+  default = "false"
+}
+
 #==============================================================================#
 #                                                                              #
 #                             Secrets Variable Group                           #

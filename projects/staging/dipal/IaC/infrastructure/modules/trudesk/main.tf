@@ -259,6 +259,11 @@ resource "kubernetes_manifest" "deployment_trudesk" {
           }
         }
         "spec" = {
+          "imagePullSecrets" = [
+            {
+              name = "regcred"
+            }
+          ]
           "containers" = [
             {
               "env" = [
@@ -279,7 +284,7 @@ resource "kubernetes_manifest" "deployment_trudesk" {
                   "value" = "true"
                 },
               ]
-              "image" = "polonel/trudesk:1"
+              "image" = "10.244.217.7:32488/dipal/trudesk:v1"
               "livenessProbe" = {
                 "initialDelaySeconds" = 15
                 "periodSeconds" = 20

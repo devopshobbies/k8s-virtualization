@@ -36,10 +36,10 @@ terraform {
 
 provider "helm" {
   kubernetes {
-    config_path = "/tmp/dipalConfig"
+    config_path = "/tmp/dipalInfraConfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "/tmp/dipalConfig"
+  config_path = "/tmp/dipalInfraConfig"
 }

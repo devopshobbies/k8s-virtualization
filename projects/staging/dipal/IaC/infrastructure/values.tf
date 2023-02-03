@@ -23,3 +23,15 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
+variable "docker-username" {
+  type = string
+  default= "skyfarm"
+}
+variable "docker-password" {
+  type = string
+  default= "PoI456ZxC"
+}
+variable "docker-server" {
+  type = string
+  default= "10.244.217.7:32488"
+}

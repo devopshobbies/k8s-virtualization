@@ -339,6 +339,10 @@ variable "crow_keycloak_username" {
   type = string
   default = "admin"
 }
+variable "crow_is_staging_or_prod" {
+  type = string
+  default = "staging"
+}
 #-------------------------------------------------------------------------------
 #Defines keycloak password
 variable "crow_keycloak_password" {

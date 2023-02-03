@@ -111,6 +111,30 @@ variable "pigeons_tls_reject" {
   type = string
   default = "0"
 }
+#-------------------------------------------------------------------------------
+#Defines pigeons db address
+variable "pigeons_db_address" {
+  type = string
+  default = "dipal-mongodb"
+}
+#-------------------------------------------------------------------------------
+#Defines pigeons db port
+variable "pigeons_db_port" {
+  type = string
+  default = "27017"
+}
+#-------------------------------------------------------------------------------
+#Defines pigeons db username
+variable "pigeons_db_username" {
+  type = string
+  default = "root"
+}
+#-------------------------------------------------------------------------------
+#Defines pigeons db username
+variable "pigeons_db_name" {
+  type = string
+  default = "pigeons"
+}
 #==============================================================================#
 #                                                                              #
 #                             Secrets Variable Group                           #
@@ -259,4 +283,10 @@ variable "pigeons_firebase_default_message_image_uri" {
 variable "pigeons_firebase_registration_token" {
   type = string
   default = "AIzaSyCf5LhHwWcWWgjKCHv1I32lko6QusPty-I"
+}
+#-------------------------------------------------------------------------------
+#Defines pigeons db password
+variable "pigeons_db_password" {
+  type = string
+  default = "PoI456ZxC"
 }

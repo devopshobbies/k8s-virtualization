@@ -26,23 +26,29 @@
 #-------------------------------------------------------------------
 #Deploys Iguana configmap
 resource "kubernetes_config_map" "pyrador_configmap" {
+
   metadata {
     namespace = var.iguana_namespace
     name = "${var.iguana_name}-configmap"
     labels = {"app"= var.iguana_name}
   }
   data = {
-    "APP_PORT": var.iguana_app_port
-    "REDIS_HOST": var.iguana_redis_host
-    "REDIS_PORT": var.iguana_redis_password
-    "KAFKA_HOST": var.iguana_kafka_host
-    "KAFKA_PORT": var.iguana_kafka_port
-    "KAFKA_CLIENT_ID": var.iguana_kafka_client_id
-    "KAFKA_GROUP_ID": var.iguana_kafka_group_id
-    "FS_PUBLIC_URL": var.iguana_fs_public_url
-    "FS_HOST": var.iguana_fs_host
-    "FS_BUCKET_NAME": var.iguana_fs_bucket_name
-    "FS_PORT": var.iguana_fs_bucket_port
+    "APP_PORT"= var.iguana_app_port
+    "REDIS_HOST"= var.iguana_redis_host
+    "REDIS_PORT"= var.iguana_redis_password
+    "KAFKA_HOST"= var.iguana_kafka_host
+    "KAFKA_PORT"= var.iguana_kafka_port
+    "KAFKA_CLIENT_ID"= var.iguana_kafka_client_id
+    "KAFKA_GROUP_ID"= var.iguana_kafka_group_id
+    "FS_PUBLIC_URL"= var.iguana_fs_public_url
+    "FS_HOST"= var.iguana_fs_host
+    "FS_BUCKET_NAME"= var.iguana_fs_bucket_name
+    "FS_PORT"= var.iguana_fs_bucket_port
+    "MONGO_IP": var.iguana_db_address
+    "MONGO_PORT": var.iguana_db_port
+    "MONGO_USERNAME": var.iguana_db_username
+    "MONGO_DB_NAME": var.iguana_db_name
+    "MONGO_DEBUG": var.iguana_mongo_debug
   }
 }
 #-------------------------------------------------------------------
@@ -56,9 +62,10 @@ resource "kubernetes_secret" "iguana_secret" {
   type = "Opaque"
   data = {
     "AUTH_KEY" = var.iguana_keycloak_auth_key
-    "REDIS_PASSOWRD"= var.iguana_redis_password
+    "REDIS_PASSWORD"= var.iguana_redis_password
     "FS_ACCESS_KEY"= var.iguana_S3_access_key
     "FS_SECRET_KEY"= var.iguana_S3_secret
+    "MONGO_PASSWORD"= var.iguana_db_password
   }
 }
 #-------------------------------------------------------------------
@@ -71,7 +78,7 @@ resource "kubernetes_service" "iguana_service" {
   }
   spec {
     port {
-      name:"http"
+      name="http"
       port = var.iguana_app_port
       target_port = var.iguana_app_port
     }
@@ -82,6 +89,7 @@ resource "kubernetes_service" "iguana_service" {
 #-------------------------------------------------------------------
 #Deploys iguana deployment
 resource "kubernetes_deployment" "iguana_deployment" {
+  depends_on = [kubernetes_secret.iguana_secret,kubernetes_config_map.pyrador_configmap]
   metadata {
     name = "${var.iguana_name}-deployment"
     namespace = var.iguana_namespace
@@ -118,6 +126,15 @@ resource "kubernetes_deployment" "iguana_deployment" {
             }
           }
           env {
+            name = "MONGO_DEBUG"
+            value_from {
+              config_map_key_ref {
+                name = "${var.iguana_name}-configmap"
+                key = "MONGO_DEBUG"
+              }
+            }
+          }
+          env {
             name = "REDIS_PORT"
             value_from {
               config_map_key_ref {
@@ -141,6 +158,42 @@ resource "kubernetes_deployment" "iguana_deployment" {
               config_map_key_ref {
                 name = "${var.iguana_name}-configmap"
                 key = "KAFKA_PORT"
+              }
+            }
+          }
+          env {
+            name = "MONGO_IP"
+            value_from {
+              config_map_key_ref {
+                name = "${var.iguana_name}-configmap"
+                key = "MONGO_IP"
+              }
+            }
+          }
+          env {
+            name = "MONGO_PORT"
+            value_from {
+              config_map_key_ref {
+                name = "${var.iguana_name}-configmap"
+                key = "MONGO_PORT"
+              }
+            }
+          }
+          env {
+            name = "MONGO_USERNAME"
+            value_from {
+              config_map_key_ref {
+                name = "${var.iguana_name}-configmap"
+                key = "MONGO_USERNAME"
+              }
+            }
+          }
+          env {
+            name = "MONGO_DB_NAME"
+            value_from {
+              config_map_key_ref {
+                name = "${var.iguana_name}-configmap"
+                key = "MONGO_DB_NAME"
               }
             }
           }
@@ -231,6 +284,15 @@ resource "kubernetes_deployment" "iguana_deployment" {
               secret_key_ref {
                 name = "${var.iguana_name}-secret"
                 key = "FS_SECRET_KEY"
+              }
+            }
+          }
+          env {
+            name = "MONGO_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = "${var.iguana_name}-secret"
+                key = "MONGO_PASSWORD"
               }
             }
           }

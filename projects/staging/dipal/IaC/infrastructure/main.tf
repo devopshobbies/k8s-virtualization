@@ -25,6 +25,11 @@
 #==============================================================================#
 #==============================================================================#
 #                                                                              #
+#                                 Docker registry                              #
+#                                                                              #
+#==============================================================================#
+#==============================================================================#
+#                                                                              #
 #                                 Infrastructure                               #
 #                                                                              #
 #==============================================================================#
@@ -96,6 +101,7 @@ resource "kubernetes_manifest" "deployment_mongo" {
       "namespace" = "default"
     }
     "spec" = {
+
       "replicas" = 1
       "selector" = {
         "matchLabels" = {
@@ -117,8 +123,14 @@ resource "kubernetes_manifest" "deployment_mongo" {
           }
         }
         "spec" = {
+
+
+
           "containers" = [
             {
+
+
+
               "image" = "mongo:4.4.6"
               "livenessProbe" = {
                 "initialDelaySeconds" = 15
@@ -140,6 +152,17 @@ resource "kubernetes_manifest" "deployment_mongo" {
                   "port" = 27017
                 }
               }
+
+              "env" = [
+                {
+                  "name" = "MONGO_INITDB_ROOT_PASSWORD"
+                  "value" = "PoI456ZxC"
+                },
+                {
+                  "name" = "MONGO_INITDB_ROOT_USERNAME"
+                  "value" = "root"
+                }
+                ]
               "resources" = {}
               "volumeMounts" = [
                 {

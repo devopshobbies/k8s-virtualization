@@ -32,13 +32,13 @@ resource "kubernetes_config_map" "goose_configmap" {
     labels = {"app"= var.goose_name}
   }
   data = {
-    "APP_PORT": var.goose_app_port
-    "REDIS_HOST": var.goose_redis_host
-    "REDIS_PORT": var.goose_redis_port
-    "KAFKA_HOST": var.goose_kafka_host
-    "KAFKA_PORT": var.goose_kafka_port
-    "KAFKA_CLIENT_ID": var.goose_kafka_client_id
-    "KAFKA_GROUP_ID": var.goose_kafka_group_id
+    "APP_PORT"= var.goose_app_port
+    "REDIS_HOST"= var.goose_redis_host
+    "REDIS_PORT"= var.goose_redis_port
+    "KAFKA_HOST"= var.goose_kafka_host
+    "KAFKA_PORT"= var.goose_kafka_port
+    "KAFKA_CLIENT_ID"= var.goose_kafka_client_id
+    "KAFKA_GROUP_ID"= var.goose_kafka_group_id
   }
 }
 #-------------------------------------------------------------------
@@ -51,7 +51,7 @@ resource "kubernetes_secret" "goose_secret" {
   }
   type = "Opaque"
   data = {
-    "REDIS_PASSOWRD"= var.goose_redis_password
+    "REDIS_PASSWORD"= var.goose_redis_password
   }
 }
 #-------------------------------------------------------------------
@@ -64,7 +64,7 @@ resource "kubernetes_service" "goose_service" {
   }
   spec {
     port {
-      name:"http"
+      name="http"
       port = var.goose_app_port
       target_port = var.goose_app_port
     }
@@ -75,6 +75,7 @@ resource "kubernetes_service" "goose_service" {
 #-------------------------------------------------------------------
 #Deploys goose deployment
 resource "kubernetes_deployment" "goose_deployment" {
+  depends_on = [kubernetes_secret.goose_secret,kubernetes_config_map.goose_configmap]
   metadata {
     name = "${var.goose_name}-deployment"
     namespace = var.goose_namespace

@@ -32,13 +32,13 @@ resource "kubernetes_config_map" "pyrador_configmap" {
     labels = {"app"= var.pyrador_name}
   }
   data = {
-    "APP_PORT": var.pyrador_app_port
-    "REDIS_HOST": var.pyrador_redis_host
-    "REDIS_PORT": var.pyrador_redis_port
-    "KAFKA_HOST": var.pyrador_kafka_host
-    "KAFKA_PORT": var.pyrador_kafka_port
-    "KAFKA_CLIENT_ID": var.pyrador_kafka_client_id
-    "KAFKA_GROUP_ID": var.pyrador_kafka_group_id
+    "APP_PORT"= var.pyrador_app_port
+    "REDIS_HOST"= var.pyrador_redis_host
+    "REDIS_PORT"= var.pyrador_redis_port
+    "KAFKA_HOST"= var.pyrador_kafka_host
+    "KAFKA_PORT"= var.pyrador_kafka_port
+    "KAFKA_CLIENT_ID"= var.pyrador_kafka_client_id
+    "KAFKA_GROUP_ID"= var.pyrador_kafka_group_id
   }
 }
 
@@ -53,7 +53,7 @@ resource "kubernetes_secret" "pyrador_secret" {
   type = "Opaque"
   data = {
     "AUTH_KEY" = var.pyrador_keycloak_auth_key
-    "REDIS_PASSOWRD"= var.pyrador_redis_password
+    "REDIS_PASSWORD"= var.pyrador_redis_password
   }
 }
 #-------------------------------------------------------------------
@@ -66,7 +66,7 @@ resource "kubernetes_service" "pyrador_service" {
   }
   spec {
     port {
-      name:"http"
+      name="http"
       port = var.pyrador_app_port
       target_port = var.pyrador_app_port
     }
@@ -77,6 +77,7 @@ resource "kubernetes_service" "pyrador_service" {
 #-------------------------------------------------------------------
 #Deploys Pyrador deployment
 resource "kubernetes_deployment" "pyrador_deployment" {
+  depends_on = [kubernetes_secret.pyrador_secret,kubernetes_config_map.pyrador_configmap]
   metadata {
     name = "${var.pyrador_name}-deployment"
     namespace = var.pyrador_namespace

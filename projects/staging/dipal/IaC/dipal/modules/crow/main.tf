@@ -41,32 +41,33 @@ resource "kubernetes_config_map" "crow_configmap" {
     "DEFAULT_UTILITES_DEVICES_SERVICE_ID"= var.crow_default_utilities_service_id
     "DEFAULT_INTERCOM_SERVICE_ID"= var.crow_default_intercom_service_id
     "DEFAULT_CAMERA_SERVICE_ID"= var.crow_default_camera_service_id
-    'MONGO_BASE_URI' = var.crow_mongodb_base_url
-    'MONGO_PORT'=var.crow_mongodb_port
-    'MONGO_USERNAME' = var.crow_mongodb_username
-    'MONGO_DB_NAME' = var.crow_mongodb_dbname
-    'MONGO_DEBUG' = var.crow_mongodb_debug
-    'REDIS_HOST' = var.crow_redis_host
-    'VAULT_HOST' =var.crow_vault_host
-    'VAULT_PORT' =var.crow_vault_port
-    'REDIS_PORT' = var.crow_redis_port
-    'KAFKA_HOST' = var.crow_kafka_host
-    'KAFKA_PORT' = var.crow_kafka_port
-    'KAFKA_CLIENT_ID' = var.crow_kafka_client_id
-    'KAFKA_GROUP_ID' = var.crow_kafka_group_id
-    'KEYCLOAK_BASE_URI' = var.crow_keycloak_base_url
-    'KEYCLOAK_PORT' = var.crow_keycloak_port
-    'KEYCLOAK_REALM' = var.crow_keycloak_realm
-    'KEYCLOAK_GRANT_TYPE' = var.crow_keycloak_grant_type
-    'NEXT_TRY_TIME' = var.crow_next_try_time
-    'OTP_EXPIRATION_TIME' = var.crow_expiration_time
-    'BILLING_BASE_URL' = var.crow_billing_base_url
-    'TRUDESK_HOST' = var.crow_trudesk_host
-    'TRUDESK_PORT' = var.crow_trudesk_port
-    'TRUDESK_USERNAME' = var.crow_trudesk_username
-    'TRUDESK_USER_ROLE_ID' =var.crow_trudesk_user_role_id
-    'TRUDESK_DEFAULT_TICKET_TYPE' = var.crow_trudesk_default_ticket_type
-    'TRUDESK_DEFAULT_TICKET_PRIORITY' =  var.crow_trudesk_default_ticket_priority
+    "MONGO_BASE_URI" = var.crow_mongodb_base_url
+    "MONGO_PORT"=var.crow_mongodb_port
+    "MONGO_USERNAME" = var.crow_mongodb_username
+    "MONGO_DB_NAME" = var.crow_mongodb_dbname
+    "MONGO_DEBUG" = var.crow_mongodb_debug
+    "REDIS_HOST" = var.crow_redis_host
+    "VAULT_HOST" =var.crow_vault_host
+    "VAULT_PORT" =var.crow_vault_port
+    "REDIS_PORT" = var.crow_redis_port
+    "KAFKA_HOST" = var.crow_kafka_host
+    "KAFKA_PORT" = var.crow_kafka_port
+    "KAFKA_CLIENT_ID" = var.crow_kafka_client_id
+    "KAFKA_GROUP_ID" = var.crow_kafka_group_id
+    "KEYCLOAK_BASE_URI" = var.crow_keycloak_base_url
+    "KEYCLOAK_PORT" = var.crow_keycloak_port
+    "KEYCLOAK_REALM" = var.crow_keycloak_realm
+    "KEYCLOAK_GRANT_TYPE" = var.crow_keycloak_grant_type
+    "NEXT_TRY_TIME" = var.crow_next_try_time
+    "OTP_EXPIRATION_TIME" = var.crow_expiration_time
+    "BILLING_BASE_URL" = var.crow_billing_base_url
+    "TRUDESK_HOST" = var.crow_trudesk_host
+    "TRUDESK_PORT" = var.crow_trudesk_port
+    "TRUDESK_USERNAME" = var.crow_trudesk_username
+    "TRUDESK_USER_ROLE_ID" =var.crow_trudesk_user_role_id
+    "TRUDESK_DEFAULT_TICKET_TYPE" = var.crow_trudesk_default_ticket_type
+    "TRUDESK_DEFAULT_TICKET_PRIORITY" =  var.crow_trudesk_default_ticket_priority
+    NODE_ENV=var.crow_is_staging_or_prod
   }
 }
 #-------------------------------------------------------------------
@@ -98,6 +99,7 @@ resource "kubernetes_secret" "crow_secret" {
 #-------------------------------------------------------------------
 #Deploys crow deployment
 resource "kubernetes_deployment" "crow_deployment" {
+  depends_on = [kubernetes_secret.crow_secret,kubernetes_config_map.crow_configmap]
   metadata {
     name = "${var.crow_name}-deployment"
     namespace = var.crow_namespace
@@ -161,6 +163,15 @@ resource "kubernetes_deployment" "crow_deployment" {
             }
           }
           env {
+            name = "NODE_ENV"
+            value_from {
+              config_map_key_ref {
+                name = "${var.crow_name}-configmap"
+                key = "NODE_ENV"
+              }
+            }
+          }
+          env {
             name = "DEFAULT_PLACE_ID"
             value_from {
               config_map_key_ref {
@@ -193,15 +204,6 @@ resource "kubernetes_deployment" "crow_deployment" {
               config_map_key_ref {
                 name = "${var.crow_name}-configmap"
                 key = "DEFAULT_CAMERA_SERVICE_ID"
-              }
-            }
-          }
-          env {
-            name = "MONGO_BASE_URI"
-            value_from {
-              config_map_key_ref {
-                name = "${var.crow_name}-configmap"
-                key = "MONGO_BASE_URI"
               }
             }
           }

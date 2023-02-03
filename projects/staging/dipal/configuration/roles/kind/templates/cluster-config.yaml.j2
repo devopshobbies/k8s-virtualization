@@ -3,6 +3,10 @@ apiVersion: kind.x-k8s.io/v1alpha4
 networking:
   ipFamily: ipv4
   apiServerAddress: 10.244.90.169
+containerdConfigPatches:
+- |-
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."10.244.217.7:32488"]
+    endpoint = ["http://10.244.217.7:32488"]
 nodes:
 {% for n in range(control_nodes|int) %}
   - role: control-plane
