@@ -35,6 +35,12 @@ variable "iguana_name" {
   default = "iguana"
 }
 #-------------------------------------------------------------------------------
+# defines the node ip address
+variable "iguana_node_ip" {
+  type = string
+  default = "172.18.0.4"
+}
+#-------------------------------------------------------------------------------
 # defines the number of iguana reploicas
 variable "iguana_replica" {
   type = string
@@ -103,7 +109,7 @@ variable "iguana_fs_bucket_name" {
 # Defines S3 port
 variable "iguana_fs_bucket_port" {
   type = string
-  default = "9000"
+  default = "9001"
 }
 #-------------------------------------------------------------------------------
 #Defines kafka host

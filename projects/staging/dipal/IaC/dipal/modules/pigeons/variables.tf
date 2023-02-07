@@ -183,6 +183,12 @@ variable "pigeons_sms_url" {
   default = "https://smpp.comfortel.pro:13013"
 }
 #-------------------------------------------------------------------------------
+#Defines sms tls certificate check
+variable "pigeons_sms_tls_certificate_check" {
+  type = string
+  default = "0"
+}
+#-------------------------------------------------------------------------------
 #Defines sms pass
 variable "pigeons_sms_pass" {
   type = string

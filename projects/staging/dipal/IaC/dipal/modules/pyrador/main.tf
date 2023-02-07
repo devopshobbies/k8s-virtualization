@@ -65,12 +65,15 @@ resource "kubernetes_service" "pyrador_service" {
     namespace = var.pyrador_namespace
   }
   spec {
+    type = "NodePort"
+    external_ips = [var.pyrador_node_ip]
     port {
       name="http"
+      protocol = "TCP"
       port = var.pyrador_app_port
       target_port = var.pyrador_app_port
+      node_port = 32681
     }
-    type = "ClusterIP"
     selector = {"app"= var.pyrador_name}
   }
 }

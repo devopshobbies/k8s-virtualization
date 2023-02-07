@@ -191,6 +191,8 @@ module "code_master_node"{
   host_user= var.cicd_vm_1_host_ssh_user_name
   ssh_sudo_password= var.cicd_vm_1_host_ssh_sudo_password
 }
+#-------------------------------------------------------------------------------
+
 # Provisions the node node 1 in cicd namespace
 module "cicd_worker_node_1"{
   source = "./modules/physical_vm"
@@ -249,5 +251,6 @@ module "pod_vm" {
   pod_vm_storage_limit = var.pod_vm_1_os_storage_limit
   pod_vm_replica = var.pod_vm_1_replica
   pod_vm_host = var.pod_vm_1_host_name
+
 
 }

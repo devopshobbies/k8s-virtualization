@@ -32,18 +32,18 @@ resource "kubernetes_config_map" "pigeons_configmap" {
     labels = {"app"= var.pigeons_name}
   }
   data = {
-    "APP_PORT": var.pigeons_app_port
-    "REDIS_HOST": var.pigeons_redis_host
-    "REDIS_PORT": var.pigeons_redis_port
-    "KAFKA_HOST": var.pigeons_kafka_host
-    "KAFKA_PORT": var.pigeons_kafka_port
-    "KAFKA_CLIENT_ID": var.pigeons_kafka_client_id
-    "KAFKA_GROUP_ID": var.pigeons_kafka_group_id
-    "NODE_TLS_REJECT_UNAUTHORIZED": var.pigeons_tls_reject
-    "DB_IP": var.pigeons_db_address
-    "DB_PORT": var.pigeons_db_port
-    "MONGO_USERNAME": var.pigeons_db_username
-    "MONGO_DB_NAME": var.pigeons_db_name
+    "APP_PORT"= var.pigeons_app_port
+    "REDIS_HOST"= var.pigeons_redis_host
+    "REDIS_PORT"= var.pigeons_redis_port
+    "KAFKA_HOST"= var.pigeons_kafka_host
+    "KAFKA_PORT"= var.pigeons_kafka_port
+    "KAFKA_CLIENT_ID"= var.pigeons_kafka_client_id
+    "KAFKA_GROUP_ID"= var.pigeons_kafka_group_id
+    "NODE_TLS_REJECT_UNAUTHORIZED"= var.pigeons_tls_reject
+    "DB_IP"= var.pigeons_db_address
+    "DB_PORT"= var.pigeons_db_port
+    "MONGO_USERNAME"= var.pigeons_db_username
+    "MONGO_DB_NAME"= var.pigeons_db_name
 
   }
 }
@@ -147,6 +147,15 @@ resource "kubernetes_deployment" "pigeons_deployment" {
               config_map_key_ref {
                 name = "${var.pigeons_name}-configmap"
                 key = "KAFKA_CLIENT_ID"
+              }
+            }
+          }
+          env {
+            name = "NODE_TLS_REJECT_UNAUTHORIZED"
+            value_from {
+              config_map_key_ref {
+                name = "${var.pigeons_name}-configmap"
+                key = "NODE_TLS_REJECT_UNAUTHORIZED"
               }
             }
           }

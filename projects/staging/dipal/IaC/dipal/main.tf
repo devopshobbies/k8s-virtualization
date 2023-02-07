@@ -39,6 +39,7 @@ module "dipal_pyrador" {
   pyrador_pull_secret = "regcred"
   pyrador_image_address = "10.244.217.7:32488/dipal/pyrador"
   pyrador_image_tag = "v1"
+  pyrador_node_ip = "172.18.0.3"
   #..............configmap variables.............................................
   pyrador_app_port = 5000
   pyrador_redis_host = "redis-master"
@@ -48,7 +49,7 @@ module "dipal_pyrador" {
   pyrador_kafka_client_id = "pyrador"
   pyrador_kafka_group_id = "pyrador"
   #..............secret variables................................................
-  pyrador_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5N8RaLVL/8KrO111ekAA/MSF9XajCs4HNlWDsmj2i2/VhfbGnNz73hTbHBx/oZnIlPPOk+pL09PInR830F0uZkhN737cIU1fkvcsXVVKgy/Iz6CLPsAXqwW/LjStqWQ2cIxFyrMqJ3cYMFpq3xXA5WqPJke5oJgRQR3cemd8m+hKaiXZYUOylqso41x+lClluzmnpTuH0QMdv/VKNvFCJrfSZc5Qy9oaTm/POibrk3Y5gttB3wQ7PWvBGuqMdDDPiryVTToLFugFLZ40btueR25moGZaBdWAKeLGC0FbIBnQ/P4QvYCy2jBrkz8e5TNauPzWza/bBDwzj8aMnct1MwIDAQAB"
+  pyrador_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAssyFbMiMjXYmY/anGiTqEQ0iht2YzPXfXto5KElvUisQn/6AXSo0wGnnnCn3uj879pj8S4nvTv5oKQGcBOV+dgyEryNzgyp6PwDk/tjkOGz8HBj17nxKpk2CXsuPjwNXXrZ8GYzy7yqmHwbTj14BZqnfdHzXPBCHTh6TL5ebyowGuIW5pMVVz2sGWaHkZhvYellObBvXCsy4+mVr3RMhP/ucWH/q4Hx3cd+5w23kQzlq8OkpByXdBMU+6qTAKMyH2el7APP+D5/ZUt7BWBjJUdcjvE3Zdld1n3cOpL4PkbMrUXjpPfasi8pAr/lN8e0Cy6ou7tMY/2yj2XTHqwY2BQIDAQAB"
   pyrador_redis_password = "PoI456ZxC"
 }
 #-------------------------------------------------------------------------------
@@ -67,12 +68,15 @@ module "dipal_iguana" {
   iguana_db_name = "iguana"
   iguana_db_username = "root"
   iguana_db_debug = "false"
+  iguana_node_ip = "172.18.0.4"
   #..............configmap variables.............................................
   iguana_app_port = 2000
   iguana_redis_host = "redis-master"
   iguana_redis_port = 6378
-  iguana_fs_public_url = "10.98.25.159"
-  iguana_fs_bucket_name = "9000"
+  iguana_fs_host = "192.168.89.4"
+  iguana_fs_bucket_port = "30369"
+  iguana_fs_public_url = "http://194.226.0.195:30369"
+  iguana_fs_bucket_name = "public"
   iguana_kafka_host = "kafka"
   iguana_kafka_port = 9092
   iguana_kafka_client_id = "iguana"
@@ -80,7 +84,7 @@ module "dipal_iguana" {
   iguana_db_password = "PoI456ZxC"
 
   #..............secret variables................................................
-  iguana_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5N8RaLVL/8KrO111ekAA/MSF9XajCs4HNlWDsmj2i2/VhfbGnNz73hTbHBx/oZnIlPPOk+pL09PInR830F0uZkhN737cIU1fkvcsXVVKgy/Iz6CLPsAXqwW/LjStqWQ2cIxFyrMqJ3cYMFpq3xXA5WqPJke5oJgRQR3cemd8m+hKaiXZYUOylqso41x+lClluzmnpTuH0QMdv/VKNvFCJrfSZc5Qy9oaTm/POibrk3Y5gttB3wQ7PWvBGuqMdDDPiryVTToLFugFLZ40btueR25moGZaBdWAKeLGC0FbIBnQ/P4QvYCy2jBrkz8e5TNauPzWza/bBDwzj8aMnct1MwIDAQAB"
+  iguana_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAssyFbMiMjXYmY/anGiTqEQ0iht2YzPXfXto5KElvUisQn/6AXSo0wGnnnCn3uj879pj8S4nvTv5oKQGcBOV+dgyEryNzgyp6PwDk/tjkOGz8HBj17nxKpk2CXsuPjwNXXrZ8GYzy7yqmHwbTj14BZqnfdHzXPBCHTh6TL5ebyowGuIW5pMVVz2sGWaHkZhvYellObBvXCsy4+mVr3RMhP/ucWH/q4Hx3cd+5w23kQzlq8OkpByXdBMU+6qTAKMyH2el7APP+D5/ZUt7BWBjJUdcjvE3Zdld1n3cOpL4PkbMrUXjpPfasi8pAr/lN8e0Cy6ou7tMY/2yj2XTHqwY2BQIDAQAB"
   iguana_redis_password = "PoI456ZxC"
   iguana_S3_access_key = "admin"
   iguana_S3_secret = "XIdX48556C"
@@ -94,7 +98,7 @@ module "dipal_pigeons" {
   pigeons_replica = "1"
   pigeons_pull_secret = "regcred"
   pigeons_image_address = "10.244.217.7:32488/dipal/pigeons"
-  pigeons_image_tag = "latest"
+  pigeons_image_tag = "v2"
   #..............configmap variables.............................................
   pigeons_app_port = 5000
   pigeons_redis_host = "redis-master"
@@ -179,9 +183,9 @@ module "dipal_crow" {
   crow_trudesk_host = "trudesk"
   crow_trudesk_port = "8118"
   crow_trudesk_username = "admin"
-  crow_trudesk_user_role_id = "63973275983167ba4b2b405a"
-  crow_trudesk_default_ticket_type = "63973275983167ba4b2b4054"
-  crow_trudesk_default_ticket_priority = "6397327ec5a5299a427550f1"
+  crow_trudesk_user_role_id = "63dd228fe055f7f42a5e6ef6"
+  crow_trudesk_default_ticket_type = "63dd228fe055f7f42a5e6ef2"
+  crow_trudesk_default_ticket_priority = "63dd2297c545fe2b9ada10c2"
   #..............secret variables................................................
   crow_external_mongodb_password = "PoI456ZxC"
   crow_mongodb_password = "PoI456ZxC"
@@ -189,7 +193,7 @@ module "dipal_crow" {
   crow_vault_root = "bm90aGluZw=="
   crow_vault_token_path = "dmF1bHQvZGF0YS92YXVsdF9yb290X3Rva2VuLmtleQ=="
   crow_vault_keys_path = "dmF1bHQvZGF0YS9zZWFsaW5nX2tleXMua2V5"
-  crow_keycloak_client_account_id="1b52a357-1761-418c-bc1d-bf05cd267b1e"
+  crow_keycloak_client_account_id="f99ef6f9-4787-416e-bd3f-99de836b8691"
   crow_keycloak_client_id= "admin-cli"
   crow_keycloak_local_client_id = "dipal"
   crow_keycloak_username= "admin"

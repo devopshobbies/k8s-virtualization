@@ -51,6 +51,8 @@ variable "system_vm_1_cloud_image_address" {
 variable "system_vm_1_cloud_image_version" {
   type    = string
   default = "22.4"
+
+
 }
 #--------------------------------
 # defines the VCPU cores of the VM

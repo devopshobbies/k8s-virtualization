@@ -44,11 +44,11 @@ resource "kubernetes_config_map" "pyrador_configmap" {
     "FS_HOST"= var.iguana_fs_host
     "FS_BUCKET_NAME"= var.iguana_fs_bucket_name
     "FS_PORT"= var.iguana_fs_bucket_port
-    "MONGO_IP": var.iguana_db_address
-    "MONGO_PORT": var.iguana_db_port
-    "MONGO_USERNAME": var.iguana_db_username
-    "MONGO_DB_NAME": var.iguana_db_name
-    "MONGO_DEBUG": var.iguana_mongo_debug
+    "MONGO_IP"= var.iguana_db_address
+    "MONGO_PORT"= var.iguana_db_port
+    "MONGO_USERNAME"= var.iguana_db_username
+    "MONGO_DB_NAME"= var.iguana_db_name
+    "MONGO_DEBUG"= var.iguana_mongo_debug
   }
 }
 #-------------------------------------------------------------------
@@ -77,12 +77,15 @@ resource "kubernetes_service" "iguana_service" {
     namespace = var.iguana_namespace
   }
   spec {
+    type = "NodePort"
+    external_ips = [var.iguana_node_ip]
     port {
       name="http"
+      protocol = "TCP"
       port = var.iguana_app_port
       target_port = var.iguana_app_port
+      node_port = 30492
     }
-    type = "ClusterIP"
     selector = {"app"= var.iguana_name}
   }
 }

@@ -29,6 +29,12 @@ variable "pyrador_namespace" {
   default = "default"
 }
 #-------------------------------------------------------------------------------
+# defines the node ip address
+variable "pyrador_node_ip" {
+  type = string
+  default = "172.18.0.3"
+}
+#-------------------------------------------------------------------------------
 # defines a name for pyrador service
 variable "pyrador_name" {
   type = string

@@ -155,5 +155,88 @@ resource "helm_release" "minio" {
     name  = "persistence.size"
     value = var.minio_helm_storage
   }
+}
+#----------------------------------------------------------------------------------
+# Deploys Coturn and all of it's component with helmchart
+resource "kubernetes_daemonset" "coturn_daemonset" {
+  metadata {
+    name = "coturn"
+    namespace = "default"
+    labels = {
+        "app.kubernetes.io/name" = "coturn"
+        "app.kubernetes.io/instance" = "coturn"
+        "app.kubernetes.io/version" = "0.0.1"
+      }
+  }
+  spec {
+    selector {
+      match_labels = {
+        "app.kubernetes.io/name" = "coturn"
+        "app.kubernetes.io/instance" = "coturn"
+        "app.kubernetes.io/version" = "0.0.1"
+      }
+    }
+    template {
 
+      metadata {
+        labels = {
+          "app.kubernetes.io/name"     = "coturn"
+          "app.kubernetes.io/instance" = "coturn"
+          "app.kubernetes.io/version" = "0.0.1"
+        }
+      }
+      spec {
+        host_network = true
+        container {
+          name = "coturn"
+          image = "coturn/coturn"
+          image_pull_policy = "Always"
+          port {
+            name = "turn-port1"
+            container_port = 3478
+            host_port = 3478
+            protocol = "UDP"
+          }
+          port {
+            name = "turn-port2"
+            container_port = 3478
+            host_port = 3478
+            protocol = "TCP"
+          }
+          args = ["-v"]
+        }
+      }
+    }
+  }
+}
+resource "kubernetes_service" "coturn_service" {
+  metadata {
+    name = "coturn"
+    namespace = "default"
+    labels = {
+      "app.kubernetes.io/name"     = "coturn"
+      "app.kubernetes.io/instance" = "coturn"
+      "app.kubernetes.io/version" = "0.0.1"
+    }
+  }
+  spec {
+    type = "ClusterIP"
+    port {
+      port = 3478
+      target_port = "3478"
+      protocol = "UDP"
+      name = "turn-port1"
+    }
+    port {
+      port = 3478
+      target_port = "3478"
+      protocol = "TCP"
+      name = "turn-port2"
+    }
+    selector = {
+      "app.kubernetes.io/name"     = "coturn"
+      "app.kubernetes.io/instance" = "coturn"
+      "app.kubernetes.io/version" = "0.0.1"
+    }
+  }
 }

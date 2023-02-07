@@ -344,21 +344,6 @@ resource "helm_release" "harbor" {
 }
 #==============================================================================#
 #                                                                              #
-#                                Prometheus                                    #
-#                                                                              #
-#==============================================================================#
-# Deploys Prometheus and all of it's component with helmchart
-resource "helm_release" "prometheus" {
-  name       = var.prometheus_helm_release_name
-  repository = var.prometheus_helm_repo
-  chart      = var.prometheus_helm_chart_name
-  namespace  = var.prometheus_helm_namespace
-  version    = var.prometheus_helm_chart_version
-  wait       = "false"
-  values     = [file(var.prometheus_helm_chart_values_file_path)]
-}
-#==============================================================================#
-#                                                                              #
 #                                keycloak                                    #
 #                                                                              #
 #==============================================================================#
@@ -414,4 +399,107 @@ resource "helm_release" "keycloak" {
   wait       = "false"
   values     = [file(var.keycloak_helm_chart_values_file_path)]
 }
+#==============================================================================#
+#                                                                              #
+#                                   OpenProject                                #
+#                                                                              #
+#==============================================================================#
+resource "kubernetes_persistent_volume" "openproject_persistent_volume" {
+  connection {
+    type        = "ssh"
+    user        = var.openproject_host_ssh_user
+    private_key = file(var.openproject_host_ssh_key_address)
+    agent       = "true"
+    host        = var.openproject_host_ssh_address
+  }
+  provisioner "remote-exec" {
+    inline = ["echo ${var.openproject_host_sudo_password} | sudo -S mkdir -p ${var.openproject_host_disk_path}/default-${var.openproject_helm_release_name}"]
+  }
+  metadata {
+    name = "${var.openproject_helm_release_name}-persistent-volume"
+  }
+  spec {
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key      = "kubernetes.io/hostname"
+            operator = "In"
+            values   = ["system-master"]
+          }
+        }
+      }
+    }
+    access_modes       = ["ReadWriteOnce"]
+    capacity = {
+      storage = var.openproject_helm_storage
+    }
 
+    persistent_volume_source {
+      local {
+        path = "${var.openproject_host_disk_path}/default-${var.openproject_helm_release_name}"
+      }
+    }
+  }
+}
+resource "kubernetes_persistent_volume" "openproject_postgress_persistent_volume" {
+  connection {
+    type        = "ssh"
+    user        = var.openproject_host_ssh_user
+    private_key = file(var.openproject_host_ssh_key_address)
+    agent       = "true"
+    host        = var.openproject_host_ssh_address
+  }
+  provisioner "remote-exec" {
+    inline = ["echo ${var.openproject_host_sudo_password} | sudo -S mkdir -p ${var.openproject_host_disk_path}-${var.openproject_helm_release_name}/postgress"]
+  }
+  metadata {
+    name = "${var.openproject_helm_release_name}-postgress-persistent-volume"
+  }
+  spec {
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key      = "kubernetes.io/hostname"
+            operator = "In"
+            values   = ["system-master"]
+          }
+        }
+      }
+    }
+    access_modes       = ["ReadWriteOnce"]
+    capacity = {
+      storage = "8Gi"
+    }
+
+    persistent_volume_source {
+      local {
+        path = "${var.openproject_host_disk_path}-${var.openproject_helm_release_name}/postgress"
+      }
+    }
+  }
+}
+#----------------------------------------------------------------------------------
+# Deploys Grafana and all of it's component with helmchart
+resource "helm_release" "openproject" {
+  name       = var.openproject_helm_release_name
+  repository = var.openproject_helm_repo
+  chart      = var.openproject_helm_chart_name
+  namespace  = var.openproject_helm_namespace
+  version    = var.openproject_helm_chart_version
+  wait       = "false"
+  set {
+    name  = "persistence.size"
+    value = var.openproject_helm_storage
+  }
+  set{
+    name = "nodeSelector.kubernetes\\.io/hostname"
+    value = "system-master"
+  }
+  set {
+    name  = "ingress.enabled"
+    value = false
+  }
+
+}

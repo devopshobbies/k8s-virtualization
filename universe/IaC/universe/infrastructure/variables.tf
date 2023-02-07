@@ -184,6 +184,39 @@ variable "grafana_helm_storage" {
   type = string
   default = "10Gi"
 }
-
+#==============================================================================#
+#                                                                              #
+#                             coturn group var                                  #
+#                                                                              #
+#==============================================================================#
+# Defines a release name for coturn
+variable "coturn_helm_release_name"{
+  type= string
+  default = "skyfarm-coturn"
+}
+#--------------------------------------------------------------------------------
+# Defines the repository name for coturn helm deploy
+variable "coturn_helm_repo" {
+  type = string
+  default = "https://iits-consulting.github.io/coturn-chart/"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart name for coturn helm deploy
+variable "coturn_helm_chart_name" {
+  type = string
+  default = "coturn"
+}
+#--------------------------------------------------------------------------------
+# Defines the namespace name for coturn helm deploy
+variable "coturn_helm_namespace" {
+  type = string
+  default = "default"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart version for coturn helm deploy
+variable "coturn_helm_chart_version" {
+  type = string
+  default = "2.0.3"
+}
 
 

@@ -162,15 +162,7 @@ resource "kubernetes_deployment" "crow_deployment" {
               }
             }
           }
-          env {
-            name = "NODE_ENV"
-            value_from {
-              config_map_key_ref {
-                name = "${var.crow_name}-configmap"
-                key = "NODE_ENV"
-              }
-            }
-          }
+
           env {
             name = "DEFAULT_PLACE_ID"
             value_from {
