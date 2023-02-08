@@ -88,22 +88,23 @@ resource "kubernetes_deployment" "vm_pod" {
 }
 #-------------------------------------------------------------------------------
 # Deploys a pod-vm service
-#resource "kubernetes_service" "pod_vm_service" {
-#  depends_on = [kubernetes_deployment.vm_pod]
-#  metadata {
-#    name = "${var.pod_vm_namespace}-${var.pod_vm_name}-service"
-#    namespace = var.pod_vm_namespace
-#  }
-#  spec {
-#    type = "LoadBalancer"
-#    selector = {
-#      app = "${var.pod_vm_namespace}-${var.pod_vm_name}"
-#    }
-#    external_ips = ["192.168.89.4"]
-#    port {
-#      protocol = "TCP"
-#      port = "22"
-#      target_port = "22"
-#    }
-#  }
-#}
+resource "kubernetes_service" "pod_vm_service" {
+  depends_on = [kubernetes_deployment.vm_pod]
+  metadata {
+    name = "${var.pod_vm_namespace}-${var.pod_vm_name}-service"
+    namespace = var.pod_vm_namespace
+  }
+  spec {
+    type = "LoadBalancer"
+    selector = {
+      app = "${var.pod_vm_namespace}-${var.pod_vm_name}"
+    }
+    external_ips = ["192.168.89.4"]
+    port {
+      protocol = "TCP"
+      port = "22"
+      target_port = "22"
+    }
+  }
+  wait_for_load_balancer = false
+}

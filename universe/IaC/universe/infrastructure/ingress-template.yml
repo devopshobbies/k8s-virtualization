@@ -1,0 +1,18 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: projects-dipal-staging-iguana-ingress
+  namespace: projects
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.dev.dipal.ru
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: projects-dipal-staging-iguana
+                port:
+                  number: 2002

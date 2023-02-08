@@ -38,6 +38,7 @@ resource "kubernetes_namespace" "system_namespace" {
 #-------------------------------------------------------------------------------
 #create persistent volumes
 resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
+
   connection {
     type        = "ssh"
     user        = var.host_user
@@ -81,14 +82,16 @@ resource "kubernetes_persistent_volume" "system_vm1_persistent_volume" {
     }
   }
 }
+
 #-------------------------------------------------------------------------------
 #https://cloud-images.ubuntu.com/lunar/current/lunar-server-cloudimg-amd64-disk-kvm.img
 resource "kubernetes_manifest" "virtual_machine_ubuntu" {
+
+
   manifest = {
     apiVersion = "kubevirt.io/v1"
     kind       = "VirtualMachine"
     metadata = {
-      creationTimestamp = null
       name              = var.vm_name
       namespace         = var.vm_namespace
     }
@@ -127,7 +130,7 @@ resource "kubernetes_manifest" "virtual_machine_ubuntu" {
           }
         },
       ]
-      running = false
+      running = true
       template = {
 
         metadata = {

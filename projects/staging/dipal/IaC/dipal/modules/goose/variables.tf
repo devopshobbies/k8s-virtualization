@@ -105,6 +105,7 @@ variable "goose_kafka_group_id" {
   type = string
   default = "goose-consumer"
 }
+
 #==============================================================================#
 #                                                                              #
 #                             Secrets Variable Group                           #

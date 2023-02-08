@@ -218,5 +218,91 @@ variable "coturn_helm_chart_version" {
   type = string
   default = "2.0.3"
 }
-
+#==============================================================================#
+#                                                                              #
+#                             ingress group var                                #
+#                                                                              #
+#==============================================================================#
+# Defines a release name for ingress
+variable "ingress_helm_release_name"{
+  type= string
+  default = "skyfarm-ingress"
+}
+#--------------------------------------------------------------------------------
+# Defines the repository name for ingress helm deploy
+variable "ingress_helm_repo" {
+  type = string
+  default = "bitnami"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart name for ingress helm deploy
+variable "ingress_helm_chart_name" {
+  type = string
+  default = "nginx-ingress-controller"
+}
+#--------------------------------------------------------------------------------
+# Defines the namespace name for ingress helm deploy
+variable "ingress_helm_namespace" {
+  type = string
+  default = "default"
+}
+#--------------------------------------------------------------------------------
+# Defines the chart version for ingress helm deploy
+variable "ingress_helm_chart_version" {
+  type = string
+  default = "9.3.26"
+}
+#==============================================================================#
+#                                                                              #
+#                             Dipal website group var                          #
+#                                                                              #
+#==============================================================================#
+#-------------------------------------------------------------------------------
+# Defines Dipal website name
+variable "dipal_website_name" {
+  type = string
+  default = "dipal"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website namespace
+variable "dipal_website_namespace" {
+  type = string
+  default = "default"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website image address
+variable "dipal_website_image_address" {
+  type = string
+  default = "moeidheidari/dipalwebsite"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website image tag
+variable "dipal_website_image_tag" {
+  type = string
+  default = "v3"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website service port
+variable "dipal_website_container_port" {
+  type = string
+  default = "8080"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website service port
+variable "dipal_website_service_port" {
+  type = string
+  default = "80"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website ingress
+variable "dipal_website_ingress_name" {
+  type = string
+  default = "dipal_website_ingress"
+}
+#-------------------------------------------------------------------------------
+# Defines Dipal website domain
+variable "dipal_website_ingress_domain_name" {
+  type = string
+  default = "dipal.ru"
+}
 

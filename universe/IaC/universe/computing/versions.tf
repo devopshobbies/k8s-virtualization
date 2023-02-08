@@ -37,11 +37,11 @@ terraform {
 
 provider "helm" {
   kubernetes {
-    config_path = "/tmp/skyfarmConfig"
+    config_path = "/mnt/skyfarmComputingConfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "/tmp/skyfarmConfig"
+  config_path = "/mnt/skyfarmComputingConfig"
 }
 

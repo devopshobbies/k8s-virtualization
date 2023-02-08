@@ -157,86 +157,92 @@ resource "helm_release" "minio" {
   }
 }
 #----------------------------------------------------------------------------------
-# Deploys Coturn and all of it's component with helmchart
-resource "kubernetes_daemonset" "coturn_daemonset" {
+# Deploys Nginx-ingress-controller and all of it's component with helmchart
+resource "helm_release" "ingress_nginx_controller" {
+  name       = var.ingress_helm_release_name
+  repository = var.ingress_helm_repo
+  chart      = var.ingress_helm_chart_name
+  namespace  = var.ingress_helm_namespace
+  version    = var.ingress_helm_chart_version
+  wait       = "false"
+}
+#----------------------------------------------------------------------------------
+# Deploys dipal website
+resource "kubernetes_deployment" "dipal_website_deployment" {
   metadata {
-    name = "coturn"
-    namespace = "default"
+    name = var.dipal_website_name
+    namespace = var.dipal_website_namespace
     labels = {
-        "app.kubernetes.io/name" = "coturn"
-        "app.kubernetes.io/instance" = "coturn"
-        "app.kubernetes.io/version" = "0.0.1"
-      }
+      "app" = var.dipal_website_name
+    }
   }
   spec {
-    selector {
-      match_labels = {
-        "app.kubernetes.io/name" = "coturn"
-        "app.kubernetes.io/instance" = "coturn"
-        "app.kubernetes.io/version" = "0.0.1"
-      }
-    }
+    selector {match_labels = {"app" = var.dipal_website_name}}
     template {
-
       metadata {
-        labels = {
-          "app.kubernetes.io/name"     = "coturn"
-          "app.kubernetes.io/instance" = "coturn"
-          "app.kubernetes.io/version" = "0.0.1"
-        }
+        labels = {"app"= var.dipal_website_name}
       }
       spec {
-        host_network = true
+        image_pull_secrets {
+          name = "regcred"
+        }
         container {
-          name = "coturn"
-          image = "coturn/coturn"
-          image_pull_policy = "Always"
+
+          name = "dipal"
+          image = "${var.dipal_website_image_address}:${var.dipal_website_image_tag}"
           port {
-            name = "turn-port1"
-            container_port = 3478
-            host_port = 3478
-            protocol = "UDP"
+            container_port = var.dipal_website_container_port
           }
-          port {
-            name = "turn-port2"
-            container_port = 3478
-            host_port = 3478
-            protocol = "TCP"
-          }
-          args = ["-v"]
         }
       }
     }
   }
 }
-resource "kubernetes_service" "coturn_service" {
+#------------------------------------------------------------------------------------------------------
+# Deploys dipal website service
+resource "kubernetes_service" "dipal_website_service" {
   metadata {
-    name = "coturn"
-    namespace = "default"
-    labels = {
-      "app.kubernetes.io/name"     = "coturn"
-      "app.kubernetes.io/instance" = "coturn"
-      "app.kubernetes.io/version" = "0.0.1"
+    name = "${var.dipal_website_name}-service"
+    namespace = var.dipal_website_namespace
+    labels = {"app"= var.dipal_website_name}
+  }
+
+  spec {
+    port {
+      name="http"
+      port = var.dipal_website_service_port
+      target_port = var.dipal_website_container_port
     }
+    type = "ClusterIP"
+    selector = {"app"= var.dipal_website_name}
+  }
+
+}
+#------------------------------------------------------------------------------------------------------
+# Deploys dipal website ingress
+resource "kubernetes_ingress_v1" "dipal_website_ingress" {
+  metadata {
+    name = "${var.dipal_website_namespace}-${var.dipal_website_name}-ingress"
+    namespace = var.dipal_website_namespace
   }
   spec {
-    type = "ClusterIP"
-    port {
-      port = 3478
-      target_port = "3478"
-      protocol = "UDP"
-      name = "turn-port1"
-    }
-    port {
-      port = 3478
-      target_port = "3478"
-      protocol = "TCP"
-      name = "turn-port2"
-    }
-    selector = {
-      "app.kubernetes.io/name"     = "coturn"
-      "app.kubernetes.io/instance" = "coturn"
-      "app.kubernetes.io/version" = "0.0.1"
+    ingress_class_name = "nginx"
+    rule {
+      host = "dipal.ru"
+      http {
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "${var.dipal_website_name}-service"
+              port {
+                number = var.dipal_website_service_port
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
