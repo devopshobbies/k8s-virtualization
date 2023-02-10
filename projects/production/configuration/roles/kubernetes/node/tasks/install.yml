@@ -23,24 +23,44 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
-    }
-  }
-}
+---
 
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/dipalInfraConfig"
-  }
-}
+#--------------------------------------------
+# install kubeadm
+#--------------------------------------------
 
-provider "kubernetes" {
-  config_path = "/mnt/dipalInfraConfig"
-}
+- name: add kubernetes gpg key
+  shell: "curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 
+- name: add kubernetes apt repo
+  shell: 'echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list'
+
+- name: "install kubeadm"
+  apt:
+    name: kubeadm={{kubeadm_version}}
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+  when: kubeadm_package.changed 
+  tags:
+    - always
+
+- name: "install kubelet"
+  apt:
+    name: kubelet={{kubelet_version}}
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+  when: kubelet_package.changed 
+  tags:
+    - always
+
+- name: "install kubectl"
+  apt:
+    name: kubectl={{kubectl_version}}
+    state: present
+    update_cache: yes
+    allow_downgrade: yes
+  when: kubectl_package.changed 
+  tags:
+    - always

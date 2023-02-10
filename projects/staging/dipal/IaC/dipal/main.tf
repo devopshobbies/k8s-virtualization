@@ -148,7 +148,7 @@ module "dipal_crow" {
   crow_replica = "1"
   crow_pull_secret = "regcred"
   crow_image_address = "10.244.217.7:32488/dipal/crow"
-  crow_image_tag = "v1"
+  crow_image_tag = "v4"
   crow_is_staging_or_prod = "staging"
   #..............configmap variables.............................................
   crow_mongodb_base_url = "dipal-mongodb-service"

@@ -105,6 +105,18 @@ variable "goose_kafka_group_id" {
   type = string
   default = "goose-consumer"
 }
+#-------------------------------------------------------------------------------
+#Defines mqtt host address
+variable "goose_mqtt_address" {
+  type = string
+  default = "mosquitto-1675869047"
+}
+#-------------------------------------------------------------------------------
+#Defines mqtt port
+variable "goose_mqtt_port" {
+  type = string
+  default = "1883"
+}
 
 #==============================================================================#
 #                                                                              #

@@ -23,24 +23,13 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
-    }
-  }
-}
+---
 
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/dipalInfraConfig"
-  }
-}
-
-provider "kubernetes" {
-  config_path = "/mnt/dipalInfraConfig"
-}
-
+- name: "Check if curl is installed"
+  package:
+    name: curl
+    state: present
+  check_mode: true
+  register: curl_package
+  tags:
+    - always

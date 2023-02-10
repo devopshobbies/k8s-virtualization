@@ -23,24 +23,43 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
-    }
-  }
-}
+---
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+  register: reset_cluster
+  tags:
+    - always
 
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/dipalInfraConfig"
-  }
-}
 
-provider "kubernetes" {
-  config_path = "/mnt/dipalInfraConfig"
-}
+- name: Init Kubernetes cluster {{ master_ip }}
+  when: reset_cluster is succeeded
+  shell: |
+    kubeadm init --pod-network-cidr={{ pod_network_cidr }} \
+                 --apiserver-cert-extra-sans={{ master_ip }}
+  register: init_cluster
+  tags:
+    - always
 
+
+- name: Create Kubernetes config directory
+  file:
+    path: ".kube/"
+    state: directory
+  tags:
+    - always
+
+- name: Copy admin.conf to Home directory
+  when: init_cluster is succeeded
+  copy:
+    src: "{{ kubeadmin_config }}"
+    dest: ".kube/config"
+    owner: "{{ ansible_user | default(ansible_user_id) }}"
+    group: "{{ ansible_user | default(ansible_user_id) }}"
+    mode: 0755
+    remote_src: true
+  tags:
+    - always
+
+- name: "untaint control-plan"
+  command: kubectl --kubeconfig={{ kubeadmin_config }} taint nodes --all node-role.kubernetes.io/master-
+  run_once: true

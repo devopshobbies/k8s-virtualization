@@ -23,24 +23,21 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
-    }
-  }
-}
+---
+- hosts: master
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: docker, tags: always }
+    - { role: git, tags: always }
+    - { role: kubernetes/master, tags: always }
+    - { role: cni, tags: cni }
+    - { role: kubernetes/joincommand, tags: always }
 
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/dipalInfraConfig"
-  }
-}
-
-provider "kubernetes" {
-  config_path = "/mnt/dipalInfraConfig"
-}
-
+-  hosts: node
+   gather_facts: yes
+   become: yes
+   roles:
+     - { role: docker, tags: always }
+     - { role: git, tags: always }
+     - { role: kubernetes/node, tags: always }

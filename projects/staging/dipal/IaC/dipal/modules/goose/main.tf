@@ -39,6 +39,8 @@ resource "kubernetes_config_map" "goose_configmap" {
     "KAFKA_PORT"= var.goose_kafka_port
     "KAFKA_CLIENT_ID"= var.goose_kafka_client_id
     "KAFKA_GROUP_ID"= var.goose_kafka_group_id
+    "MQTT_HOST"= var.goose_mqtt_address
+    "MQTT_PORT"= var.goose_mqtt_port
   }
 }
 #-------------------------------------------------------------------
@@ -117,6 +119,24 @@ resource "kubernetes_deployment" "goose_deployment" {
               config_map_key_ref {
                 name = "${var.goose_name}-configmap"
                 key = "REDIS_PORT"
+              }
+            }
+          }
+          env {
+            name = "MQTT_HOST"
+            value_from {
+              config_map_key_ref {
+                name = "${var.goose_name}-configmap"
+                key = "MQTT_HOST"
+              }
+            }
+          }
+          env {
+            name = "MQTT_PORT"
+            value_from {
+              config_map_key_ref {
+                name = "${var.goose_name}-configmap"
+                key = "MQTT_PORT"
               }
             }
           }

@@ -23,24 +23,30 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
-    }
-  }
-}
+---
+- name: "Check if kubeadm is installed"
+  snap:
+    name: kubeadm
+    state: present
+  check_mode: true
+  register: kubeadm_package
+  tags:
+    - always
 
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/dipalInfraConfig"
-  }
-}
+- name: "Check if kubelet is installed"
+  snap:
+    name: kubelet
+    state: present
+  check_mode: true
+  register: kubelet_package
+  tags:
+    - always
 
-provider "kubernetes" {
-  config_path = "/mnt/dipalInfraConfig"
-}
-
+- name: "Check if kubectl is installed"
+  snap:
+    name: kubectl
+    state: present
+  check_mode: true
+  register: kubectl_package
+  tags:
+    - always

@@ -76,8 +76,8 @@ resource "helm_release" "kafka" {
 # Deploys kafka and all of it's component with helmchart
 resource "helm_release" "mqtt" {
   name       = "mqtt"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "rabbitmq"
+  repository = "https://k8s-at-home.com/charts/"
+  chart      = "mosquitto"
   namespace  = "default"
   wait       = "false"
 }

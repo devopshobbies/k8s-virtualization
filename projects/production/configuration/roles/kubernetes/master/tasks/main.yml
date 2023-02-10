@@ -23,24 +23,38 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
-    }
-  }
-}
+---
 
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/dipalInfraConfig"
-  }
-}
+# ####################################################################
+#                             Prechecks
+# ####################################################################
 
-provider "kubernetes" {
-  config_path = "/mnt/dipalInfraConfig"
-}
+- name: Prechecks
+  include_tasks: prechecks.yml
+  tags:
+    - always
 
+# ####################################################################
+#                             Prefilght
+# ####################################################################
+
+- name: Preflight
+  include_tasks: preflight.yml
+  tags:
+    - always
+
+# ####################################################################
+#                             Install
+# ####################################################################
+- name: Install
+  include_tasks: install.yml
+  tags:
+    - always
+
+# ####################################################################
+#                             Init
+# ####################################################################
+- name: Init
+  include_tasks: init.yml
+  tags:
+    - always
