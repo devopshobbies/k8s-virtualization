@@ -1,6 +1,4 @@
-# Universe
-
-<img src="assets/Universe.png" title="" alt="" data-align="center">
+# k8s-virtualization
 
 ## Table of Contents
 
@@ -14,7 +12,7 @@
 
 ## Overview
 
-universe as an automation source code can automate the deployment of skyfarm backend and infrastructure. Universe consists of a number of sub systems that deploy separate parts of the infrastructure separately. The underlyig infrastructure has been automated by Ansible while the cluster level automation has been conducted with Hashicorp Terraform. With Universe we deploy +13 Virtual machines fully automated with KVM in the backend and Kubevirt on kubernetes. In this document we go throught the capabilities of the source code, list of features, basic concepts and finally the full deployment roadmap and guideline. 
+k8s-virtualization as an automation source code can automate the deployment of skyfarm backend and infrastructure. Universe consists of a number of sub systems that deploy separate parts of the infrastructure separately. The underlyig infrastructure has been automated by Ansible while the cluster level automation has been conducted with Hashicorp Terraform. With Universe we deploy +13 Virtual machines fully automated with KVM in the backend and Kubevirt on kubernetes. In this document we go throught the capabilities of the source code, list of features, basic concepts and finally the full deployment roadmap and guideline. 
 
 ## Prerequisits
 
@@ -490,8 +488,6 @@ Below you can see the structure of our ansible project accordingly.
 Configuration management consists of serveral necessary steps to be executed (Roles).
 
 Below you can see the list of Roles with their purpose of usage. 
-
-
 
 > **[Commons](universe/configuration/roles/commons)**
 > 
