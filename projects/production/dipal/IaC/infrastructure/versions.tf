@@ -36,11 +36,11 @@ terraform {
 
 provider "helm" {
   kubernetes {
-    config_path = "/mnt/codeConfig"
+    config_path = "/mnt/dipalProdInfraConfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "/mnt/codeConfig"
+  config_path = "/mnt/dipalProdInfraConfig"
 }
 

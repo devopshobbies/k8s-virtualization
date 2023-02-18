@@ -222,14 +222,26 @@ resource "kubernetes_service" "dipal_website_service" {
 # Deploys dipal website ingress
 resource "kubernetes_ingress_v1" "dipal_website_ingress" {
   metadata {
-    name = "${var.dipal_website_namespace}-${var.dipal_website_name}-ingress"
-    namespace = var.dipal_website_namespace
+    name = "default-dipal-ingress"
+    namespace = "default"
+    annotations = {
+      "cert-manager.io/cluster-issuer"= "letsencrypt"
+      "kubernetes.io/ingress.class"="nginx"
+    }
   }
   spec {
+    tls {
+      hosts = [
+      "dipal.ru"
+      ]
+      secret_name = "dipal-tls"
+    }
     ingress_class_name = "nginx"
     rule {
       host = "dipal.ru"
+
       http {
+
         path {
           path = "/"
           path_type = "Prefix"
@@ -238,6 +250,94 @@ resource "kubernetes_ingress_v1" "dipal_website_ingress" {
               name = "${var.dipal_website_name}-service"
               port {
                 number = var.dipal_website_service_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#------------------------------------------------------------------------------------------------------
+# Deploys dipal cert issuer
+resource "helm_release" "cluster_issuer" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  namespace  = "default"
+  version    = "1.5.3"
+  wait       = "false"
+
+
+}
+#-------------------------------------------------------------------------------------------------------
+resource "kubernetes_manifest" "cluster_issuer" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "ClusterIssuer"
+    metadata = {
+      name              = "letsencrypt"
+    }
+    spec = {
+      acme = {
+        server = "https://acme-v02.api.letsencrypt.org/directory"
+        email="admin@dipal.ru"
+        privateKeySecretRef = {
+          name="letsencrypt"
+        }
+        solvers=[
+          {
+            http01={
+              ingress={
+                class="nginx"
+              }
+            }
+          }
+        ]
+      }
+    }
+
+  }
+
+
+}
+#==============================================================================#
+#                                                                              #
+#                                   Projects Ingresses                         #
+#                                                                              #
+#==============================================================================#
+#------------------------------------------------------------------------------------------------------
+# Deploys iguana website ingress
+resource "kubernetes_ingress_v1" "dipal_iguana_ingress" {
+  metadata {
+    name = "projects-dipal-staging-iguana-ingress"
+    namespace = "default"
+    annotations = {
+      "cert-manager.io/cluster-issuer"= "letsencrypt"
+      "kubernetes.io/ingress.class"="nginx"
+    }
+  }
+  spec {
+    tls {
+      hosts = [
+        "api.dev.dipal.ru"
+      ]
+      secret_name = "dipal-tls"
+    }
+    ingress_class_name = "nginx"
+    rule {
+      host = "api.dev.dipal.ru"
+
+      http {
+
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "projects-dipal-staging-iguana"
+              port {
+                number = 2002
               }
             }
           }

@@ -33,7 +33,7 @@
 module "dipal_pyrador" {
   source = "./modules/pyrador"
   #..............general variables...............................................
-  pyrador_namespace = "default"
+  pyrador_namespace = "dipal"
   pyrador_name = "pyrador"
   pyrador_replica = "1"
   pyrador_pull_secret = "regcred"
@@ -42,14 +42,14 @@ module "dipal_pyrador" {
   pyrador_node_ip = "172.18.0.3"
   #..............configmap variables.............................................
   pyrador_app_port = 5000
-  pyrador_redis_host = "redis-master"
+  pyrador_redis_host = "dipal-redis-master.dipal.svc.cluster.local"
   pyrador_redis_port = 6378
-  pyrador_kafka_host = "kafka"
+  pyrador_kafka_host = "dipal-kafka.dipal.svc.cluster.local"
   pyrador_kafka_port = 9092
   pyrador_kafka_client_id = "pyrador"
   pyrador_kafka_group_id = "pyrador"
   #..............secret variables................................................
-  pyrador_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAssyFbMiMjXYmY/anGiTqEQ0iht2YzPXfXto5KElvUisQn/6AXSo0wGnnnCn3uj879pj8S4nvTv5oKQGcBOV+dgyEryNzgyp6PwDk/tjkOGz8HBj17nxKpk2CXsuPjwNXXrZ8GYzy7yqmHwbTj14BZqnfdHzXPBCHTh6TL5ebyowGuIW5pMVVz2sGWaHkZhvYellObBvXCsy4+mVr3RMhP/ucWH/q4Hx3cd+5w23kQzlq8OkpByXdBMU+6qTAKMyH2el7APP+D5/ZUt7BWBjJUdcjvE3Zdld1n3cOpL4PkbMrUXjpPfasi8pAr/lN8e0Cy6ou7tMY/2yj2XTHqwY2BQIDAQAB"
+  pyrador_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1DJLaTtjj9ED2ZOLoVK1K1VU26aFTkTwcNhPqk0w1cS4/DYPerZx3YBORG8aMfEjbmzUt4s07UDXppalN5HP0rGrDuqbByBKvQxOdi7Zmeb3VRPyXQG+hpY470na5xVGP0/B6vtxzzwRIt7qHzOIHudHH1F91YZv7fNSB2CUUyVgoUJUhzfu/2TsicW9BUm3D/KZ5CwyAQ0UmnSYgbIKaI60LOybLYlrIbNK5Q/2BLLxUheug09PU2uVMp2v53HSwiSBV/8SDpSx/WSUVkeqsi0KxvC0mme+Ei7egXsURbjlO68UzaDLF5HxymWFyNAJZkb3RB6KkrReh1TvPPJbswIDAQAB"
   pyrador_redis_password = "PoI456ZxC"
 }
 #-------------------------------------------------------------------------------
@@ -57,34 +57,34 @@ module "dipal_pyrador" {
 module "dipal_iguana" {
   source = "./modules/iguana"
   #..............general variables...............................................
-  iguana_namespace = "default"
+  iguana_namespace = "dipal"
   iguana_name = "iguana"
   iguana_replica = "1"
   iguana_pull_secret = "regcred"
   iguana_image_address = "10.244.217.7:32488/dipal/iguana"
   iguana_image_tag = "v7"
-  iguana_db_address = "dipal-mongodb-service"
-  iguana_db_port = "32042"
+  iguana_db_address = "dipal-mongodb-service.dipal.svc.cluster.local"
+  iguana_db_port = "27017"
   iguana_db_name = "iguana"
   iguana_db_username = "root"
   iguana_db_debug = "false"
   iguana_node_ip = "172.18.0.4"
   #..............configmap variables.............................................
   iguana_app_port = 2000
-  iguana_redis_host = "redis-master"
+  iguana_redis_host = "dipal-redis-master.dipal.svc.cluster.local"
   iguana_redis_port = 6378
   iguana_fs_host = "192.168.89.4"
   iguana_fs_bucket_port = "30369"
   iguana_fs_public_url = "http://194.226.0.195:30369"
   iguana_fs_bucket_name = "public"
-  iguana_kafka_host = "kafka"
+  iguana_kafka_host = "dipal-kafka.dipal.svc.cluster.local"
   iguana_kafka_port = 9092
   iguana_kafka_client_id = "iguana"
   iguana_kafka_group_id = "iguana"
   iguana_db_password = "PoI456ZxC"
 
   #..............secret variables................................................
-  iguana_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAssyFbMiMjXYmY/anGiTqEQ0iht2YzPXfXto5KElvUisQn/6AXSo0wGnnnCn3uj879pj8S4nvTv5oKQGcBOV+dgyEryNzgyp6PwDk/tjkOGz8HBj17nxKpk2CXsuPjwNXXrZ8GYzy7yqmHwbTj14BZqnfdHzXPBCHTh6TL5ebyowGuIW5pMVVz2sGWaHkZhvYellObBvXCsy4+mVr3RMhP/ucWH/q4Hx3cd+5w23kQzlq8OkpByXdBMU+6qTAKMyH2el7APP+D5/ZUt7BWBjJUdcjvE3Zdld1n3cOpL4PkbMrUXjpPfasi8pAr/lN8e0Cy6ou7tMY/2yj2XTHqwY2BQIDAQAB"
+  iguana_keycloak_auth_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1DJLaTtjj9ED2ZOLoVK1K1VU26aFTkTwcNhPqk0w1cS4/DYPerZx3YBORG8aMfEjbmzUt4s07UDXppalN5HP0rGrDuqbByBKvQxOdi7Zmeb3VRPyXQG+hpY470na5xVGP0/B6vtxzzwRIt7qHzOIHudHH1F91YZv7fNSB2CUUyVgoUJUhzfu/2TsicW9BUm3D/KZ5CwyAQ0UmnSYgbIKaI60LOybLYlrIbNK5Q/2BLLxUheug09PU2uVMp2v53HSwiSBV/8SDpSx/WSUVkeqsi0KxvC0mme+Ei7egXsURbjlO68UzaDLF5HxymWFyNAJZkb3RB6KkrReh1TvPPJbswIDAQAB"
   iguana_redis_password = "PoI456ZxC"
   iguana_S3_access_key = "admin"
   iguana_S3_secret = "XIdX48556C"
@@ -93,7 +93,7 @@ module "dipal_iguana" {
 # Deploys pigeons service
 module "dipal_pigeons" {
   source = "./modules/pigeons"
-  pigeons_namespace = "default"
+  pigeons_namespace = "dipal"
   pigeons_name = "pigeons"
   pigeons_replica = "1"
   pigeons_pull_secret = "regcred"
@@ -101,14 +101,14 @@ module "dipal_pigeons" {
   pigeons_image_tag = "v2"
   #..............configmap variables.............................................
   pigeons_app_port = 5000
-  pigeons_redis_host = "redis-master"
+  pigeons_redis_host = "dipal-redis-master.dipal.svc.cluster.local"
   pigeons_redis_port = 6378
-  pigeons_kafka_host = "kafka"
+  pigeons_kafka_host = "dipal-kafka.dipal.svc.cluster.local"
   pigeons_kafka_port = 9092
   pigeons_kafka_client_id = "pigeons"
   pigeons_kafka_group_id = "pigeons"
   pigeons_tls_reject = "0"
-  pigeons_db_address = "dipal-mongodb-service"
+  pigeons_db_address = "dipal-mongodb-service.dipal.svc.cluster.local"
   pigeons_db_port = "27017"
   pigeons_db_name = "pigeons"
   pigeons_db_username = "root"
@@ -143,7 +143,7 @@ module "dipal_pigeons" {
 # Deploys crow service
 module "dipal_crow" {
   source = "./modules/crow"
-  crow_namespace = "default"
+  crow_namespace = "dipal"
   crow_name = "crow"
   crow_replica = "1"
   crow_pull_secret = "regcred"
@@ -151,36 +151,36 @@ module "dipal_crow" {
   crow_image_tag = "v4"
   crow_is_staging_or_prod = "staging"
   #..............configmap variables.............................................
-  crow_mongodb_base_url = "dipal-mongodb-service"
-  crow_mongodb_port = "32042"
-  crow_external_mongodb_base_url = "dipal-mongodb-service"
+  crow_mongodb_base_url = "dipal-mongodb-service.dipal.svc.cluster.local"
+  crow_mongodb_port = "27017"
+  crow_external_mongodb_base_url = "dipal-mongodb-service.dipal.svc.cluster.local"
   crow_external_mongodb_username="root"
   crow_mongodb_username = "root"
   crow_mongodb_dbname= "comfortech"
   crow_external_mongodb_db_name = "external_db"
   crow_external_mongodb_debug = "false"
   crow_mongodb_debug = "false"
-  crow_external_mongodb_port = "32042"
+  crow_external_mongodb_port = "27017"
   crow_default_place_id = "631749ea24fb4fc46bbe08e6"
   crow_default_utilities_service_id = "631749ee24fb4f3828be08f0"
   crow_default_intercom_service_id = "631749ee24fb4f6c11be08f4"
   crow_default_camera_service_id = "631749ee24fb4f8c9ebe08f6"
-  crow_redis_host = "redis-master"
+  crow_redis_host = "dipal-redis-master.dipal.svc.cluster.local"
   crow_vault_host = "vault"
   crow_vault_port= 8200
   crow_redis_port = "6378"
-  crow_kafka_host = "kafka"
+  crow_kafka_host = "dipal-kafka.dipal.svc.cluster.local"
   crow_kafka_port = "9092"
   crow_kafka_client_id = "comfortech-dataland"
   crow_kafka_group_id = "comfortech-dataland"
   crow_keycloak_base_url = "http://192.168.89.4:31107"
   crow_keycloak_port = "32223"
-  crow_keycloak_realm = "dipal_staging"
+  crow_keycloak_realm = "dipal_prod"
   crow_keycloak_grant_type = "password"
   crow_next_try_time = "60000"
   crow_expiration_time = "60000"
   crow_billing_base_url = "https://api.uut-telecom.ru/api/v1.0"
-  crow_trudesk_host = "trudesk"
+  crow_trudesk_host = "trudesk.dipal.svc.cluster.local"
   crow_trudesk_port = "8118"
   crow_trudesk_username = "admin"
   crow_trudesk_user_role_id = "63dd228fe055f7f42a5e6ef6"
@@ -205,7 +205,7 @@ module "dipal_crow" {
 # Deploys goose service
 module "dipal_goose" {
   source = "./modules/goose"
-  goose_namespace = "default"
+  goose_namespace = "dipal"
   goose_name = "goose"
   goose_replica = "1"
   goose_pull_secret = "regcred"
@@ -213,9 +213,10 @@ module "dipal_goose" {
   goose_image_tag = "latest"
   #..............configmap variables.............................................
   goose_app_port = 2000
-  goose_redis_host = "redis-master"
+  goose_redis_host = "dipal-redis-master.dipal.svc.cluster.local"
   goose_redis_port = 6378
-  goose_kafka_host = "kafka"
+  goose_kafka_host = "dipal-kafka.dipal.svc.cluster.local"
+  goose_mqtt_address = "dipal-mqtt-mosquitto.dipal.svc.cluster.local"
   goose_kafka_port = 9092
   goose_kafka_client_id = "goose-consumer"
   goose_kafka_group_id = "goose-consumer"

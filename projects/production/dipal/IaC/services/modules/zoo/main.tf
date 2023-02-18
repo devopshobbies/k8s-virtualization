@@ -23,24 +23,22 @@
 #                                  SOFTWARE.                                   #
 #                                                                              #
 #==============================================================================#
-terraform {
-  required_providers {
-    helm = {
-      version = "~> 2.5.1"
-    }
-    kubernetes = {
-      version = "~> 2.11.0"
+resource "kubernetes_config_map" "zoo_configmap" {
+  metadata {}
+}
+resource "kubernetes_secret" "zoo_secret" {
+  metadata {}
+}
+resource "kubernetes_service" "zoo_service" {
+  metadata {}
+  spec {}
+}
+resource "kubernetes_deployment" "zoo_deployment" {
+  metadata {}
+  spec {
+    template {
+      metadata {}
+      spec {}
     }
   }
 }
-
-provider "helm" {
-  kubernetes {
-    config_path = "/mnt/codeConfig"
-  }
-}
-
-provider "kubernetes" {
-  config_path = "/mnt/codeConfig"
-}
-
