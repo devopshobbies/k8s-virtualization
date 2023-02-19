@@ -44,7 +44,6 @@
   apt:
     name: kubeadm={{kubeadm_version}}
     state: present
-    update_cache: yes
     allow_downgrade: yes
   when: kubeadm_package.changed 
   tags:
@@ -54,7 +53,6 @@
   apt:
     name: kubelet={{kubelet_version}}
     state: present
-    update_cache: yes
     allow_downgrade: yes
   when: kubelet_package.changed 
   tags:
@@ -64,7 +62,6 @@
   apt:
     name: kubectl={{kubectl_version}}
     state: present
-    update_cache: yes
     allow_downgrade: yes
   when: kubectl_package.changed 
   tags:

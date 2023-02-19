@@ -2,10 +2,10 @@
 #                                                                              #
 #                                 MIT License                                  #
 #                                                                              #
-#                       Copyright (c) 2023 Skyfarm                             #
+#                       Copyright (c) 2023 DevopsHobbies                       #
 #                                                                              #
 # Permission is hereby granted, free of charge, to any person obtaining a copy #
-#of this software and associated documentation files (the Software), to deal #
+#of this software and associated documentation files (the Software), to deal   #
 # in the Software without restriction, including without limitation the rights #
 #  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   #
 #    copies of the Software, and to permit persons to whom the Software is     #
@@ -166,100 +166,9 @@ resource "helm_release" "ingress_nginx_controller" {
   version    = var.ingress_helm_chart_version
   wait       = "false"
 }
-#----------------------------------------------------------------------------------
-# Deploys dipal website
-resource "kubernetes_deployment" "dipal_website_deployment" {
-  metadata {
-    name = var.dipal_website_name
-    namespace = var.dipal_website_namespace
-    labels = {
-      "app" = var.dipal_website_name
-    }
-  }
-  spec {
-    selector {match_labels = {"app" = var.dipal_website_name}}
-    template {
-      metadata {
-        labels = {"app"= var.dipal_website_name}
-      }
-      spec {
-        image_pull_secrets {
-          name = "regcred"
-        }
-        container {
 
-          name = "dipal"
-          image = "${var.dipal_website_image_address}:${var.dipal_website_image_tag}"
-          port {
-            container_port = var.dipal_website_container_port
-          }
-        }
-      }
-    }
-  }
-}
 #------------------------------------------------------------------------------------------------------
-# Deploys dipal website service
-resource "kubernetes_service" "dipal_website_service" {
-  metadata {
-    name = "${var.dipal_website_name}-service"
-    namespace = var.dipal_website_namespace
-    labels = {"app"= var.dipal_website_name}
-  }
-
-  spec {
-    port {
-      name="http"
-      port = var.dipal_website_service_port
-      target_port = var.dipal_website_container_port
-    }
-    type = "ClusterIP"
-    selector = {"app"= var.dipal_website_name}
-  }
-
-}
-#------------------------------------------------------------------------------------------------------
-# Deploys dipal website ingress
-resource "kubernetes_ingress_v1" "dipal_website_ingress" {
-  metadata {
-    name = "default-dipal-ingress"
-    namespace = "default"
-    annotations = {
-      "cert-manager.io/cluster-issuer"= "letsencrypt"
-      "kubernetes.io/ingress.class"="nginx"
-    }
-  }
-  spec {
-    tls {
-      hosts = [
-      "dipal.ru"
-      ]
-      secret_name = "dipal-tls"
-    }
-    ingress_class_name = "nginx"
-    rule {
-      host = "dipal.ru"
-
-      http {
-
-        path {
-          path = "/"
-          path_type = "Prefix"
-          backend {
-            service {
-              name = "${var.dipal_website_name}-service"
-              port {
-                number = var.dipal_website_service_port
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-#------------------------------------------------------------------------------------------------------
-# Deploys dipal cert issuer
+# Deploys cert issuer
 resource "helm_release" "cluster_issuer" {
   name       = "cert-manager"
   repository = "https://charts.jetstack.io"
@@ -300,49 +209,4 @@ resource "kubernetes_manifest" "cluster_issuer" {
   }
 
 
-}
-#==============================================================================#
-#                                                                              #
-#                                   Projects Ingresses                         #
-#                                                                              #
-#==============================================================================#
-#------------------------------------------------------------------------------------------------------
-# Deploys iguana website ingress
-resource "kubernetes_ingress_v1" "dipal_iguana_ingress" {
-  metadata {
-    name = "projects-dipal-staging-iguana-ingress"
-    namespace = "default"
-    annotations = {
-      "cert-manager.io/cluster-issuer"= "letsencrypt"
-      "kubernetes.io/ingress.class"="nginx"
-    }
-  }
-  spec {
-    tls {
-      hosts = [
-        "api.dev.dipal.ru"
-      ]
-      secret_name = "dipal-tls"
-    }
-    ingress_class_name = "nginx"
-    rule {
-      host = "api.dev.dipal.ru"
-
-      http {
-
-        path {
-          path = "/"
-          path_type = "Prefix"
-          backend {
-            service {
-              name = "projects-dipal-staging-iguana"
-              port {
-                number = 2002
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 }

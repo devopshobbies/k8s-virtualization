@@ -26,25 +26,25 @@
 # Defines the host machine user
 variable "host_ssh_user" {
   type = string
-  default = "av"
+  default = "moeid"
 }
 #--------------------------------------------------------------------------------
 # defines the address of the host ssh-key file
 variable "host_ssh_key_address" {
   type = string
-  default = "/home/moeid/.ssh/nonprotected_skyfarm_rsa"
+  default = "/home/moeid/.ssh/id_rsa"
 }
 #--------------------------------------------------------------------------------
 # defines the host address
 variable "host_ssh_address" {
   type = string
-  default = "192.168.89.4"
+  default = "192.168.1.216"
 }
 #--------------------------------------------------------------------------------
 # defines the host sudo password
 variable "host_sudo_password" {
   type = string
-  default = "PoI456ZxC"
+  default = "Moied3dMoied3d"
 }
 #--------------------------------------------------------------------------------
 # defines the host disk path
@@ -60,7 +60,7 @@ variable "host_disk_path" {
 # Defines a release name for prometheus
 variable "prometheus_helm_release_name"{
   type= string
-  default = "skyfarm-prometheus"
+  default = "prometheus"
 }
 #--------------------------------------------------------------------------------
 # Defines the repository name for prometheus helm deploy
@@ -100,7 +100,7 @@ variable "prometheus_helm_chart_values_file_path" {
 # Defines a release name for minio
 variable "minio_helm_release_name"{
   type= string
-  default = "skyfarm-minio"
+  default = "minio"
 }
 #--------------------------------------------------------------------------------
 # Defines the repository name for minio helm deploy
@@ -146,7 +146,7 @@ variable "minio_helm_storage" {
 # Defines a release name for grafana
 variable "grafana_helm_release_name"{
   type= string
-  default = "skyfarm-grafana"
+  default = "grafana"
 }
 #--------------------------------------------------------------------------------
 # Defines the repository name for grafana helm deploy
@@ -186,47 +186,13 @@ variable "grafana_helm_storage" {
 }
 #==============================================================================#
 #                                                                              #
-#                             coturn group var                                  #
-#                                                                              #
-#==============================================================================#
-# Defines a release name for coturn
-variable "coturn_helm_release_name"{
-  type= string
-  default = "skyfarm-coturn"
-}
-#--------------------------------------------------------------------------------
-# Defines the repository name for coturn helm deploy
-variable "coturn_helm_repo" {
-  type = string
-  default = "https://iits-consulting.github.io/coturn-chart/"
-}
-#--------------------------------------------------------------------------------
-# Defines the chart name for coturn helm deploy
-variable "coturn_helm_chart_name" {
-  type = string
-  default = "coturn"
-}
-#--------------------------------------------------------------------------------
-# Defines the namespace name for coturn helm deploy
-variable "coturn_helm_namespace" {
-  type = string
-  default = "default"
-}
-#--------------------------------------------------------------------------------
-# Defines the chart version for coturn helm deploy
-variable "coturn_helm_chart_version" {
-  type = string
-  default = "2.0.3"
-}
-#==============================================================================#
-#                                                                              #
 #                             ingress group var                                #
 #                                                                              #
 #==============================================================================#
 # Defines a release name for ingress
 variable "ingress_helm_release_name"{
   type= string
-  default = "skyfarm-ingress"
+  default = "ingress"
 }
 #--------------------------------------------------------------------------------
 # Defines the repository name for ingress helm deploy
@@ -252,57 +218,5 @@ variable "ingress_helm_chart_version" {
   type = string
   default = "9.3.26"
 }
-#==============================================================================#
-#                                                                              #
-#                             Dipal website group var                          #
-#                                                                              #
-#==============================================================================#
-#-------------------------------------------------------------------------------
-# Defines Dipal website name
-variable "dipal_website_name" {
-  type = string
-  default = "dipal"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website namespace
-variable "dipal_website_namespace" {
-  type = string
-  default = "default"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website image address
-variable "dipal_website_image_address" {
-  type = string
-  default = "moeidheidari/dipalwebsite"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website image tag
-variable "dipal_website_image_tag" {
-  type = string
-  default = "v3"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website service port
-variable "dipal_website_container_port" {
-  type = string
-  default = "8080"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website service port
-variable "dipal_website_service_port" {
-  type = string
-  default = "80"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website ingress
-variable "dipal_website_ingress_name" {
-  type = string
-  default = "dipal_website_ingress"
-}
-#-------------------------------------------------------------------------------
-# Defines Dipal website domain
-variable "dipal_website_ingress_domain_name" {
-  type = string
-  default = "dipal.ru"
-}
+
 
