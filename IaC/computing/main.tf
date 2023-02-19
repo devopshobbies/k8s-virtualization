@@ -48,25 +48,7 @@ module "system_master_node"{
   host_user= var.system_vm_1_host_ssh_user_name
   ssh_sudo_password= var.system_vm_1_host_ssh_sudo_password
 }
-# Provisions the node node 1 in System namespace
-module "system_worker_node_1"{
-  source = "modules/physical_vm"
-  vm_namespace = var.system_namespace
-  vm_name = "${var.system_namespace}-${var.system_vm_2_name}"
-  vm_os = var.system_vm_2_cloud_image_address
-  vm_os_version = var.system_vm_2_cloud_image_version
-  vm_cpu_cores = var.system_vm_2_VCPU_NUMBER
-  vm_memory = var.system_vm_2_memory_capacity
-  vm_host_node = var.system_vm_2_host_name
-  vm_disk_storage = var.system_vm_2_storage_size
-  vm_ssh_key = var.system_vm_2_ssh_key
-  vm_disk_name = var.system_vm_2_disk_name
-  vm_host_disk_path = var.system_vm_2_host_disk_root_path
-  host_address = var.system_vm_2_host_ip_address
-  host_ssh_key= var.system_vm_2_host_ssh_key_address
-  host_user= var.system_vm_2_host_ssh_user_name
-  ssh_sudo_password= var.system_vm_2_host_ssh_sudo_password
-}
+
 
 ###==============================================================================#
 ###                                                                              #
@@ -88,6 +70,4 @@ module "pod_vm" {
   pod_vm_storage_limit = var.pod_vm_1_os_storage_limit
   pod_vm_replica = var.pod_vm_1_replica
   pod_vm_host = var.pod_vm_1_host_name
-
-
 }

@@ -185,13 +185,13 @@ other commands, please read the help and docs before usage.
 # Source code
 
 ```bash
-git clone https://github.com/MoeidHeidari/universe-infra.git && cd universe-infra
+git clone https://github.com/devopshobbies/k8s-virtualization.git && cd universe-infra
 ```
 
 # Run tests
 
 ```bash
-cd universe/configuration
+cd configuration
 ansible-playbook tests.yml
 ```
 
@@ -200,14 +200,14 @@ ansible-playbook tests.yml
 ## infrastructure preparation
 
 ```bash
-cd universe/configuration
+cd configuration
 ansible-playbook site.yml
 ```
 
 ## Deploy infrastructure on the main cluster
 
 ```bash
-cd universe/IaC/infrastructure
+cd IaC/infrastructure
 terraform init
 terraform plan -o plan
 terraform apply
@@ -216,7 +216,7 @@ terraform apply
 ## Create computing instances (VMS)
 
 ```bash
-cd universe/IaC/comuting
+cd IaC/comuting
 terraform init
 terraform plan -o plan
 terraform apply
@@ -239,134 +239,141 @@ terraform apply
 # Project structure
 
 ```bash
-├── code
-├── infrastructure
+├── assets
+│   ├── Godfather.png
+│   └── Universe.png
+├── configuration
+│   ├── ansible.cfg
+│   ├── group_vars
+│   │   └── all.yml
+│   ├── hosts.ini
+│   ├── roles
+│   │   ├── cni
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── templates
+│   │   │       ├── calico.yml.j2
+│   │   │       ├── canal.yml.j2
+│   │   │       └── flannel.yml.j2
+│   │   ├── commons
+│   │   │   ├── os-checker
+│   │   │   │   ├── defaults
+│   │   │   │   │   └── main.yml
+│   │   │   │   └── tasks
+│   │   │   │       └── main.yml
+│   │   │   └── pre-install
+│   │   │       ├── meta
+│   │   │       │   └── main.yml
+│   │   │       ├── tasks
+│   │   │       │   ├── main.yml
+│   │   │       │   └── pkg.yml
+│   │   │       └── templates
+│   │   │           └── 20-extra-args.conf.j2
+│   │   ├── curl
+│   │   │   └── tasks
+│   │   │       ├── install.yml
+│   │   │       ├── main.yml
+│   │   │       └── prechecks.yml
+│   │   ├── docker
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   ├── meta
+│   │   │   │   └── main.yml
+│   │   │   ├── tasks
+│   │   │   │   ├── install.yml
+│   │   │   │   ├── main.yml
+│   │   │   │   └── prechecks.yml
+│   │   │   └── templates
+│   │   │       ├── daemon.json.j2
+│   │   │       ├── docker.j2
+│   │   │       └── docker.service.j2
+│   │   ├── git
+│   │   │   ├── defaults
+│   │   │   └── tasks
+│   │   │       ├── install.yml
+│   │   │       ├── main.yml
+│   │   │       └── prechecks.yml
+│   │   ├── helm
+│   │   ├── kubernetes
+│   │   │   ├── joincommand
+│   │   │   │   └── tasks
+│   │   │   │       └── main.yml
+│   │   │   ├── master
+│   │   │   │   ├── defaults
+│   │   │   │   │   └── main.yml
+│   │   │   │   └── tasks
+│   │   │   │       ├── init.yml
+│   │   │   │       ├── install.yml
+│   │   │   │       ├── main.yml
+│   │   │   │       ├── prechecks.yml
+│   │   │   │       └── preflight.yml
+│   │   │   └── node
+│   │   │       ├── defaults
+│   │   │       │   └── main.yml
+│   │   │       └── tasks
+│   │   │           ├── install.yml
+│   │   │           ├── join.yml
+│   │   │           ├── main.yml
+│   │   │           ├── prechecks.yml
+│   │   │           └── preflight.yml
+│   │   ├── kubevirt
+│   │   │   ├── defaults
+│   │   │   ├── tasks
+│   │   │   │   ├── crds.yml
+│   │   │   │   ├── data-importer.yml
+│   │   │   │   ├── main.yml
+│   │   │   │   ├── okd.yml
+│   │   │   │   └── operators.yml
+│   │   │   └── templates
+│   │   │       └── okd.j2
+│   │   ├── pv
+│   │   │   ├── defaults
+│   │   │   └── tasks
+│   │   │       ├── directories.yml
+│   │   │       ├── main.yml
+│   │   │       └── precheks.yml
+│   │   └── tests
+│   │       └── tasks
+│   │           └── main.yml
+│   ├── site.yml
+│   └── tests.yml
+├── IaC
+│   ├── computing
+│   │   ├── main.tf
+│   │   ├── modules
+│   │   │   ├── container-vm
+│   │   │   │   ├── Dockerfile
+│   │   │   │   ├── main.tf
+│   │   │   │   └── variables.tf
+│   │   │   └── physical_vm
+│   │   │       ├── main.tf
+│   │   │       └── variables.tf
+│   │   ├── pv-template.yml
+│   │   ├── template.yml
+│   │   ├── terraform.tfstate
+│   │   ├── terraform.tfstate.backup
+│   │   ├── variables.tf
+│   │   └── versions.tf
+│   └── infrastructure
+│       ├── cert-issuer.yml
+│       ├── grafana
+│       │   └── values.yml
+│       ├── influxdb
+│       │   └── values.yml
+│       ├── ingress-template.yml
+│       ├── main.tf
+│       ├── minio-s3
+│       │   └── values.yml
+│       ├── prometheus
+│       │   └── values.yml
+│       ├── terraform.tfstate
+│       ├── terraform.tfstate.backup
+│       ├── variables.tf
+│       └── versions.tf
 ├── LICENSE
-├── projects
-├── README.md
-├── system
-└── universe
-    ├── configuration
-    │   ├── ansible.cfg
-    │   ├── group_vars
-    │   │   └── all.yml
-    │   ├── hosts.ini
-    │   ├── roles
-    │   │   ├── cni
-    │   │   │   ├── defaults
-    │   │   │   │   └── main.yml
-    │   │   │   ├── tasks
-    │   │   │   │   └── main.yml
-    │   │   │   └── templates
-    │   │   │       ├── calico.yml.j2
-    │   │   │       ├── canal.yml.j2
-    │   │   │       └── flannel.yml.j2
-    │   │   ├── commons
-    │   │   │   ├── os-checker
-    │   │   │   │   ├── defaults
-    │   │   │   │   │   └── main.yml
-    │   │   │   │   └── tasks
-    │   │   │   │       └── main.yml
-    │   │   │   └── pre-install
-    │   │   │       ├── meta
-    │   │   │       │   └── main.yml
-    │   │   │       ├── tasks
-    │   │   │       │   ├── main.yml
-    │   │   │       │   └── pkg.yml
-    │   │   │       └── templates
-    │   │   │           └── 20-extra-args.conf.j2
-    │   │   ├── curl
-    │   │   │   └── tasks
-    │   │   │       ├── install.yml
-    │   │   │       ├── main.yml
-    │   │   │       └── prechecks.yml
-    │   │   ├── docker
-    │   │   │   ├── defaults
-    │   │   │   │   └── main.yml
-    │   │   │   ├── meta
-    │   │   │   │   └── main.yml
-    │   │   │   ├── tasks
-    │   │   │   │   ├── install.yml
-    │   │   │   │   ├── main.yml
-    │   │   │   │   └── prechecks.yml
-    │   │   │   └── templates
-    │   │   │       ├── daemon.json.j2
-    │   │   │       ├── docker.j2
-    │   │   │       └── docker.service.j2
-    │   │   ├── git
-    │   │   │   ├── defaults
-    │   │   │   └── tasks
-    │   │   │       ├── install.yml
-    │   │   │       ├── main.yml
-    │   │   │       └── prechecks.yml
-    │   │   ├── kubernetes
-    │   │   │   ├── master
-    │   │   │   │   ├── defaults
-    │   │   │   │   │   └── main.yml
-    │   │   │   │   ├── tasks
-    │   │   │   │   │   ├── init.yml
-    │   │   │   │   │   ├── install.yml
-    │   │   │   │   │   ├── main.yml
-    │   │   │   │   │   ├── prechecks.yml
-    │   │   │   │   │   └── preflight.yml
-    │   │   │   │   └── templates
-    │   │   │   └── node
-    │   │   ├── kubevirt
-    │   │   │   ├── defaults
-    │   │   │   ├── tasks
-    │   │   │   │   ├── crds.yml
-    │   │   │   │   ├── data-importer.yml
-    │   │   │   │   ├── main.yml
-    │   │   │   │   ├── okd.yml
-    │   │   │   │   └── operators.yml
-    │   │   │   └── templates
-    │   │   │       └── okd.j2
-    │   │   ├── pv
-    │   │   │   ├── defaults
-    │   │   │   └── tasks
-    │   │   │       ├── directories.yml
-    │   │   │       ├── main.yml
-    │   │   │       └── precheks.yml
-    │   │   └── tests
-    │   │       └── tasks
-    │   │           └── main.yml
-    │   ├── site.yml
-    │   └── tests.yml
-    └── IaC
-        └── universe
-            ├── computing
-            │   ├── main.tf
-            │   ├── modules
-            │   │   ├── container-vm
-            │   │   │   ├── Dockerfile
-            │   │   │   ├── main.tf
-            │   │   │   └── variables.tf
-            │   │   └── physical_vm
-            │   │       ├── main.tf
-            │   │       └── variables.tf
-            │   ├── plan
-            │   ├── template.yml
-            │   ├── terraform.tfstate
-            │   ├── terraform.tfstate.backup
-            │   ├── variables.tf
-            │   └── versions.tf
-            └── infrastructure
-                ├── grafana
-                │   └── values.yml
-                ├── harbor
-                │   └── values.yml
-                ├── influxdb
-                │   └── values.yml
-                ├── main.tf
-                ├── minio-s3
-                │   └── values.yml
-                ├── plan
-                ├── prometheus
-                │   └── values.yml
-                ├── terraform.tfstate
-                ├── terraform.tfstate.backup
-                ├── variables.tf
-                └── versions.tf
+└── README.md
 ```
 
 # Configuration management
@@ -423,21 +430,36 @@ Below you can see the structure of our ansible project accordingly.
 │   │       ├── docker.j2
 │   │       └── docker.service.j2
 │   ├── git
+│   │   ├── defaults
 │   │   └── tasks
 │   │       ├── install.yml
 │   │       ├── main.yml
 │   │       └── prechecks.yml
+│   ├── helm
 │   ├── kubernetes
-│   │   └── master
+│   │   ├── joincommand
+│   │   │   └── tasks
+│   │   │       └── main.yml
+│   │   ├── master
+│   │   │   ├── defaults
+│   │   │   │   └── main.yml
+│   │   │   └── tasks
+│   │   │       ├── init.yml
+│   │   │       ├── install.yml
+│   │   │       ├── main.yml
+│   │   │       ├── prechecks.yml
+│   │   │       └── preflight.yml
+│   │   └── node
 │   │       ├── defaults
 │   │       │   └── main.yml
 │   │       └── tasks
-│   │           ├── init.yml
 │   │           ├── install.yml
+│   │           ├── join.yml
 │   │           ├── main.yml
 │   │           ├── prechecks.yml
 │   │           └── preflight.yml
 │   ├── kubevirt
+│   │   ├── defaults
 │   │   ├── tasks
 │   │   │   ├── crds.yml
 │   │   │   ├── data-importer.yml
@@ -447,6 +469,7 @@ Below you can see the structure of our ansible project accordingly.
 │   │   └── templates
 │   │       └── okd.j2
 │   ├── pv
+│   │   ├── defaults
 │   │   └── tasks
 │   │       ├── directories.yml
 │   │       ├── main.yml

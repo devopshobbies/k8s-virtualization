@@ -176,8 +176,6 @@ resource "helm_release" "cluster_issuer" {
   namespace  = "default"
   version    = "1.5.3"
   wait       = "false"
-
-
 }
 #-------------------------------------------------------------------------------------------------------
 resource "kubernetes_manifest" "cluster_issuer" {
