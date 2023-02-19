@@ -1,5 +1,5 @@
 # k8s-virtualization
-
+![](assets/kubevirt.png)
 ## Overview
 
 k8s-virtualization as an automation source code can automate the deployment of k8s-virtualization backend and infrastructure. Universe consists of several sub-systems that deploy separate parts of the infrastructure separately. The underlying infrastructure has been automated by Ansible while the cluster-level automation has been conducted with Hashicorp Terraform. With k8s-virtualization we deploy several Virtual machines at once and fully automated with KVM in the backend and Kubevirt on Kubernetes. In this document, we go through the capabilities of the source code, a list of features, basic concepts, and finally the full deployment roadmap and guidelines.
