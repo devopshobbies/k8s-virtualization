@@ -435,28 +435,28 @@ Below you can see the structure of our ansible project accordingly.
 
 ## Global variables description
 
-| #   | var name | type | usage |
-| --- | --- | --- | --- |
-| 1   | kube_version | string | version of the kubernetes to be installed |
-| 2   | token | string | kubeadm custom token for join command generating |
-| 3   | init_opts | string | feature gates to be installed |
-| 4   | kubeadm_opts | string | the list of kubernetes addons to be enabled |
-| 5   | service_cidr | string | specifies the service network CIDR (IP range) |
-| 6   | pod_network_cidr | string | specifies the pod network CIDR (IP rane) |
-| 7   | network | string | name of the pod network controller to be installed(options: Calico, flannel and canal) |
-| 8   | network_interface | string | Your chosen network interface to be used . Default is your default network interface |
-| 9   | enable_dashboard | boolean | Checks if the kubernetes dashboard should be enabled or not |
-| 10  | insecure_registries | array string | specifies the list of trusted insecure docker registries to be added to the docker daemon.json file |
-| 11  | systemd_dir | string (path) | root directory of the systemd |
-| 12  | systemd_env_dir | string (path) | root directory of the sysconfig file |
-| 13  | network_dir | string (path) | root directory of the kubernetes network |
-| 14  | kubeadmin_config | string (path) | address of the kubernetes admin config file |
-| 15  | kube_addon_dir | string (path) | address of the kubernetes addon |
-| 16  | additional_features | Object | list of addons to be activated (helm,metallb,healthcheck) |
-| 17  | tmp_dir | string (path) | the address of the kubernetes temporary files directory |
-| 18  | container_runtime | string | choose the container runtime engine to be used with kubernetes |
-| 19  | helm_version | string | specifies the helm version to be installed |
-| 20  | master_ip | string | Finds the default IPv4 of the current selected network interface |
+| #   | var name            | type          | usage                                                                                               |
+| --- | ------------------- | ------------- | --------------------------------------------------------------------------------------------------- |
+| 1   | kube_version        | string        | version of the kubernetes to be installed                                                           |
+| 2   | token               | string        | kubeadm custom token for join command generating                                                    |
+| 3   | init_opts           | string        | feature gates to be installed                                                                       |
+| 4   | kubeadm_opts        | string        | the list of kubernetes addons to be enabled                                                         |
+| 5   | service_cidr        | string        | specifies the service network CIDR (IP range)                                                       |
+| 6   | pod_network_cidr    | string        | specifies the pod network CIDR (IP rane)                                                            |
+| 7   | network             | string        | name of the pod network controller to be installed(options: Calico, flannel and canal)              |
+| 8   | network_interface   | string        | Your chosen network interface to be used . Default is your default network interface                |
+| 9   | enable_dashboard    | boolean       | Checks if the kubernetes dashboard should be enabled or not                                         |
+| 10  | insecure_registries | array string  | specifies the list of trusted insecure docker registries to be added to the docker daemon.json file |
+| 11  | systemd_dir         | string (path) | root directory of the systemd                                                                       |
+| 12  | systemd_env_dir     | string (path) | root directory of the sysconfig file                                                                |
+| 13  | network_dir         | string (path) | root directory of the kubernetes network                                                            |
+| 14  | kubeadmin_config    | string (path) | address of the kubernetes admin config file                                                         |
+| 15  | kube_addon_dir      | string (path) | address of the kubernetes addon                                                                     |
+| 16  | additional_features | Object        | list of addons to be activated (helm,metallb,healthcheck)                                           |
+| 17  | tmp_dir             | string (path) | the address of the kubernetes temporary files directory                                             |
+| 18  | container_runtime   | string        | choose the container runtime engine to be used with kubernetes                                      |
+| 19  | helm_version        | string        | specifies the helm version to be installed                                                          |
+| 20  | master_ip           | string        | Finds the default IPv4 of the current selected network interface                                    |
 
 ## Roles
 
@@ -465,80 +465,79 @@ Configuration management consists of several necessary steps to be executed (Rol
 Below you can see the list of Roles with their purpose of usage.
 
 > **[Commons](universe/configuration/roles/commons)**
->
+> 
 > this Role contains all common operations that need to be run before all other rules. We put common and basic checkers, fact collective and dependency installations here. As for now, this role consists of two main sub-rules.
->
+> 
 > > **os-checker**
-> >
+> > 
 > > This role tries to collect some facts about the host machine. OS version, distribute name and set facts to `ansible_os_family`.
->
+> 
 > > **preinstall**
-> >
+> > 
 > > this role tries to execute some pre installation jobs. To let the kubernetes work well we need to install a module called [kubelet]([kubelet | Kubernetes](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/#:~:text=The%20kubelet%20is%20the%20primary,in%20terms%20of%20a%20PodSpec.)). Kubelet doesn't support Swap, thus we need to turn off the swap before any installation and finally reload the kubelet daemon.
->
+> 
 > **[Curl](configuration/roles/curl)**
->
+> 
 > this role checks if curl ios installed. If not then it tries to add the appropriate repository and install it on the host machine.
->
+> 
 > > precheck.yml
-> >
+> > 
 > > install.yml
-> >
+> > 
 > > main.yml
->
+> 
 > **[Git](configuration/roles/git)**
->
+> 
 > this role checks if git ios installed. If not then it tries to add the appropriate repository and install it on the host machine.
->
+> 
 > > precheck.yml
-> >
+> > 
 > > install.yml
-> >
+> > 
 > > main.yml
->
+> 
 > **[docker](configuration/roles/docker)**
->
+> 
 > this role checks if docker ios installed. If not then it tries to add the appropriate repository and install it on the host machine.
->
+> 
 > > **default/main** contains a variable to hold the docker version that we want to install or upgrade to.
->
+> 
 > > **meta/main** contains a list of dependencies and roles that need to be run before this task. In our case `os-checker`.
-> >
+> > 
 > > **tasks/prechecks** Checks pre-installed dependencies.
-> >
+> > 
 > > **tasks/install** install docker packages
->
+> 
 > **[CNI](configuration/roles/cni)**
->
+> 
 > > this role install a chosen container network interface . supported CNIs:
->
+> 
 > - Calico
->
+> 
 > - canal
->
+> 
 > - flannel
->
->
+> 
 > **[Kubernetes](configuration/roles/kubernetes)**
->
+> 
 > > **master** installs and initializes a kubeadm (multinode kubernetes cluster) cluster
->
+> 
 > > **join** command generates a join command with the cluster roken. we later use it to join new worker nodes to the cluster
->
+> 
 > > **node** installs and joins a worker node in the same network
->
+> 
 > **[Kubevirt](configuration/roles/kubevirt)**
->
+> 
 > > **CRD** installs kubevirt necessary CRDs(Custom resource definitions)
->
+> 
 > > **data-importer** install data-importer CRD to mount external disks inside the VM root directory (via kubernetes persistent volumes)
->
+> 
 > > **OKD** Installs OKS CRD and operators as a dashboard to manage kubernetes and virtual machines
->
+> 
 > > **Operators** installs necessary operators
->
+> 
 > **[Tests](configuration/roles/tests)**
->
+> 
 > > contains ansible code to check if all necessary dependencies are installed
 
 ## Infrastructure as Code
@@ -548,7 +547,6 @@ infrastructure part contains 2 separate parts
 - Infrastructure
 
 - Computing
-
 
 ### Infrastructure
 
@@ -563,7 +561,6 @@ In this part we try to deploy the necessary tools to manage the infrastructure. 
 - Ingtress-nginx-controller
 
 - Cluster-issuer
-
 
 If you need to add a new tool to the infrastructure you can either add the manifest or install by helm. as an example you can see the minio deployment and required variables.
 
@@ -680,17 +677,16 @@ resource "kubernetes_persistent_volume" "minio_persistent_volume" {
 ```
 
 > **Note:** We use `provisioner` to make the required directories on the host machine. becareful to fill in the required variables at first.
->
+> 
 > - var.host_ssh_user
->
+> 
 > - var.host_ssh_key_address
->
+> 
 > - var.host_ssh_address
->
+> 
 > - var.host_disk_path
->
+> 
 > - var.*_storage
->
 
 ## Computing
 
@@ -729,22 +725,22 @@ module "system_master_node"{
 }
 ```
 
-| #   | variable | description |
-| --- | --- | --- |
-| 1   | system_namespace | Defines the namespace where the vm should be created |
-| 2   | vm_name | name of the vm (used for pod name and vm host name) |
-| 3   | vm_os | os type (link to the OS cloud image) |
-| 4   | vm_os_version | OS version that you want to install (based on the cloud image) |
-| 5   | vm_cpu_cores | Number of VCPUs(Vistual CPU cores) |
-| 6   | vm_memory | Amount of memory you plan to dedicate to this VM |
-| 7   | vm_host_node | Node host name where you want to provision the compute instance on. (in multicore Kubernetes cluster) |
-| 8   | vm_disk_storage | Disk storage to be dedicated to the VM |
-| 9   | vm_ssh_key | SSH key that you will use later to doo SSH login to the VM. |
-| 10  | vm_disk_name | Name of the disk you want to mount on the VM |
-| 11  | vm_host_disk_path | Address of the disk you want to use to make the persistent volume (Used to manage the Vm disk) |
-| 12  | host_address | Address of the host you want to make the disk on (used in remote provisioner) |
-| 13  | host_user | Target host username |
-| 14  | ssh_sudo_password | Target host Sudo password (used in remote provisioner) |
+| #   | variable          | description                                                                                           |
+| --- | ----------------- | ----------------------------------------------------------------------------------------------------- |
+| 1   | system_namespace  | Defines the namespace where the vm should be created                                                  |
+| 2   | vm_name           | name of the vm (used for pod name and vm host name)                                                   |
+| 3   | vm_os             | os type (link to the OS cloud image)                                                                  |
+| 4   | vm_os_version     | OS version that you want to install (based on the cloud image)                                        |
+| 5   | vm_cpu_cores      | Number of VCPUs(Vistual CPU cores)                                                                    |
+| 6   | vm_memory         | Amount of memory you plan to dedicate to this VM                                                      |
+| 7   | vm_host_node      | Node host name where you want to provision the compute instance on. (in multicore Kubernetes cluster) |
+| 8   | vm_disk_storage   | Disk storage to be dedicated to the VM                                                                |
+| 9   | vm_ssh_key        | SSH key that you will use later to doo SSH login to the VM.                                           |
+| 10  | vm_disk_name      | Name of the disk you want to mount on the VM                                                          |
+| 11  | vm_host_disk_path | Address of the disk you want to use to make the persistent volume (Used to manage the Vm disk)        |
+| 12  | host_address      | Address of the host you want to make the disk on (used in remote provisioner)                         |
+| 13  | host_user         | Target host username                                                                                  |
+| 14  | ssh_sudo_password | Target host Sudo password (used in remote provisioner)                                                |
 
 > **Note:** you are responsible to make a kubernetes service if you want to provide an external access to the VM (On port 22). By default all the ports of the VM are open, it means you can easily up a service inside your vm and forward the port in the attached service and make it externally acccesible.
 
@@ -869,24 +865,41 @@ module "pod_vm" {
 }
 ```
 
-| #   | variable | description |
-| --- | --- | --- |
-| 1   | pod_vm_namespace | Defines the namespace where the vm should be created |
-| 2   | pod_vm_name | name of the vm (used for pod name and vm host name) |
-| 3   | pod_vm_os | os type (link to the OS cloud image) |
-| 4   | pod_vm_os_version | OS version that you want to install (based on the cloud image) |
-| 5   | pod_vm_registry | address of the OS docker registry |
-| 6   | pod_vm_cpu_request | Percentage of VCPUs(Vistual CPU cores) we request |
-| 7   | pod_vm_cpu_limit | Percentage of VCPUs(Vistual CPU cores) limitation |
-| 8   | pod_vm_memory_request | Amount of memory you plan to request for this VM |
-| 9   | pod_vm_memory_limit | Amount of memory limitation for this VM |
-| 9   | pod_vm_storage_request | Disk storage to be requested for the VM |
-| 10  | pod_vm_storage_limit | Disk storage limitation for the VM |
-| 11  | pod_vm_replica | number of replicas |
-| 12  | pod_vm_host | vm host (the node we want to make the VM on) |
+| #   | variable               | description                                                    |
+| --- | ---------------------- | -------------------------------------------------------------- |
+| 1   | pod_vm_namespace       | Defines the namespace where the vm should be created           |
+| 2   | pod_vm_name            | name of the vm (used for pod name and vm host name)            |
+| 3   | pod_vm_os              | os type (link to the OS cloud image)                           |
+| 4   | pod_vm_os_version      | OS version that you want to install (based on the cloud image) |
+| 5   | pod_vm_registry        | address of the OS docker registry                              |
+| 6   | pod_vm_cpu_request     | Percentage of VCPUs(Vistual CPU cores) we request              |
+| 7   | pod_vm_cpu_limit       | Percentage of VCPUs(Vistual CPU cores) limitation              |
+| 8   | pod_vm_memory_request  | Amount of memory you plan to request for this VM               |
+| 9   | pod_vm_memory_limit    | Amount of memory limitation for this VM                        |
+| 9   | pod_vm_storage_request | Disk storage to be requested for the VM                        |
+| 10  | pod_vm_storage_limit   | Disk storage limitation for the VM                             |
+| 11  | pod_vm_replica         | number of replicas                                             |
+| 12  | pod_vm_host            | vm host (the node we want to make the VM on)                   |
 
 > **Note:** Default username and password is
->
+> 
 > user: ubuntu
->
+> 
 > password: ubuntu
+
+#### Below you can see several Vms managed by K8s pods.
+
+![](assets/vms.png)  
+![](assets/vms-pods.png)
+
+#### Here is the list of Persistent volumes managed by Kubernetes and mounted on the vms.
+
+![](assets/vm-pvs.png)
+
+#### Resources of one of the VMs.
+
+```bash
+ssh -i ubuntu@10.244.217.4
+```
+
+![](assets/vm-inside.png)
