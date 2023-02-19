@@ -1,0 +1,93 @@
+#==============================================================================#
+#                                                                              #
+#                                 MIT License                                  #
+#                                                                              #
+#                       Copyright (c) 2023 DevopsHobbies                       #
+#                                                                              #
+# Permission is hereby granted, free of charge, to any person obtaining a copy #
+#of this software and associated documentation files (the Software), to deal   #
+# in the Software without restriction, including without limitation the rights #
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   #
+#    copies of the Software, and to permit persons to whom the Software is     #
+#           furnished to do so, subject to the following conditions:           #
+#                                                                              #
+#The above copyright notice and this permission notice shall be included in all#
+#               copies or substantial portions of the Software.                #
+#                                                                              #
+#  THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  #
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,   #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  #
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER    #
+#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, #
+#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE #
+#                                  SOFTWARE.                                   #
+#                                                                              #
+#==============================================================================#
+---
+#==============================================================================#
+#                                                                              #
+#                             Harbor Server Group                              #
+#                                                                              #
+#==============================================================================#
+- name: Creates postgresql directory
+  file:
+    path: "{{pv_root_directory}}/postgresql"
+    state: directory
+  when: postgresql_stat.stat.exists
+
+- name: Creates trivy directory
+  file:
+    path: "{{pv_root_directory}}/trivy"
+    state: directory
+  when: trivy_stat.stat.exists
+
+- name: Creates charts directory
+  file:
+    path: "{{pv_root_directory}}/charts"
+    state: directory
+  when: charts_stat.stat.exists
+
+- name: Creates jobservice directory
+  file:
+    path: "{{pv_root_directory}}/jobservice"
+    state: directory
+  when: jobservice_stat.stat.exists
+
+- name: Creates scandata directory
+  file:
+    path: "{{pv_root_directory}}/scandata"
+    state: directory
+  when: scandata_stat.stat.exists
+
+- name: Creates registry directory
+  file:
+    path: "{{pv_root_directory}}/registry"
+    state: directory
+  when: registry_stat.stat.exists
+
+- name: Creates redis directory
+  file:
+    path: "{{pv_root_directory}}/redis"
+    state: directory
+  when: redis_stat.stat.exists
+
+#==============================================================================#
+#                                                                              #
+#                             Grafana Server Group                             #
+#                                                                              #
+#==============================================================================#
+- name: Creates grafana directory
+  file:
+    path: "{{pv_root_directory}}/grafana"
+    state: directory
+  when: grafana_stat.stat.exists
+#==============================================================================#
+#                                                                              #
+#                             Minio-s3 Server Group                            #
+#                                                                              #
+#==============================================================================#
+- name: Creates minio directory
+  file:
+    path: "{{pv_root_directory}}/minio"
+    state: directory
+  when: minio_stat.stat.exists
